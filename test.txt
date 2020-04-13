@@ -1,0 +1,21 @@
+program prueba:
+
+var int j;
+
+main(){
+    var int j;
+    j=0;
+    j = j*4;
+    print("hola");
+}
+
+function prueba(){
+    var int x;
+    if(x<3){
+        x=2;
+    };
+
+    while(x<3){
+        z = z+1;
+    }
+}
