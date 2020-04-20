@@ -17,5 +17,6 @@ function prueba(){
 
     while(x<3){
         z = z+1;
+        z == x;
     }
 }

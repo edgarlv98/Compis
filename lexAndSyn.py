@@ -93,6 +93,8 @@ lexer = lex.lex()
 def p_program(p):
     '''program : PROGRAM ID COLON vars main function
                | PROGRAM ID COLON main function
+               | PROGRAM ID COLON vars main
+               | PROGRAM ID COLON main
     '''
 
 def p_main(p):
@@ -150,10 +152,15 @@ def p_estatuto(p):
                 | condicion
                 | escritura
                 | while
+                | comparacion
     '''
 
 def p_asignacion(p):
     '''asignacion : ID EQUAL expresion SEMICOLON
+    '''
+
+def p_comparacion(p):
+    '''comparacion : ID EQUAL EQUAL expresion SEMICOLON
     '''
 
 def p_condicion(p):
