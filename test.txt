@@ -1,16 +1,17 @@
 program prueba:
 
-var int j;
+var int j,k,l;
 
 main(){
-    var int j;
+    var char er;
     j=0;
     j = j*4;
     print("hola");
 }
 
-function prueba(){
-    var int x;
+function int pruebafuncion(){
+    var float po;
+    po=30;
     if(x<3){
         x=2;
     };
@@ -19,4 +20,9 @@ function prueba(){
         z = z+1;
         z == x;
     }
+}
+
+function int pruebafuncion2(){
+    var int il;
+    il=300;
 }
