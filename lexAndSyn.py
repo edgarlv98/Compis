@@ -13,6 +13,7 @@ reserved = {
     'float' : 'FLOAT',
     'int' : 'INT',
     'char' : 'CHAR',
+    'void' : 'VOID',
     'print' : 'PRINT',
     'function' : 'FUNCTION',
     'while' : 'WHILE',
@@ -89,6 +90,8 @@ def t_error(t):
 lexer = lex.lex()
 
 # GRAMATICA #
+import vars_table as varsTable
+import directorio_funciones as directorioFunc
 
 def p_program(p):
     '''program : PROGRAM ID COLON vars main function
@@ -115,12 +118,23 @@ def p_varAux2(p):
     '''varAux2 : ID
                | ID COMA varAux2
     '''
+    varsTable.insert(p[1], varsTable.tipo)
+
 
 def p_tipo(p):
     '''tipo : INT
             | FLOAT
             | CHAR
     '''
+    varsTable.tipo = p[1]
+
+def p_tipoFunc(p):
+    '''tipoFunc : INT
+            | FLOAT
+            | CHAR
+            | VOID
+    '''
+    directorioFunc.tipo = p[1]
 
 def p_bloque(p):
     '''bloque : LBRACE RBRACE
@@ -128,15 +142,18 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION ID LPAREN RPAREN LBRACE RBRACE
-              | FUNCTION ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE
-              | FUNCTION ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION ID LPAREN RPAREN LBRACE RBRACE function
-              | FUNCTION ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
-              | FUNCTION ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE function
-              | FUNCTION ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE function
+    '''function : FUNCTION tipoFunc ID LPAREN RPAREN LBRACE RBRACE
+              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE
+              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE RBRACE function
+              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
+              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE function
+              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE function
     '''
+    directorioFunc.insert(p[3], directorioFunc.tipo)
+    print("funciones '%s'" % p[3])
+
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
@@ -158,6 +175,7 @@ def p_estatuto(p):
 def p_asignacion(p):
     '''asignacion : ID EQUAL expresion SEMICOLON
     '''
+    varsTable.update(p[1], varsTable.valor)
 
 def p_comparacion(p):
     '''comparacion : ID EQUAL EQUAL expresion SEMICOLON
@@ -214,6 +232,8 @@ def p_var_cte(p):
                | CTE_I
                | CTE_F
     '''
+    print("valor '%s'" % p[1])
+    varsTable.valor = p[1]
 
 def p_error(p):
     global success
@@ -231,6 +251,10 @@ parser.parse(s)
 
 if success == True:
     print("Archivo aprobado")
+    print("Variables")
+    varsTable.show()
+    print("Funciones")
+    directorioFunc.show()
     sys.exit()
 else:
     print("Archivo no aprobado")
