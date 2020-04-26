@@ -4,17 +4,19 @@ simbolos = []
 
 tipo = None
 Id = None
+direccion = None
 valor = None
 
 #Objeto tabla variables#
 class tabla(object):
-    def __init__(self, id, type_data, value=None):
+    def __init__(self, id, tipo, direccion, value=None):
         self.id = str(id)
-        self.type_data = str(type_data)
+        self.tipo = str(tipo)
+        self.direccion = direccion
         self.value = value
 
-def insert(id, type_data):
-    temp = tabla(id, type_data)
+def insert(id, tipo, direccion):
+    temp = tabla(id, tipo, direccion)
     if len(simbolos) >= 1 and not repeatID(id):
         simbolos.append(temp)
     if len(simbolos) == 0:
@@ -38,4 +40,4 @@ def show():
     longitud = len(simbolos)
     i = 0
     for i in range(0, longitud):
-        print(simbolos[i].id, simbolos[i].type_data, simbolos[i].value)
+        print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].value)
