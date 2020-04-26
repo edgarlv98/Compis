@@ -3,6 +3,10 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 success = True
+direccion_func = 1000
+vars_int = 2000
+vars_char = 2100
+vars_float = 2200
 
 #Palabras reservadas
 reserved = {
@@ -34,6 +38,9 @@ tokens = [
     "DIFFERENT",
     'LOWERTHAN',
     'MORETHAN',
+    'DOUBLEEQUAL',
+    'AND',
+    'OR',
     'LPAREN',
     'RPAREN',
     'LBRACE',
@@ -54,6 +61,9 @@ t_EQUAL = r'\='
 t_DIFFERENT = r'\[<>]'
 t_LOWERTHAN = r'\<'
 t_MORETHAN = r'\>'
+t_DOUBLEEQUAL = r'\=='
+t_AND = r'\&'
+t_OR = r'\|'
 
 # Simbolos
 t_LPAREN = r'\('
@@ -105,6 +115,10 @@ def p_main(p):
             | MAIN LPAREN RPAREN LBRACE vars bloqueAux RBRACE
     '''
 
+    global direccion_func
+    direccion_func = direccion_func + 1
+    directorioFunc.insert(p[1], 'int', direccion_func)
+
 def p_vars(p):
     '''vars : VAR varAux1
     '''
@@ -118,7 +132,18 @@ def p_varAux2(p):
     '''varAux2 : ID
                | ID COMA varAux2
     '''
-    varsTable.insert(p[1], varsTable.tipo)
+    if varsTable.tipo == 'int':
+        global vars_int
+        vars_int = vars_int + 1
+        varsTable.insert(p[1], varsTable.tipo, vars_int)
+    elif varsTable.tipo == 'char':
+        global vars_char
+        vars_char = vars_char + 1
+        varsTable.insert(p[1], varsTable.tipo, vars_char)
+    elif varsTable.tipo == 'float':
+        global vars_float
+        vars_float = vars_float + 1
+        varsTable.insert(p[1], varsTable.tipo, vars_float)
 
 
 def p_tipo(p):
@@ -151,8 +176,9 @@ def p_function(p):
               | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE function
               | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE function
     '''
-    directorioFunc.insert(p[3], directorioFunc.tipo)
-    print("funciones '%s'" % p[3])
+    global direccion_func
+    direccion_func = direccion_func + 1
+    directorioFunc.insert(p[3], directorioFunc.tipo, direccion_func)
 
 
 def p_bloqueAux(p):
@@ -178,7 +204,7 @@ def p_asignacion(p):
     varsTable.update(p[1], varsTable.valor)
 
 def p_comparacion(p):
-    '''comparacion : ID EQUAL EQUAL expresion SEMICOLON
+    '''comparacion : ID DOUBLEEQUAL expresion SEMICOLON
     '''
 
 def p_condicion(p):
@@ -232,7 +258,6 @@ def p_var_cte(p):
                | CTE_I
                | CTE_F
     '''
-    print("valor '%s'" % p[1])
     varsTable.valor = p[1]
 
 def p_error(p):
