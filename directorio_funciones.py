@@ -1,25 +1,27 @@
 import sys
-import vars_table as varsTable
+import vars_table
 
 funciones = []
 
 tipo = None
 Id = None
+direccion = None
 
 #Objeto directorio funciones#
-class directorio(object):
-    def __init__(self, id, type_data):
+class funcion(object):
+    def __init__(self, id, tipo, direccion):
         self.id = str(id)
-        self.type_data = str(type_data)
+        self.tipo = str(tipo)
+        self.direccion = direccion
 
 def show():
     longitud = len(funciones)
     i = 0
     for i in range(0, longitud):
-        print(funciones[i].id, funciones[i].type_data)
+        print(funciones[i].id, funciones[i].tipo)
 
-def insert(id, type_data):
-    temp = directorio(id, type_data)
+def insert(id, tipo, direccion):
+    temp = funcion(id, tipo, direccion)
     if len(funciones) >= 1 and not repeatID(id):
         funciones.append(temp)
     if len(funciones) == 0:
@@ -38,4 +40,4 @@ def show():
     longitud = len(funciones)
     i = 0
     for i in range(0, longitud):
-        print(funciones[i].id, funciones[i].type_data)
+        print(funciones[i].id, funciones[i].tipo, funciones[i].direccion)
