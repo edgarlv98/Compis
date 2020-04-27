@@ -3,10 +3,15 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 success = True
+contFunciones = None
+
+#Direcciones de funciones
 direccion_func = 1000
-vars_int = 2000
-vars_char = 2100
-vars_float = 2200
+
+#Direcciones de variables
+vars_int = 2000 #variables int
+vars_char = 2100 #variables char
+vars_float = 2200 #variables float
 
 #Palabras reservadas
 reserved = {
@@ -114,10 +119,11 @@ def p_main(p):
     '''main : MAIN LPAREN RPAREN LBRACE bloqueAux RBRACE
             | MAIN LPAREN RPAREN LBRACE vars bloqueAux RBRACE
     '''
-
     global direccion_func
     direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], 'int', direccion_func)
+    aux = varsTable.simbolos
+    varsTable.simbolos = []
+    directorioFunc.insert(p[3], 'int', direccion_func, aux)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -179,6 +185,10 @@ def p_function(p):
     global direccion_func
     direccion_func = direccion_func + 1
     directorioFunc.insert(p[3], directorioFunc.tipo, direccion_func)
+    global contFunciones
+    contFunciones = contFunciones + 1
+    varsTable.simbolos = []
+    if p[3] == None
 
 
 def p_bloqueAux(p):
@@ -275,9 +285,9 @@ s = f.read()
 parser.parse(s)
 
 if success == True:
-    print("Archivo aprobado")
-    print("Variables")
-    varsTable.show()
+    #print("Archivo aprobado")
+    #print("Variables")
+    #varsTable.show()
     print("Funciones")
     directorioFunc.show()
     sys.exit()
