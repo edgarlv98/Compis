@@ -3,7 +3,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 success = True
-contFunciones = None
+funcionPadreDeVariables = 'global'
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -95,6 +95,10 @@ def t_ID(t):
     t.type = reserved.get(t.value,'ID')
     return t
 
+def t_COMMENTS(t):
+    r'%{2,}.*'
+    pass
+
 # Errores
 def t_error(t):
     global success
@@ -114,16 +118,20 @@ def p_program(p):
                | PROGRAM ID COLON vars main
                | PROGRAM ID COLON main
     '''
+    print(p[4])
+    if p[4]== 'main':
+        pass
 
 def p_main(p):
     '''main : MAIN LPAREN RPAREN LBRACE bloqueAux RBRACE
             | MAIN LPAREN RPAREN LBRACE vars bloqueAux RBRACE
     '''
+
+    global funcionPadreDeVariables
+    funcionPadreDeVariables = 'main'
     global direccion_func
     direccion_func = direccion_func + 1
-    aux = varsTable.simbolos
-    varsTable.simbolos = []
-    directorioFunc.insert(p[3], 'int', direccion_func, aux)
+    directorioFunc.insert(p[1], 'int', direccion_func)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -136,20 +144,20 @@ def p_varAux1(p):
 
 def p_varAux2(p):
     '''varAux2 : ID
-               | ID COMA varAux2
+            | ID COMA varAux2
     '''
     if varsTable.tipo == 'int':
         global vars_int
         vars_int = vars_int + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_int)
+        varsTable.insert(p[1], varsTable.tipo, vars_int, funcionPadreDeVariables)
     elif varsTable.tipo == 'char':
         global vars_char
         vars_char = vars_char + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_char)
+        varsTable.insert(p[1], varsTable.tipo, vars_char, funcionPadreDeVariables)
     elif varsTable.tipo == 'float':
         global vars_float
         vars_float = vars_float + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_float)
+        varsTable.insert(p[1], varsTable.tipo, vars_float, funcionPadreDeVariables)
 
 
 def p_tipo(p):
@@ -182,14 +190,11 @@ def p_function(p):
               | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE function
               | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE function
     '''
+    global funcionPadreDeVariables
+    funcionPadreDeVariables = p[3]
     global direccion_func
     direccion_func = direccion_func + 1
     directorioFunc.insert(p[3], directorioFunc.tipo, direccion_func)
-    global contFunciones
-    contFunciones = contFunciones + 1
-    varsTable.simbolos = []
-    if p[3] == None
-
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
@@ -285,11 +290,11 @@ s = f.read()
 parser.parse(s)
 
 if success == True:
-    #print("Archivo aprobado")
-    #print("Variables")
-    #varsTable.show()
+    print("Archivo aprobado")
     print("Funciones")
     directorioFunc.show()
+    print("Variables")
+    varsTable.show()
     sys.exit()
 else:
     print("Archivo no aprobado")

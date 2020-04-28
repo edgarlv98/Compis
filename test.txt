@@ -1,5 +1,7 @@
 program prueba:
 
+var int j,k,l;
+
 main(){
     var char er;
     j=0;
@@ -7,13 +9,12 @@ main(){
     print("hola");
 }
 
+%%Este es un comentario
 function int pruebafuncion(){
     var float po;
     po=30;
     if(x<3){
         x=2;
-    } else {
-        x=3;
     };
 
     while(x<3){
@@ -22,7 +23,7 @@ function int pruebafuncion(){
     }
 }
 
-function void pruebafuncion2(){
+function int pruebafuncion2(){
     var int il;
     il=300;
 }
