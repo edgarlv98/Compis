@@ -118,15 +118,17 @@ def p_program(p):
                | PROGRAM ID COLON vars main
                | PROGRAM ID COLON main
     '''
-    print(p[4])
     if p[4]== 'main':
         pass
 
 def p_main(p):
-    '''main : MAIN LPAREN RPAREN LBRACE bloqueAux RBRACE
-            | MAIN LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE
+            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE
     '''
 
+def p_nomMain(p):
+    ''' nomMain : MAIN
+    '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
     global direccion_func
@@ -181,20 +183,20 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION tipoFunc ID LPAREN RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE
-              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc ID LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
-              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE bloqueAux RBRACE function
-              | FUNCTION tipoFunc ID LPAREN vars RPAREN LBRACE vars bloqueAux RBRACE function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
+    '''
+
+def p_nomFunc(p):
+    '''nomFunc : ID
     '''
     global funcionPadreDeVariables
-    funcionPadreDeVariables = p[3]
+    funcionPadreDeVariables = p[1]
     global direccion_func
     direccion_func = direccion_func + 1
-    directorioFunc.insert(p[3], directorioFunc.tipo, direccion_func)
+    directorioFunc.insert(p[1], directorioFunc.tipo, direccion_func)
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto

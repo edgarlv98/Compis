@@ -6,6 +6,7 @@ funciones = []
 tipo = None
 Id = None
 direccion = None
+variables = []
 
 #Objeto directorio funciones#
 class funcion(object):
@@ -28,8 +29,8 @@ def repeatID(id):
             sys.exit()
     return aux
 
-def agregaSimbolos(simbolo, index):
-    funciones[index].simbolos.append(simbolo)
+def agregaSimbolos(simbolo):
+    variables.append(simbolo)
 
 def show():
     longitud = len(funciones)
