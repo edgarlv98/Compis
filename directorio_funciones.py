@@ -6,6 +6,7 @@ funciones = []
 tipo = None
 Id = None
 direccion = None
+variables = []
 
 #Objeto directorio funciones#
 class funcion(object):
@@ -14,17 +15,9 @@ class funcion(object):
         self.tipo = str(tipo)
         self.direccion = direccion
 
-def show():
-    longitud = len(funciones)
-    i = 0
-    for i in range(0, longitud):
-        print(funciones[i].id, funciones[i].tipo)
-
 def insert(id, tipo, direccion):
     temp = funcion(id, tipo, direccion)
-    if len(funciones) >= 1 and not repeatID(id):
-        funciones.append(temp)
-    if len(funciones) == 0:
+    if (len(funciones) >= 1 and not repeatID(id)) or len(funciones) == 0:
         funciones.append(temp)
 
 def repeatID(id):
@@ -36,8 +29,10 @@ def repeatID(id):
             sys.exit()
     return aux
 
+def agregaSimbolos(simbolo):
+    variables.append(simbolo)
+
 def show():
     longitud = len(funciones)
-    i = 0
     for i in range(0, longitud):
         print(funciones[i].id, funciones[i].tipo, funciones[i].direccion)
