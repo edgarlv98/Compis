@@ -3,15 +3,14 @@ program prueba:
 var int j,k,l;
 
 main(){
-    var char er;
-    j=0;
-    j = j*4;
-    print("hola");
+    var float por;
+    por=30;
 }
 
 %%Este es un comentario
 function int pruebafuncion(){
     var float po;
+        int a,b;
     po=30;
     if(x<3){
         x=2;
