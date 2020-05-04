@@ -8,7 +8,7 @@ main(){
 }
 
 %%Este es un comentario
-function int pruebafuncion(){
+function int pruebafuncion(int www, int eee){
     var float po;
         int a,b;
     po=30;
