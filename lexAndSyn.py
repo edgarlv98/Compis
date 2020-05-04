@@ -63,7 +63,7 @@ t_DIVIDE = r'\/'
 
 # Operadores de Comparacion
 t_EQUAL = r'\='
-t_DIFFERENT = r'\[<>]'
+t_DIFFERENT = r'\[!=]'
 t_LOWERTHAN = r'\<'
 t_MORETHAN = r'\>'
 t_DOUBLEEQUAL = r'\=='
@@ -131,8 +131,8 @@ def p_nomMain(p):
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
-    global direccion_func
-    direccion_func = direccion_func + 1
+    #global direccion_func
+    #direccion_func = direccion_func + 1
     directorioFunc.insert(p[1], 'int', direccion_func)
 
 def p_vars(p):
@@ -149,16 +149,16 @@ def p_varAux2(p):
             | ID COMA varAux2
     '''
     if varsTable.tipo == 'int':
-        global vars_int
-        vars_int = vars_int + 1
+        #global vars_int
+        #vars_int = vars_int + 1
         varsTable.insert(p[1], varsTable.tipo, vars_int, funcionPadreDeVariables)
     elif varsTable.tipo == 'char':
-        global vars_char
-        vars_char = vars_char + 1
+        #global vars_char
+        #vars_char = vars_char + 1
         varsTable.insert(p[1], varsTable.tipo, vars_char, funcionPadreDeVariables)
     elif varsTable.tipo == 'float':
-        global vars_float
-        vars_float = vars_float + 1
+        #global vars_float
+        #vars_float = vars_float + 1
         varsTable.insert(p[1], varsTable.tipo, vars_float, funcionPadreDeVariables)
 
 
@@ -204,8 +204,8 @@ def p_nomFunc(p):
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = p[1]
-    global direccion_func
-    direccion_func = direccion_func + 1
+    #global direccion_func
+    #direccion_func = direccion_func + 1
     directorioFunc.insert(p[1], directorioFunc.tipo, direccion_func)
 
 def p_bloqueAux(p):
