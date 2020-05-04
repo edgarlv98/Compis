@@ -187,7 +187,17 @@ def p_function(p):
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
     '''
+
+def p_param(p):
+    '''param : tipo ID
+             | tipo ID COMA param
+    '''
+    varsTable.insert(p[2], varsTable.tipo, 0, funcionPadreDeVariables)
 
 def p_nomFunc(p):
     '''nomFunc : ID
