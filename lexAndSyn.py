@@ -148,6 +148,7 @@ def p_varAux2(p):
     '''varAux2 : ID
             | ID COMA varAux2
     '''
+
     if varsTable.tipo == 'int':
         #global vars_int
         #vars_int = vars_int + 1
@@ -301,12 +302,44 @@ s = f.read()
 
 parser.parse(s)
 
+#variablesGlobales
+varsTableGlobal = []
+for x in varsTable.simbolos:
+    if(x.funcion == 'global'):
+        varsTableGlobal.append(x)
+    elif(x.funcion != 'global'):
+        break
+
+#variablesPorFuncion
+varsTableAux = []
+auxInt = 0
+for x in varsTable.simbolos:
+    if x.funcion == directorioFunc.funciones[auxInt].id:
+        varsTableAux.append(directorioFunc.funciones[auxInt])
+    elif x.funcion != directorioFunc.funciones[auxInt].id and auxInt + 1 < len(directorioFunc.funciones):
+        directorioFunc.funciones[auxInt].variables = varsTableAux
+        auxInt = 1 + auxInt
+        varsTableAux = []
+    else:
+        break
+
+def printGlobal():
+    for x in varsTableGlobal:
+        print(x.id)
+
+def printTablaDeVariablePorFuncion():
+    for x in directorioFunc.funciones:
+        x
+
+
 if success == True:
     print("Archivo aprobado")
     print("Funciones")
     directorioFunc.show()
     print("Variables")
     varsTable.show()
+    printGlobal()
+    printTablaDeVariablePorFuncion()
     sys.exit()
 else:
     print("Archivo no aprobado")
