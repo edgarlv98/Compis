@@ -1,6 +1,7 @@
 import sys
 import ply.lex as lex
 import ply.yacc as yacc
+import quadruple as quad
 
 success = True
 funcionPadreDeVariables = 'global'
@@ -227,12 +228,12 @@ def p_estatuto(p):
     '''
 
 def p_asignacion(p):
-    '''asignacion : ID EQUAL expresion SEMICOLON
+    '''asignacion : ID push_id EQUAL push_poper expresion SEMICOLON
     '''
     varsTable.update(p[1], varsTable.valor)
 
 def p_comparacion(p):
-    '''comparacion : ID DOUBLEEQUAL expresion SEMICOLON
+    '''comparacion : ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
     '''
 
 def p_condicion(p):
@@ -253,21 +254,25 @@ def p_escrituraAux(p):
 
 def p_expresion(p):
     '''expresion : exp
-                 | exp LOWERTHAN exp
-                 | exp MORETHAN exp
-                 | exp DIFFERENT exp
+                 | exp LOWERTHAN push_poper exp
+                 | exp MORETHAN push_poper exp
+                 | exp DIFFERENT push_poper exp
     '''
 
 def p_exp(p):
     '''exp : termino
-           | termino PLUS exp
-           | termino MINUS exp
+           | termino PLUS push_poper exp
+           | termino MINUS push_poper exp
     '''
+
+def p_quad_Fact(p):
+    "quad_Fact :"
+    quad.createQuadFact()
 
 def p_termino(p):
     '''termino : factor
-               | factor TIMES termino
-               | factor DIVIDE termino
+               | factor TIMES push_poper termino
+               | factor DIVIDE push_poper termino
     '''
 
 def p_factor(p):
@@ -276,15 +281,30 @@ def p_factor(p):
     '''
 
 def p_factorAux(p):
-    '''factorAux : PLUS var_cte
-                 | MINUS var_cte
+    '''factorAux : PLUS push_poper var_cte
+                 | MINUS push_poper var_cte
                  | var_cte
     '''
 
+def p_push_id(p):
+    "push_id :"
+    print("aqui va el id", p[-1])
+    quad.pushID(p[-1])
+
+def p_push_cte(p):
+    "push_cte :"
+    print("aqui va la cte", p[-1])
+    quad.pushCTE(p[-1])
+
+def p_push_poper(p):
+    "push_poper :"
+    print("operadores", p[-1])
+    quad.pushPoper(p[-1])
+
 def p_var_cte(p):
-    '''var_cte : ID
-               | CTE_I
-               | CTE_F
+    '''var_cte : ID push_id
+               | CTE_I push_cte
+               | CTE_F push_cte
     '''
     varsTable.valor = p[1]
 
@@ -333,13 +353,13 @@ def printTablaDeVariablePorFuncion():
 
 
 if success == True:
-    print("Archivo aprobado")
-    print("Funciones")
-    directorioFunc.show()
-    print("Variables")
-    varsTable.show()
-    printGlobal()
-    printTablaDeVariablePorFuncion()
+    #print("Archivo aprobado")
+    #print("Funciones")
+    #directorioFunc.show()
+    #print("Variables")
+    #varsTable.show()
+    #printGlobal()
+    #printTablaDeVariablePorFuncion()
     sys.exit()
 else:
     print("Archivo no aprobado")
