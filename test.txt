@@ -13,7 +13,8 @@ function int pruebafuncion(int www, int eee){
         int a,b;
     po=30;
     if(x<3){
-        x=2;
+        x=2*45;
+
     };
 
     while(x<3){
