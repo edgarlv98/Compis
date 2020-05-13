@@ -14,7 +14,7 @@ class variable(object):
         self.id = str(id)
         self.tipo = str(tipo)
         self.direccion = direccion
-        self.value = value
+        self.value = str(value)
         self.funcion = funcion
 
 def insert(id, tipo, direccion, funcion):

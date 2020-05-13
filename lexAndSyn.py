@@ -228,9 +228,13 @@ def p_estatuto(p):
     '''
 
 def p_asignacion(p):
-    '''asignacion : ID push_id EQUAL push_poper expresion SEMICOLON
+    '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
     '''
     varsTable.update(p[1], varsTable.valor)
+
+def p_create_asign(p):
+    "create_asign :"
+    quad.createQuadAssign()
 
 def p_comparacion(p):
     '''comparacion : ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
@@ -265,14 +269,18 @@ def p_exp(p):
            | termino MINUS push_poper exp
     '''
 
-def p_quad_Fact(p):
-    "quad_Fact :"
+def p_quad_fact(p):
+    "quad_fact :"
     quad.createQuadFact()
 
 def p_termino(p):
-    '''termino : factor
-               | factor TIMES push_poper termino
-               | factor DIVIDE push_poper termino
+    '''termino : factor quad_fact
+               | factor quad_fact termino1
+    '''
+
+def p_termino1(p):
+    '''termino1 : TIMES push_poper termino
+                | DIVIDE push_poper termino
     '''
 
 def p_factor(p):
@@ -283,22 +291,22 @@ def p_factor(p):
 def p_factorAux(p):
     '''factorAux : PLUS push_poper var_cte
                  | MINUS push_poper var_cte
-                 | var_cte
+                 | var_cte 
     '''
 
 def p_push_id(p):
     "push_id :"
-    print("aqui va el id", p[-1])
+    #print("aqui va el id", p[-1])
     quad.pushID(p[-1])
 
 def p_push_cte(p):
     "push_cte :"
-    print("aqui va la cte", p[-1])
+    #print("aqui va la cte", p[-1])
     quad.pushCTE(p[-1])
 
 def p_push_poper(p):
     "push_poper :"
-    print("operadores", p[-1])
+    #print("operadores", p[-1])
     quad.pushPoper(p[-1])
 
 def p_var_cte(p):
@@ -360,6 +368,8 @@ if success == True:
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
+    quad.mostrarSize()
+    quad.cuadruplosAsignacion()
     sys.exit()
 else:
     print("Archivo no aprobado")

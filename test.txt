@@ -1,29 +1,14 @@
 program prueba:
 
-var int j,k,l;
-
 main(){
-    var float por;
+    var int por;
     por=30;
+    por=50000;
 }
 
 %%Este es un comentario
 function int pruebafuncion(int www, int eee){
-    var float po;
-        int a,b;
-    po=30;
-    if(x<3){
-        x=2*45;
-
-    };
-
-    while(x<3){
-        z = z+1;
-        z == x;
-    }
-}
-
-function int pruebafuncion2(){
-    var int il;
-    il=300;
+    var int prueba2, otraPrueba, tres, cuatro, cinco, seis;
+    prueba2=10;
+    otraPrueba = prueba2 / 2 * 5;
 }
