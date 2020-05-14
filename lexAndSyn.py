@@ -246,8 +246,12 @@ def p_condicion(p):
     '''
 
 def p_escritura(p):
-    '''escritura : PRINT LPAREN escrituraAux RPAREN SEMICOLON
+    '''escritura : PRINT push_poper LPAREN exp RPAREN quad_print SEMICOLON
     '''
+
+def p_quad_print(p):
+    "quad_print :"
+    quad.createQuadPrint()
 
 def p_escrituraAux(p):
     '''escrituraAux : expresion
@@ -258,16 +262,28 @@ def p_escrituraAux(p):
 
 def p_expresion(p):
     '''expresion : exp
-                 | exp LOWERTHAN push_poper exp
-                 | exp MORETHAN push_poper exp
-                 | exp DIFFERENT push_poper exp
+                 | exp LOWERTHAN push_poper exp quad_comp
+                 | exp MORETHAN push_poper exp quad_comp
+                 | exp DIFFERENT push_poper exp quad_comp
     '''
 
+def p_quad_comp(p):
+    "quad_comp :"
+    quad.createQuadComp()
+
 def p_exp(p):
-    '''exp : termino
-           | termino PLUS push_poper exp
-           | termino MINUS push_poper exp
+    '''exp : termino quad_term
+           | termino quad_term exp1
     '''
+
+def p_exp1(p):
+    '''exp1 : PLUS push_poper exp
+            | MINUS push_poper exp
+    '''
+
+def p_quad_term(p):
+    "quad_term :"
+    quad.createQuadTerm()
 
 def p_quad_fact(p):
     "quad_fact :"
@@ -369,7 +385,7 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     quad.mostrarSize()
-    quad.cuadruplosAsignacion()
+    quad.cuadruplos()
     sys.exit()
 else:
     print("Archivo no aprobado")
