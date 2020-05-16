@@ -40,4 +40,4 @@ def update(id, value):
 def show():
     longitud = len(simbolos)
     for i in range(0, longitud):
-        print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].value, simbolos[i].funcion)
+        print(simbolos[i].id, simbolos[i].value)

@@ -70,6 +70,7 @@ def createQuadAssign():
                 result = right_value
     else:
         print("ERROR")
+    return result
 
 def cuadruplos():
     for i in range(len(Quad)):
@@ -153,6 +154,9 @@ def createQuadComp():
                 result = left_value != right_value
             quadr = quadruple(len(Quad), operator, left_operand, right_operand)
             Quad.append(quadr)
+            AVAIL.append(result)
+            PilaO.append(result)
+            PTypes.append('bool')
     else:
         print("ERROR")
 
@@ -171,15 +175,14 @@ def fill(cuadruplo, salto):
     Quad[cuadruplo].result = salto
 
 def createQuadCond():
-    #exp_type = PTypes.pop()
-    #if exp_type == "bool":
-        #result = PilaO.pop()
-        quadr = quadruple(len(Quad), "gotof", None, None, None)
+    exp_type = PTypes.pop()
+    if exp_type == "bool":
+        result = PilaO.pop()
+        quadr = quadruple(len(Quad), "gotof", result, None, None)
         Quad.append(quadr)
         PJumps.append(len(Quad) - 1)
-    #else:
-     #   print("ERROR:")
-      #  sys.exit()
+    else:
+        print("ERROR:")
 
 def updateQuadCondIFJump():
     end = PJumps.pop()
