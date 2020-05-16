@@ -10,6 +10,8 @@ Quad = []
 AVAIL = []
 PJumps = []
 
+temporales = []
+
 
 #Clase del cuadruplo
 class quadruple(object):
@@ -80,18 +82,20 @@ def createQuadTerm():
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
             right_value = AVAIL.pop()
-            left_operand = PilaO[POperSize-1]
-            left_type = PTypes[POperSize-1]
+            left_operand = PilaO.pop()
+            left_type = PTypes.pop()
             left_value = AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
                 if(operator == '+'):
-                    result = int(left_value) + int(right_value)
+                    result = float(left_value) + float(right_value)
                     AVAIL.append(result)
+                    PilaO.append(result)
                 else:
-                    result = int(left_value) - int(right_value)
+                    result = float(left_value) - float(right_value)
                     AVAIL.append(result)
+                    PilaO.append(result)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
                 PTypes.append(result_type)
@@ -105,21 +109,25 @@ def createQuadFact():
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
             right_value = AVAIL.pop()
-            left_operand = PilaO[POperSize-1]
-            left_type = PTypes[POperSize-1]
+            left_operand = PilaO.pop()
+            left_type = PTypes.pop()
             left_value = AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
                 if(operator == '*'):
-                    result = int(left_value) * int(right_value)
+                    result = float(left_value) * float(right_value)
                     AVAIL.append(result)
+                    PilaO.append(result)
                 else:
-                    result = int(left_value) / int(right_value)
+                    result = float(left_value) / float(right_value)
                     AVAIL.append(result)
+                    PilaO.append(result)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
+                #PilaO.append(result)
                 PTypes.append(result_type)
+                #AVAIL.append(result)
     else:
         print("ERROR")
 
