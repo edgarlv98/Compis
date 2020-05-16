@@ -241,9 +241,21 @@ def p_comparacion(p):
     '''
 
 def p_condicion(p):
-    '''condicion : IF LPAREN expresion RPAREN bloque SEMICOLON
-                 | IF LPAREN expresion RPAREN bloque ELSE bloque SEMICOLON
+    '''condicion : IF LPAREN expresion RPAREN cond bloque SEMICOLON condFinal
+                 | IF LPAREN expresion RPAREN cond bloque ELSE condElse bloque SEMICOLON condFinal
     '''
+
+def p_quad_cond(p):
+    "cond :"
+    quad.createQuadCond()
+
+def p_quad_condElse(p):
+    "condElse :"
+    quad.updateQuadCondIfElseJump()
+
+def p_quad_condFinal(p):
+    "condFinal :"
+    quad.updateQuadCondIFJump()
 
 def p_escritura(p):
     '''escritura : PRINT push_poper LPAREN exp RPAREN quad_print SEMICOLON

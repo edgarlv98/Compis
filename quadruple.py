@@ -167,7 +167,31 @@ def createQuadPrint():
             quadr = quadruple(len(Quad), operator, None, None, right_operand)
             Quad.append(quadr)
 
+def fill(cuadruplo, salto):
+    Quad[cuadruplo].result = salto
+
+def createQuadCond():
+    #exp_type = PTypes.pop()
+    #if exp_type == "bool":
+        #result = PilaO.pop()
+        quadr = quadruple(len(Quad), "gotof", None, None, None)
+        Quad.append(quadr)
+        PJumps.append(len(Quad) - 1)
+    #else:
+     #   print("ERROR:")
+      #  sys.exit()
+
+def updateQuadCondIFJump():
+    end = PJumps.pop()
+    fill(end, len(Quad))
+
+def updateQuadCondIfElseJump():
+    quadr = quadruple(len(Quad), "goto", None, None, None)
+    Quad.append(quadr)
+    false = PJumps.pop()
+    PJumps.append(len(Quad) - 1)
+    fill(false, len(Quad))
+
 def mostrarSize():
     for i in range(len(POper)):
         print(POper[i])
-    
