@@ -91,14 +91,12 @@ def createQuadTerm():
             if(result_type != 'error'):
                 if(operator == '+'):
                     result = float(left_value) + float(right_value)
-                    AVAIL.append(result)
-                    PilaO.append(result)
                 else:
                     result = float(left_value) - float(right_value)
-                    AVAIL.append(result)
-                    PilaO.append(result)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
+                AVAIL.append(result)
+                PilaO.append(result)
                 PTypes.append(result_type)
     else:
         print("ERROR")
@@ -118,17 +116,13 @@ def createQuadFact():
             if(result_type != 'error'):
                 if(operator == '*'):
                     result = float(left_value) * float(right_value)
-                    AVAIL.append(result)
-                    PilaO.append(result)
                 else:
                     result = float(left_value) / float(right_value)
-                    AVAIL.append(result)
-                    PilaO.append(result)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
-                #PilaO.append(result)
+                AVAIL.append(result)
+                PilaO.append(result)
                 PTypes.append(result_type)
-                #AVAIL.append(result)
     else:
         print("ERROR")
 
@@ -194,6 +188,39 @@ def updateQuadCondIfElseJump():
     false = PJumps.pop()
     PJumps.append(len(Quad) - 1)
     fill(false, len(Quad))
+
+def while1():
+    PJumps.append(len(Quad))
+
+def while2():
+    exp_type = PTypes.pop()
+    if(exp_type == 'bool'):
+        result = PilaO.pop()
+        quadr = quadruple(len(Quad), 'gotof', result, None, None)
+        Quad.append(quadr)
+        PJumps.append(len(Quad)-1)
+    else:
+        print("ERROR")
+
+def while3():
+    final = PJumps.pop()
+    regresa = PJumps.pop()
+    quadr = quadruple(len(Quad), "goto", None, None, regresa)
+    Quad.append(quadr)
+    fill(final, len(Quad))
+
+def loop1():
+    PJumps.append(len(Quad))
+
+def loop2():
+    exp_type = PTypes.pop()
+    if(exp_type == 'bool'):
+        result = PilaO.pop()
+        quadr = quadruple(len(Quad), 'gotof', result, None, None)
+        Quad.append(quadr)
+        PJumps.append(len(Quad)-1)
+    else:
+        print("ERROR")
 
 def mostrarSize():
     for i in range(len(POper)):

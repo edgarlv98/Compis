@@ -27,7 +27,9 @@ reserved = {
     'print' : 'PRINT',
     'function' : 'FUNCTION',
     'while' : 'WHILE',
-    'for' : 'FOR',
+    'from' : 'FROM',
+    'do' : 'DO',
+    'to' : 'TO',
     'main' : 'MAIN'
 }
 
@@ -216,14 +218,39 @@ def p_bloqueAux(p):
     '''
 
 def p_while(p):
-    '''while : WHILE LPAREN expresion RPAREN bloque
+    '''while : WHILE while1 LPAREN expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
     '''
+
+def p_while1(p):
+    "while1 :"
+    quad.while1()
+
+def p_while2(p):
+    "while2 :"
+    quad.while2()
+
+def p_while3(p):
+    "while3 :"
+    quad.while3()
+
+def p_loopFromDo(p):
+    '''loopFromDo : FROM LPAREN ID EQUAL expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
+    '''
+
+#def p_loop1(p):
+#    "loop1 :"
+#    quad.loop1()
+#
+#def p_loop2(p):
+#    "loop2 :"
+#    quad.loop2()
 
 def p_estatuto(p):
     '''estatuto : asignacion
                 | condicion
                 | escritura
                 | while
+                | loopFromDo
                 | comparacion
     '''
 
@@ -275,9 +302,14 @@ def p_escrituraAux(p):
 
 def p_expresion(p):
     '''expresion : exp
-                 | exp LOWERTHAN push_poper exp quad_comp
-                 | exp MORETHAN push_poper exp quad_comp
-                 | exp DIFFERENT push_poper exp quad_comp
+                 | exp comp exp quad_comp
+    '''
+
+def p_comp(p):
+    '''comp : LOWERTHAN push_poper
+            | MORETHAN push_poper
+            | DIFFERENT push_poper
+            | DOUBLEEQUAL push_poper
     '''
 
 def p_quad_comp(p):
@@ -396,7 +428,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     quad.mostrarSize()
     quad.cuadruplos()
-    varsTable.show()
+    #varsTable.show()
     sys.exit()
 else:
     print("Archivo no aprobado")

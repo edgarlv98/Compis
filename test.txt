@@ -21,7 +21,16 @@ function int pruebafuncion(){
         prueba2 = prueba2 + 2;
     }
 
-    if ( prueba2 < 200){
+    if ( prueba2 == 10){
         prueba2 = prueba2 + 1;
     }
+
+    from ( j = 0) to (9) do {
+        prueba = prueba + 1;
+    }
+
+    while (prueba2 > 3) {
+        print(hola);
+    }
+
 }
