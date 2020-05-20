@@ -1,14 +1,17 @@
 program prueba:
 
 main(){
-    var int por;
-    por=30;
-    por=50000;
+    var float por;
+    int pruebaInt;
+    char pruebaChar;
+    pruebaInt = 10;
+    por=5.11;
 }
 
 %%Este es un comentario
 function int pruebafuncion(){
     var int prueba2, otraPrueba, prueba;
+    float blabla;
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
     
@@ -23,6 +26,7 @@ function int pruebafuncion(){
 
     if ( prueba2 == 10){
         prueba2 = prueba2 + 1;
+        blabla = 34.56;
     }
 
     from ( j = 0) to (9) do {
@@ -32,5 +36,4 @@ function int pruebafuncion(){
     while (prueba2 > 3) {
         print(hola);
     }
-
 }

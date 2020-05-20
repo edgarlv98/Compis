@@ -30,22 +30,28 @@ def pushID(id):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
 
+def is_float(cte):
+    try:
+        return float(cte) and '.' in cte
+    except ValueError:
+        return False
 
-def pushCTE(cte):
-    PilaO.append(cte)
-    tipo = str(type(cte))
-    #if cte == 'true' or cte == 'false':
-    #    tipo = "<type 'bool'>"
-    #if tipo == "<type 'float'>":
-    #    PTypes.append('float')
-    #if tipo == "<type 'int'>":
-    #    PTypes.append('int')
-    #if tipo == "<type 'str'>":
-    #    PTypes.append('string')
-    #if tipo == "<type 'bool'>":
-    #    PTypes.append('bool')
-    AVAIL.append(cte)
-    PTypes.append('int')
+def pushCTE(cte, direccion):
+    isFloat = is_float(cte)
+    if(isFloat):
+        PTypes.append('float')
+        PilaO.append(direccion)
+        AVAIL.append(float(cte))
+    else:
+        isInt = cte.isdigit()
+        if(isInt):
+            PTypes.append('int')
+            PilaO.append(direccion)
+            AVAIL.append(int(cte))
+        else:
+            PTypes.append('string')
+            PilaO.append(direccion)
+            AVAIL.append(cte)
 
 def pushTipo(tipo):
     PTypes.append(tipo)
@@ -90,9 +96,9 @@ def createQuadTerm():
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
                 if(operator == '+'):
-                    result = float(left_value) + float(right_value)
+                    result = left_value + right_value
                 else:
-                    result = float(left_value) - float(right_value)
+                    result = left_value - right_value
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
                 AVAIL.append(result)
@@ -115,9 +121,9 @@ def createQuadFact():
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
                 if(operator == '*'):
-                    result = float(left_value) * float(right_value)
+                    result = left_value * right_value
                 else:
-                    result = float(left_value) / float(right_value)
+                    result = left_value / right_value
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
                 Quad.append(quadr)
                 AVAIL.append(result)

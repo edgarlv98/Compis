@@ -2,6 +2,8 @@ import sys
 import ply.lex as lex
 import ply.yacc as yacc
 import quadruple as quad
+import maquinaVirtual as virtual
+import memoria
 
 success = True
 funcionPadreDeVariables = 'global'
@@ -361,7 +363,10 @@ def p_push_id(p):
 
 def p_push_cte(p):
     "push_cte :"
-    quad.pushCTE(p[-1])
+    tipo = memoria.getTipoCte(p[-1])
+    direccion = memoria.getDirCte(tipo)
+    memoria.updateCte(p[-1], direccion, tipo)
+    quad.pushCTE(p[-1], direccion)
 
 def p_push_poper(p):
     "push_poper :"
@@ -371,6 +376,7 @@ def p_var_cte(p):
     '''var_cte : ID push_id
                | CTE_I push_cte
                | CTE_F push_cte
+               | CTE_STRING push_cte
     '''
     varsTable.valor = p[1]
 
@@ -426,9 +432,11 @@ if success == True:
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
-    quad.mostrarSize()
+    #quad.mostrarSize()
     quad.cuadruplos()
     #varsTable.show()
+    #virtual.inicio()
+    memoria.show()
     sys.exit()
 else:
     print("Archivo no aprobado")
