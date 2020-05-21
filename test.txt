@@ -1,7 +1,7 @@
 program prueba:
 
 main(){
-    var float por;
+    var float por, por2;
     int pruebaInt;
     char pruebaChar;
     pruebaInt = 10;

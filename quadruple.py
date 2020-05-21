@@ -1,6 +1,7 @@
 import sys
 from vars_table import simbolos
 from sematic_cube import semantic
+import memoria
 
 #Pilas
 POper = []
@@ -74,8 +75,8 @@ def createQuadAssign():
                 quadr = quadruple(len(Quad), operator, right_operand, None, left_operand)
                 Quad.append(quadr)
                 result = right_value
-    else:
-        print("ERROR")
+    #else:
+    #    print("ERROR")
     return result
 
 def cuadruplos():
@@ -99,13 +100,15 @@ def createQuadTerm():
                     result = left_value + right_value
                 else:
                     result = left_value - right_value
-                quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
+                direccion = memoria.getDirTemporal(result_type)
+                memoria.updateTemporal(result, direccion, result_type)
+                quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(result)
-                PilaO.append(result)
+                PilaO.append(direccion)
                 PTypes.append(result_type)
-    else:
-        print("ERROR")
+    #else:
+    #    print("ERROR")
 
 def createQuadFact():
     POperSize = len(POper)
@@ -124,13 +127,15 @@ def createQuadFact():
                     result = left_value * right_value
                 else:
                     result = left_value / right_value
-                quadr = quadruple(len(Quad), operator, left_operand, right_operand, result)
+                direccion = memoria.getDirTemporal(result_type)
+                memoria.updateTemporal(result, direccion, result_type)
+                quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(result)
-                PilaO.append(result)
+                PilaO.append(direccion)
                 PTypes.append(result_type)
-    else:
-        print("ERROR")
+    #else:
+    #    print("ERROR")
 
 def createQuadComp():
     POperSize = len(POper)
@@ -152,13 +157,15 @@ def createQuadComp():
                 result = left_value == right_value
             elif(operator == '!='):
                 result = left_value != right_value
-            quadr = quadruple(len(Quad), operator, left_operand, right_operand)
+            direccion = memoria.getDirTemporal(result_type)
+            memoria.updateTemporal(result, direccion, result_type)
+            quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
             Quad.append(quadr)
             AVAIL.append(result)
-            PilaO.append(result)
+            PilaO.append(direccion)
             PTypes.append('bool')
-    else:
-        print("ERROR")
+    #else:
+    #    print("ERROR")
 
 def createQuadPrint():
     POperSize = len(POper)
