@@ -2,6 +2,7 @@ import sys
 import estructuraMemorias
 from pprint import pprint
 
+memoria_global = estructuraMemorias.memoria()
 memoria_local = estructuraMemorias.memoria()
 memoria_temporal = estructuraMemorias.memoria()
 
@@ -44,7 +45,7 @@ tempMainChar = 22000
 tempMainBool = 23000
 
 
-## CONSTANTES ##
+## MEMORIA CONSTANTES ##
 def is_float(cte):
     try:
         return float(cte) and '.' in cte
@@ -99,7 +100,79 @@ def getValor(direccion, tipo):
         temp = memoria_local.bool[direccion]
     return temp
 
-## TEMPORALES ##
+def repeatCte(cte):
+    tipo = getTipoCte(cte)
+
+    global memoCteInt
+    global memoCteFloat
+    global memoCteChar
+
+    ints = 20000
+    floats = 21000
+    chars = 22000
+
+    if(tipo == 'int'):
+        if(memoria_local.int):
+            i = ints
+            while(i < memoCteInt):
+                if(cte == memoria_local.int[i]):
+                    return True
+                i += 1
+            return False
+        else:
+            return False
+    elif(tipo == 'float'):
+        if(memoria_local.float):
+            i = floats
+            while(i < memoCteFloat):
+                if(cte == memoria_local.float[i]):
+                    return True
+                i += 1
+            return False
+        else:
+            return False
+    elif(tipo == 'char'):
+        if(memoria_local.char):
+            i = chars
+            while(i < memoCteFloat):
+                if(cte == memoria_local.char[i]):
+                    return True
+                i += 1
+            return False
+        else:
+            return False
+    else:
+        return False
+
+def getDirRepeatCte(cte):
+    global memoCteInt
+    global memoCteFloat
+    global memoCteChar
+
+    cteInt = 20000
+    cteFloat = 21000
+    cteChar = 22000
+
+    tipo = getTipoCte(cte)
+
+    if tipo == 'int':
+        for dir, value in memoria_local.int.items():
+            if (dir >= cteInt) and (dir < cteFloat):
+                if cte == value:
+                    return dir
+    elif tipo == 'float':
+        for dir, value in memoria_local.float.items():
+            if (dir >= cteFloat) and (dir < cteChar):
+                if cte == value:
+                    return dir
+    elif tipo == 'char':
+        for dir, value in memoria_local.char.items():
+            if (dir >= cteChar) and (dir < cteChar + 1000):
+                if cte == value:
+                    return dir
+    return "error"
+
+## MEMORIA TEMPORALES ##
 
 def getDirTemporal(tipo):
     global memoTempInt
@@ -145,3 +218,5 @@ def show():
     pprint(memoria_local.int, width=1)
     print("FLOAT")
     pprint(memoria_local.float, width=1)
+    print("CHAR")
+    pprint(memoria_local.char, width=1)

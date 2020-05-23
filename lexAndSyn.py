@@ -153,7 +153,6 @@ def p_varAux2(p):
     '''varAux2 : ID
             | ID COMA varAux2
     '''
-
     if varsTable.tipo == 'int':
         #global vars_int
         #vars_int = vars_int + 1
@@ -364,8 +363,11 @@ def p_push_id(p):
 def p_push_cte(p):
     "push_cte :"
     tipo = memoria.getTipoCte(p[-1])
-    direccion = memoria.getDirCte(tipo)
-    memoria.updateCte(p[-1], direccion, tipo)
+    repeat = memoria.repeatCte(p[-1])
+    if(repeat == False):
+        direccion = memoria.getDirCte(tipo)
+        memoria.updateCte(p[-1], direccion, tipo)
+    direccion = memoria.getDirRepeatCte(p[-1])
     quad.pushCTE(p[-1], direccion)
 
 def p_push_poper(p):

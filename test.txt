@@ -6,6 +6,7 @@ main(){
     char pruebaChar;
     pruebaInt = 10;
     por=5.11;
+    pruebaChar="hola";
 }
 
 %%Este es un comentario

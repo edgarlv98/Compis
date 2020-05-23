@@ -50,7 +50,7 @@ def pushCTE(cte, direccion):
             PilaO.append(direccion)
             AVAIL.append(int(cte))
         else:
-            PTypes.append('string')
+            PTypes.append('char')
             PilaO.append(direccion)
             AVAIL.append(cte)
 
