@@ -9,9 +9,9 @@ PTypes = []
 Quad = []
 AVAIL = []
 PJumps = []
-
+paramCont = 0
 temporales = []
-
+auxFuncSalto = 0
 
 #Clase del cuadruplo
 class quadruple(object):
@@ -225,3 +225,37 @@ def loop2():
 def mostrarSize():
     for i in range(len(POper)):
         print(POper[i])
+
+def moduloDos(id):
+    quadr = quadruple(len(Quad), 'era', None, None, id)
+    Quad.append(quadr)
+    global paramCont
+    paramCont = 1
+
+def moduloTres():
+    argument = PilaO.pop()
+    PTypes.pop()
+    valor = AVAIL.pop()
+    num = str(paramCont)
+    quadr = quadruple(len(Quad), 'param', argument, None, 'param'+num)
+    Quad.append(quadr)
+    return valor
+
+def moduloCuatro():
+    global paramCont
+    paramCont = paramCont + 1
+
+def moduloSeis(id, addr):
+    quadr = quadruple(len(Quad), 'gosub', id, None, addr)
+    Quad.append(quadr)
+
+def miReturn():
+    result = PilaO.pop()
+    PTypes.pop()
+    AVAIL.pop()
+    quadr = quadruple(len(Quad), 'return', None, None, result)
+    Quad.append(quadr)
+    
+def endproc(id):
+    quadr = quadruple(len(Quad), 'endproc', None, None, id)
+    Quad.append(quadr)

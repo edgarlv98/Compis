@@ -5,6 +5,7 @@ import quadruple as quad
 
 success = True
 funcionPadreDeVariables = 'global'
+idFuncActual = None
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -136,7 +137,7 @@ def p_nomMain(p):
     funcionPadreDeVariables = 'main'
     #global direccion_func
     #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], 'int', direccion_func)
+    directorioFunc.insert(p[1], 'int', len(quad.Quad))
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -187,19 +188,19 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE funcionSeis
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE funcionSeis
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE funcionSeis function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE funcionSeis function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE funcionSeis
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE funcionSeis
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE funcionSeis function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE funcionSeis function
     '''
 
 def p_param(p):
-    '''param : tipo ID
-             | tipo ID COMA param
+    '''param : tipo ID funcionTres
+             | tipo ID COMA funcionTres funcionCuatro param
     '''
     varsTable.insert(p[2], varsTable.tipo, 0, funcionPadreDeVariables)
 
@@ -210,7 +211,28 @@ def p_nomFunc(p):
     funcionPadreDeVariables = p[1]
     #global direccion_func
     #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], directorioFunc.tipo, direccion_func)
+    directorioFunc.insert(p[1], directorioFunc.tipo, len(quad.Quad))
+    global idFuncActual
+    idFuncActual = p[1]
+    funcionDos(p[1])
+
+
+def p_funcionTres(p):
+    "funcionTres :"
+    quad.moduloTres()
+
+def p_funcionCuatro(p):
+    "funcionCuatro :"
+    quad.moduloCuatro()
+
+def p_funcionSeis(p):
+    "funcionSeis :"
+    aux = None
+    for x in directorioFunc.funciones:
+        if x.id == idFuncActual:
+            aux = x
+            break
+    quad.moduloSeis(idFuncActual, aux.direccion)
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
@@ -380,6 +402,10 @@ def p_error(p):
     print("Error en la Sintaxis en '%s" % p.value)
     sys.exit()
 
+def funcionDos(id):
+    quad.moduloDos(id)
+
+
 parser = yacc.yacc()
 
 archivo = "test.txt"
@@ -420,13 +446,13 @@ def printTablaDeVariablePorFuncion():
 
 if success == True:
     #print("Archivo aprobado")
-    #print("Funciones")
+    print("Funciones")
     #directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
-    quad.mostrarSize()
+    #quad.mostrarSize()
     quad.cuadruplos()
     #varsTable.show()
     sys.exit()
