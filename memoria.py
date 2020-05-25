@@ -32,6 +32,7 @@ memoCteChar = 22000
 memoFuncInt = 7000
 memoFuncFloat = 7100
 memoFuncChar = 7200
+memoFuncVoid = 7300
 
 # Direccion de memoria del main
 memoMainInt = 9000
@@ -39,10 +40,10 @@ memoMainFloat = 9100
 memoMainChar = 9200
 
 # Direccion temporal del main
-tempMainInt = 20000
-tempMainFloat = 21000
-tempMainChar = 22000
-tempMainBool = 23000
+tempMainInt = 2000
+tempMainFloat = 2100
+tempMainChar = 2200
+tempMainBool = 2300
 
 
 ## MEMORIA CONSTANTES ##
@@ -90,7 +91,10 @@ def updateCte(valor, dir, tipo):
         memoria_local.char[dir] = valor
 
 def getValor(direccion, tipo):
+    if tipo is None:
+        tipo = getTipoDireccion(direccion)
     if(tipo == 'int'):
+        print(memoria_local.int[direccion])
         temp = memoria_local.int[direccion]
     elif(tipo == 'float'):
         temp = memoria_local.float[direccion]
@@ -203,6 +207,20 @@ def updateTemporal(valor, dir, tipo):
         memoria_temporal.char[dir] = valor
     if(tipo == "bool"):
         memoria_temporal.bool[dir] = valor
+
+def getTipoDireccion(direccion):
+    if (direccion >= 10000 and direccion < 10100) or (direccion >= 20000 and direccion < 21000) or (direccion >= 7000 and direccion < 7100) or (direccion >= 9000 and direccion < 9100) or (direccion >= 2000 and direccion < 2100):
+        tipo = "int"
+        return tipo
+    elif (direccion >= 10100 and direccion < 10200) or (direccion >= 21000 and direccion < 22000) or (direccion >= 7100 and direccion < 7200) or (direccion >= 9100 and direccion < 9200) or (direccion >= 2100 and direccion < 2200):
+        tipo = "float"
+        return tipo
+    elif (direccion >= 10200 and direccion < 10300) or (direccion >= 22000) or (direccion >= 7200 and direccion < 7300) or (direccion >= 9200) or (direccion >= 22000 and direccion < 23000):
+        tipo = "char"
+        return tipo
+    else:
+        tipo = "bool"
+        return tipo
 
 def show():
     print("TEMPORALES")

@@ -14,7 +14,7 @@ function int pruebafuncion(){
     var int prueba2, otraPrueba, prueba;
     float blabla;
     prueba2=10;
-    otraPrueba = 2 + prueba2 / 2 * 10;
+    otraPrueba = 2 + 2;
     
     prueba = 3 * 3 + 11;
     print(prueba);
@@ -22,7 +22,7 @@ function int pruebafuncion(){
     if ( prueba2 > 2){
         prueba2 = prueba2 + 1;
     } else {
-        prueba2 = prueba2 + 2;
+        prueba2 = prueba2 - 2;
     }
 
     if ( prueba2 == 10){
@@ -31,7 +31,7 @@ function int pruebafuncion(){
     }
 
     from ( j = 0) to (9) do {
-        prueba = prueba + 1;
+        prueba = prueba - 1;
     }
 
     while (prueba2 > 3) {
