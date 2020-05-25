@@ -29,102 +29,89 @@ Rule 18    tipoFunc -> CHAR
 Rule 19    tipoFunc -> VOID
 Rule 20    bloque -> LBRACE RBRACE
 Rule 21    bloque -> LBRACE bloqueAux RBRACE
-Rule 22    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc
-Rule 23    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc
-Rule 24    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function
-Rule 25    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
-Rule 26    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
-Rule 27    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
-Rule 28    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
-Rule 29    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
-Rule 30    endProc -> <empty>
-Rule 31    param -> tipo ID
-Rule 32    param -> tipo ID COMA param
-Rule 33    param -> empty
-Rule 34    empty -> <empty>
-Rule 35    nomFunc -> ID
-Rule 36    bloqueAux -> estatuto
-Rule 37    bloqueAux -> estatuto bloqueAux
-Rule 38    while -> WHILE while1 LPAREN expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
-Rule 39    while1 -> <empty>
-Rule 40    while2 -> <empty>
-Rule 41    while3 -> <empty>
-Rule 42    loopFromDo -> FROM LPAREN ID EQUAL expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
-Rule 43    estatuto -> asignacion
-Rule 44    estatuto -> condicion
-Rule 45    estatuto -> escritura
-Rule 46    estatuto -> while
-Rule 47    estatuto -> loopFromDo
-Rule 48    estatuto -> comparacion
-Rule 49    estatuto -> llamadaAFuncion
-Rule 50    llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub RPAREN expresion
-Rule 51    llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
-Rule 52    gosub -> <empty>
-Rule 53    generarEra -> <empty>
-Rule 54    paramFuncion -> ID push_id
-Rule 55    paramFuncion -> ID push_id COMA paramFuncion
-Rule 56    paramFuncion -> expresion
-Rule 57    paramFuncion -> expresion COMA paramFuncion
-Rule 58    paramFuncion -> empty
-Rule 59    asignacion -> ID push_id EQUAL push_poper expresion create_asign SEMICOLON
-Rule 60    create_asign -> <empty>
-Rule 61    comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
-Rule 62    condicion -> IF LPAREN expresion RPAREN cond bloque condFinal
-Rule 63    condicion -> IF LPAREN expresion RPAREN cond bloque ELSE condElse bloque condFinal
-Rule 64    cond -> <empty>
-Rule 65    condElse -> <empty>
-Rule 66    condFinal -> <empty>
-Rule 67    escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON
-Rule 68    quad_print -> <empty>
-Rule 69    escrituraAux -> expresion
-Rule 70    escrituraAux -> CTE_STRING
-Rule 71    escrituraAux -> expresion COMA escrituraAux
-Rule 72    escrituraAux -> CTE_STRING COMA escrituraAux
-Rule 73    escrituraAux -> llamadaAFuncion
-Rule 74    expresion -> exp
-Rule 75    expresion -> exp comp exp quad_comp
-Rule 76    comp -> LOWERTHAN push_poper
-Rule 77    comp -> MORETHAN push_poper
-Rule 78    comp -> DIFFERENT push_poper
-Rule 79    comp -> DOUBLEEQUAL push_poper
-Rule 80    quad_comp -> <empty>
-Rule 81    exp -> termino quad_term
-Rule 82    exp -> termino quad_term exp1
-Rule 83    exp1 -> PLUS push_poper exp
-Rule 84    exp1 -> MINUS push_poper exp
-Rule 85    quad_term -> <empty>
-Rule 86    quad_fact -> <empty>
-Rule 87    termino -> factor quad_fact
-Rule 88    termino -> factor quad_fact termino1
-Rule 89    termino1 -> TIMES push_poper termino
-Rule 90    termino1 -> DIVIDE push_poper termino
-Rule 91    factor -> LPAREN expresion RPAREN
-Rule 92    factor -> factorAux
-Rule 93    factorAux -> PLUS push_poper var_cte
-Rule 94    factorAux -> MINUS push_poper var_cte
-Rule 95    factorAux -> var_cte
-Rule 96    push_id -> <empty>
-Rule 97    push_cte -> <empty>
-Rule 98    push_poper -> <empty>
-Rule 99    var_cte -> ID push_id
-Rule 100   var_cte -> CTE_I push_cte
-Rule 101   var_cte -> CTE_F push_cte
+Rule 22    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE
+Rule 23    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+Rule 24    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function
+Rule 25    function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
+Rule 26    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
+Rule 27    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
+Rule 28    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
+Rule 29    function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
+Rule 30    param -> tipo ID
+Rule 31    param -> tipo ID COMA param
+Rule 32    nomFunc -> ID
+Rule 33    bloqueAux -> estatuto
+Rule 34    bloqueAux -> estatuto bloqueAux
+Rule 35    while -> WHILE while1 LPAREN expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
+Rule 36    while1 -> <empty>
+Rule 37    while2 -> <empty>
+Rule 38    while3 -> <empty>
+Rule 39    loopFromDo -> FROM LPAREN ID EQUAL expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
+Rule 40    estatuto -> asignacion
+Rule 41    estatuto -> condicion
+Rule 42    estatuto -> escritura
+Rule 43    estatuto -> while
+Rule 44    estatuto -> loopFromDo
+Rule 45    estatuto -> comparacion
+Rule 46    asignacion -> ID push_id EQUAL push_poper expresion create_asign SEMICOLON
+Rule 47    create_asign -> <empty>
+Rule 48    comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
+Rule 49    condicion -> IF LPAREN expresion RPAREN cond bloque condFinal
+Rule 50    condicion -> IF LPAREN expresion RPAREN cond bloque ELSE condElse bloque condFinal
+Rule 51    cond -> <empty>
+Rule 52    condElse -> <empty>
+Rule 53    condFinal -> <empty>
+Rule 54    escritura -> PRINT push_poper LPAREN exp RPAREN quad_print SEMICOLON
+Rule 55    quad_print -> <empty>
+Rule 56    escrituraAux -> expresion
+Rule 57    escrituraAux -> CTE_STRING
+Rule 58    escrituraAux -> expresion COMA escrituraAux
+Rule 59    escrituraAux -> CTE_STRING COMA escrituraAux
+Rule 60    expresion -> exp
+Rule 61    expresion -> exp comp exp quad_comp
+Rule 62    comp -> LOWERTHAN push_poper
+Rule 63    comp -> MORETHAN push_poper
+Rule 64    comp -> DIFFERENT push_poper
+Rule 65    comp -> DOUBLEEQUAL push_poper
+Rule 66    quad_comp -> <empty>
+Rule 67    exp -> termino quad_term
+Rule 68    exp -> termino quad_term exp1
+Rule 69    exp1 -> PLUS push_poper exp
+Rule 70    exp1 -> MINUS push_poper exp
+Rule 71    quad_term -> <empty>
+Rule 72    quad_fact -> <empty>
+Rule 73    termino -> factor quad_fact
+Rule 74    termino -> factor quad_fact termino1
+Rule 75    termino1 -> TIMES push_poper termino
+Rule 76    termino1 -> DIVIDE push_poper termino
+Rule 77    factor -> LPAREN expresion RPAREN
+Rule 78    factor -> factorAux
+Rule 79    factorAux -> PLUS push_poper var_cte
+Rule 80    factorAux -> MINUS push_poper var_cte
+Rule 81    factorAux -> var_cte
+Rule 82    push_id -> <empty>
+Rule 83    push_cte -> <empty>
+Rule 84    push_poper -> <empty>
+Rule 85    var_cte -> ID push_id
+Rule 86    var_cte -> CTE_I push_cte
+Rule 87    var_cte -> CTE_F push_cte
+Rule 88    var_cte -> CTE_STRING push_cte
 
 Terminals, with rules where they appear
 
 AND                  : 
 CHAR                 : 15 18
 COLON                : 1 2 3 4
-COMA                 : 12 32 55 57 71 72
-CTE_F                : 101
-CTE_I                : 100
-CTE_STRING           : 70 72
-DIFFERENT            : 78
-DIVIDE               : 90
-DO                   : 42
-DOUBLEEQUAL          : 61 79
-ELSE                 : 63
-EQUAL                : 42 59
+COMA                 : 12 31 58 59
+CTE_F                : 87
+CTE_I                : 86
+CTE_STRING           : 57 59 88
+DIFFERENT            : 64
+DIVIDE               : 76
+DO                   : 39
+DOUBLEEQUAL          : 48 65
+ELSE                 : 50
+EQUAL                : 39 46
 FLOAT                : 14 17
 FROM                 : 42
 FUNCTION             : 22 23 24 25 26 27 28 29
@@ -184,16 +171,16 @@ nomMain              : 5 6
 param                : 26 27 28 29 32
 paramFuncion         : 50 51 55 57
 program              : 0
-push_cte             : 100 101
-push_id              : 54 55 59 61 99
-push_poper           : 59 61 67 76 77 78 79 83 84 89 90 93 94
-quad_comp            : 75
-quad_fact            : 87 88
-quad_print           : 67
-quad_term            : 81 82
-termino              : 81 82 89 90
-termino1             : 88
-tipo                 : 9 10 31 32
+push_cte             : 86 87 88
+push_id              : 46 48 85
+push_poper           : 46 48 54 62 63 64 65 69 70 75 76 79 80
+quad_comp            : 61
+quad_fact            : 73 74
+quad_print           : 54
+quad_term            : 67 68
+termino              : 67 68 75 76
+termino1             : 74
+tipo                 : 9 10 30 31
 tipoFunc             : 22 23 24 25 26 27 28 29
 varAux1              : 8 10
 varAux2              : 9 10 12
@@ -878,10 +865,38 @@ state 52
 
 state 53
 
-    (37) bloqueAux -> estatuto bloqueAux .
+    (49) condicion -> IF LPAREN . expresion RPAREN cond bloque condFinal
+    (50) condicion -> IF LPAREN . expresion RPAREN cond bloque ELSE condElse bloque condFinal
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    RBRACE          reduce using rule 37 (bloqueAux -> estatuto bloqueAux .)
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    expresion                      shift and go to state 73
+    factor                         shift and go to state 67
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
 
 state 54
 
@@ -902,12 +917,8 @@ state 54
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    EQUAL           shift and go to state 77
+    DOUBLEEQUAL     shift and go to state 76
 
     expresion                      shift and go to state 75
     factor                         shift and go to state 70
@@ -921,8 +932,7 @@ state 55
     (59) asignacion -> ID push_id . EQUAL push_poper expresion create_asign SEMICOLON
     (61) comparacion -> ID push_id . DOUBLEEQUAL push_poper expresion SEMICOLON
 
-    EQUAL           shift and go to state 79
-    DOUBLEEQUAL     shift and go to state 78
+    ID              shift and go to state 78
 
 
 state 56
@@ -930,7 +940,7 @@ state 56
     (50) llamadaAFuncion -> ID generarEra . LPAREN paramFuncion gosub RPAREN expresion
     (51) llamadaAFuncion -> ID generarEra . LPAREN paramFuncion gosub RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 80
+    LPAREN          shift and go to state 79
 
 
 state 57
@@ -944,7 +954,7 @@ state 58
 
     (38) while -> WHILE while1 . LPAREN expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
 
-    LPAREN          shift and go to state 82
+    LBRACE          shift and go to state 80
 
 
 state 59
@@ -952,8 +962,7 @@ state 59
     (5) main -> nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE . endProc
     (30) endProc -> .
 
-    FUNCTION        reduce using rule 30 (endProc -> .)
-    $end            reduce using rule 30 (endProc -> .)
+    RPAREN          shift and go to state 81
 
     endProc                        shift and go to state 83
 
@@ -964,7 +973,7 @@ state 60
     (24) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN . LBRACE RBRACE endProc function
     (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN . LBRACE vars bloqueAux RBRACE endProc function
 
-    LBRACE          shift and go to state 84
+    ID              shift and go to state 82
 
 
 state 61
@@ -979,10 +988,34 @@ state 61
 
 state 62
 
-    (33) param -> empty .
+    (54) escritura -> PRINT push_poper LPAREN . exp RPAREN quad_print SEMICOLON
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    RPAREN          reduce using rule 33 (param -> empty .)
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    factor                         shift and go to state 67
+    termino                        shift and go to state 64
+    exp                            shift and go to state 83
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
 
 state 63
 
@@ -1000,7 +1033,7 @@ state 64
     FUNCTION        reduce using rule 30 (endProc -> .)
     $end            reduce using rule 30 (endProc -> .)
 
-    endProc                        shift and go to state 87
+    quad_term                      shift and go to state 84
 
 state 65
 
@@ -1027,45 +1060,23 @@ state 65
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    CTE_STRING      shift and go to state 88
-    ID              shift and go to state 90
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    escrituraAux                   shift and go to state 91
-    expresion                      shift and go to state 89
-    llamadaAFuncion                shift and go to state 92
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
-    factor                         shift and go to state 70
-    var_cte                        shift and go to state 66
+    push_poper                     shift and go to state 85
 
 state 66
 
     (95) factorAux -> var_cte .
 
-    TIMES           reduce using rule 95 (factorAux -> var_cte .)
-    DIVIDE          reduce using rule 95 (factorAux -> var_cte .)
-    PLUS            reduce using rule 95 (factorAux -> var_cte .)
-    MINUS           reduce using rule 95 (factorAux -> var_cte .)
-    LOWERTHAN       reduce using rule 95 (factorAux -> var_cte .)
-    MORETHAN        reduce using rule 95 (factorAux -> var_cte .)
-    DIFFERENT       reduce using rule 95 (factorAux -> var_cte .)
-    DOUBLEEQUAL     reduce using rule 95 (factorAux -> var_cte .)
-    RPAREN          reduce using rule 95 (factorAux -> var_cte .)
-    COMA            reduce using rule 95 (factorAux -> var_cte .)
-    SEMICOLON       reduce using rule 95 (factorAux -> var_cte .)
-    ID              reduce using rule 95 (factorAux -> var_cte .)
-    IF              reduce using rule 95 (factorAux -> var_cte .)
-    PRINT           reduce using rule 95 (factorAux -> var_cte .)
-    WHILE           reduce using rule 95 (factorAux -> var_cte .)
-    FROM            reduce using rule 95 (factorAux -> var_cte .)
-    RBRACE          reduce using rule 95 (factorAux -> var_cte .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
+    push_poper                     shift and go to state 86
 
 state 67
 
@@ -1089,7 +1100,7 @@ state 67
     FROM            reduce using rule 85 (quad_term -> .)
     RBRACE          reduce using rule 85 (quad_term -> .)
 
-    quad_term                      shift and go to state 93
+    quad_fact                      shift and go to state 87
 
 state 68
 
@@ -1100,46 +1111,72 @@ state 68
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 94
+    push_cte                       shift and go to state 88
 
 state 69
 
-    (93) factorAux -> PLUS . push_poper var_cte
-    (98) push_poper -> .
+    (88) var_cte -> CTE_STRING . push_cte
+    (83) push_cte -> .
 
     ID              reduce using rule 98 (push_poper -> .)
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 95
+    push_cte                       shift and go to state 89
 
 state 70
 
-    (87) termino -> factor . quad_fact
-    (88) termino -> factor . quad_fact termino1
-    (86) quad_fact -> .
+    (86) var_cte -> CTE_I . push_cte
+    (83) push_cte -> .
 
-    TIMES           reduce using rule 86 (quad_fact -> .)
-    DIVIDE          reduce using rule 86 (quad_fact -> .)
-    PLUS            reduce using rule 86 (quad_fact -> .)
-    MINUS           reduce using rule 86 (quad_fact -> .)
-    LOWERTHAN       reduce using rule 86 (quad_fact -> .)
-    MORETHAN        reduce using rule 86 (quad_fact -> .)
-    DIFFERENT       reduce using rule 86 (quad_fact -> .)
-    DOUBLEEQUAL     reduce using rule 86 (quad_fact -> .)
-    RPAREN          reduce using rule 86 (quad_fact -> .)
-    COMA            reduce using rule 86 (quad_fact -> .)
-    SEMICOLON       reduce using rule 86 (quad_fact -> .)
-    ID              reduce using rule 86 (quad_fact -> .)
-    IF              reduce using rule 86 (quad_fact -> .)
-    PRINT           reduce using rule 86 (quad_fact -> .)
-    WHILE           reduce using rule 86 (quad_fact -> .)
-    FROM            reduce using rule 86 (quad_fact -> .)
-    RBRACE          reduce using rule 86 (quad_fact -> .)
+    TIMES           reduce using rule 83 (push_cte -> .)
+    DIVIDE          reduce using rule 83 (push_cte -> .)
+    PLUS            reduce using rule 83 (push_cte -> .)
+    MINUS           reduce using rule 83 (push_cte -> .)
+    LOWERTHAN       reduce using rule 83 (push_cte -> .)
+    MORETHAN        reduce using rule 83 (push_cte -> .)
+    DIFFERENT       reduce using rule 83 (push_cte -> .)
+    DOUBLEEQUAL     reduce using rule 83 (push_cte -> .)
+    RPAREN          reduce using rule 83 (push_cte -> .)
+    SEMICOLON       reduce using rule 83 (push_cte -> .)
 
-    quad_fact                      shift and go to state 96
+    push_cte                       shift and go to state 90
 
 state 71
+
+    (77) factor -> LPAREN . expresion RPAREN
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    expresion                      shift and go to state 91
+    factor                         shift and go to state 67
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
+
+state 72
 
     (101) var_cte -> CTE_F . push_cte
     (97) push_cte -> .
@@ -1162,34 +1199,18 @@ state 71
     FROM            reduce using rule 97 (push_cte -> .)
     RBRACE          reduce using rule 97 (push_cte -> .)
 
-    push_cte                       shift and go to state 97
+    push_id                        shift and go to state 92
 
-state 72
+state 73
 
     (100) var_cte -> CTE_I . push_cte
     (97) push_cte -> .
 
-    TIMES           reduce using rule 97 (push_cte -> .)
-    DIVIDE          reduce using rule 97 (push_cte -> .)
-    PLUS            reduce using rule 97 (push_cte -> .)
-    MINUS           reduce using rule 97 (push_cte -> .)
-    LOWERTHAN       reduce using rule 97 (push_cte -> .)
-    MORETHAN        reduce using rule 97 (push_cte -> .)
-    DIFFERENT       reduce using rule 97 (push_cte -> .)
-    DOUBLEEQUAL     reduce using rule 97 (push_cte -> .)
-    RPAREN          reduce using rule 97 (push_cte -> .)
-    COMA            reduce using rule 97 (push_cte -> .)
-    SEMICOLON       reduce using rule 97 (push_cte -> .)
-    ID              reduce using rule 97 (push_cte -> .)
-    IF              reduce using rule 97 (push_cte -> .)
-    PRINT           reduce using rule 97 (push_cte -> .)
-    WHILE           reduce using rule 97 (push_cte -> .)
-    FROM            reduce using rule 97 (push_cte -> .)
-    RBRACE          reduce using rule 97 (push_cte -> .)
+    RPAREN          shift and go to state 93
 
     push_cte                       shift and go to state 98
 
-state 73
+state 74
 
     (91) factor -> LPAREN . expresion RPAREN
     (74) expresion -> . exp
@@ -1207,21 +1228,16 @@ state 73
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    RPAREN          reduce using rule 60 (expresion -> exp .)
+    SEMICOLON       reduce using rule 60 (expresion -> exp .)
+    LOWERTHAN       shift and go to state 96
+    MORETHAN        shift and go to state 98
+    DIFFERENT       shift and go to state 94
+    DOUBLEEQUAL     shift and go to state 95
 
-    expresion                      shift and go to state 99
-    factor                         shift and go to state 70
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
-    var_cte                        shift and go to state 66
+    comp                           shift and go to state 97
 
-state 74
+state 75
 
     (99) var_cte -> ID . push_id
     (96) push_id -> .
@@ -1246,15 +1262,22 @@ state 74
 
     push_id                        shift and go to state 100
 
-state 75
+state 76
 
     (62) condicion -> IF LPAREN expresion . RPAREN cond bloque condFinal
     (63) condicion -> IF LPAREN expresion . RPAREN cond bloque ELSE condElse bloque condFinal
 
-    RPAREN          shift and go to state 101
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
+    push_poper                     shift and go to state 99
 
-state 76
+state 77
 
     (74) expresion -> exp .
     (75) expresion -> exp . comp exp quad_comp
@@ -1263,74 +1286,68 @@ state 76
     (78) comp -> . DIFFERENT push_poper
     (79) comp -> . DOUBLEEQUAL push_poper
 
-    COMA            reduce using rule 74 (expresion -> exp .)
-    RPAREN          reduce using rule 74 (expresion -> exp .)
-    SEMICOLON       reduce using rule 74 (expresion -> exp .)
-    ID              reduce using rule 74 (expresion -> exp .)
-    IF              reduce using rule 74 (expresion -> exp .)
-    PRINT           reduce using rule 74 (expresion -> exp .)
-    WHILE           reduce using rule 74 (expresion -> exp .)
-    FROM            reduce using rule 74 (expresion -> exp .)
-    RBRACE          reduce using rule 74 (expresion -> exp .)
-    LOWERTHAN       shift and go to state 104
-    MORETHAN        shift and go to state 106
-    DIFFERENT       shift and go to state 102
-    DOUBLEEQUAL     shift and go to state 103
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    comp                           shift and go to state 105
-
-state 77
-
-    (92) factor -> factorAux .
-
-    TIMES           reduce using rule 92 (factor -> factorAux .)
-    DIVIDE          reduce using rule 92 (factor -> factorAux .)
-    PLUS            reduce using rule 92 (factor -> factorAux .)
-    MINUS           reduce using rule 92 (factor -> factorAux .)
-    LOWERTHAN       reduce using rule 92 (factor -> factorAux .)
-    MORETHAN        reduce using rule 92 (factor -> factorAux .)
-    DIFFERENT       reduce using rule 92 (factor -> factorAux .)
-    DOUBLEEQUAL     reduce using rule 92 (factor -> factorAux .)
-    RPAREN          reduce using rule 92 (factor -> factorAux .)
-    COMA            reduce using rule 92 (factor -> factorAux .)
-    SEMICOLON       reduce using rule 92 (factor -> factorAux .)
-    ID              reduce using rule 92 (factor -> factorAux .)
-    IF              reduce using rule 92 (factor -> factorAux .)
-    PRINT           reduce using rule 92 (factor -> factorAux .)
-    WHILE           reduce using rule 92 (factor -> factorAux .)
-    FROM            reduce using rule 92 (factor -> factorAux .)
-    RBRACE          reduce using rule 92 (factor -> factorAux .)
-
+    push_poper                     shift and go to state 100
 
 state 78
 
-    (61) comparacion -> ID push_id DOUBLEEQUAL . push_poper expresion SEMICOLON
-    (98) push_poper -> .
+    (92) factor -> factorAux .
 
-    LPAREN          reduce using rule 98 (push_poper -> .)
-    PLUS            reduce using rule 98 (push_poper -> .)
-    MINUS           reduce using rule 98 (push_poper -> .)
-    ID              reduce using rule 98 (push_poper -> .)
-    CTE_I           reduce using rule 98 (push_poper -> .)
-    CTE_F           reduce using rule 98 (push_poper -> .)
+    EQUAL           shift and go to state 101
 
-    push_poper                     shift and go to state 107
 
 state 79
+
+    (35) while -> WHILE while1 LPAREN . expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    expresion                      shift and go to state 102
+    factor                         shift and go to state 67
+    var_cte                        shift and go to state 63
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+
+state 80
 
     (59) asignacion -> ID push_id EQUAL . push_poper expresion create_asign SEMICOLON
     (98) push_poper -> .
 
-    LPAREN          reduce using rule 98 (push_poper -> .)
-    PLUS            reduce using rule 98 (push_poper -> .)
-    MINUS           reduce using rule 98 (push_poper -> .)
-    ID              reduce using rule 98 (push_poper -> .)
-    CTE_I           reduce using rule 98 (push_poper -> .)
-    CTE_F           reduce using rule 98 (push_poper -> .)
+    RBRACE          shift and go to state 103
+    VAR             shift and go to state 8
 
-    push_poper                     shift and go to state 108
+    vars                           shift and go to state 104
 
-state 80
+state 81
 
     (50) llamadaAFuncion -> ID generarEra LPAREN . paramFuncion gosub RPAREN expresion
     (51) llamadaAFuncion -> ID generarEra LPAREN . paramFuncion gosub RPAREN SEMICOLON
@@ -1355,13 +1372,7 @@ state 80
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    ID              shift and go to state 111
-    RPAREN          reduce using rule 34 (empty -> .)
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LBRACE          shift and go to state 105
 
     expresion                      shift and go to state 112
     paramFuncion                   shift and go to state 109
@@ -1372,14 +1383,15 @@ state 80
     empty                          shift and go to state 110
     termino                        shift and go to state 67
 
-state 81
+state 82
 
     (42) loopFromDo -> FROM LPAREN ID . EQUAL expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
 
-    EQUAL           shift and go to state 113
+    RPAREN          reduce using rule 30 (param -> tipo ID .)
+    COMA            shift and go to state 106
 
 
-state 82
+state 83
 
     (38) while -> WHILE while1 LPAREN . expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
     (74) expresion -> . exp
@@ -1397,12 +1409,7 @@ state 82
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    RPAREN          shift and go to state 107
 
     expresion                      shift and go to state 114
     factor                         shift and go to state 70
@@ -1411,47 +1418,70 @@ state 82
     exp                            shift and go to state 76
     factorAux                      shift and go to state 77
 
-state 83
+state 84
 
     (5) main -> nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc .
 
-    FUNCTION        reduce using rule 5 (main -> nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc .)
-    $end            reduce using rule 5 (main -> nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc .)
+    LOWERTHAN       reduce using rule 67 (exp -> termino quad_term .)
+    MORETHAN        reduce using rule 67 (exp -> termino quad_term .)
+    DIFFERENT       reduce using rule 67 (exp -> termino quad_term .)
+    DOUBLEEQUAL     reduce using rule 67 (exp -> termino quad_term .)
+    RPAREN          reduce using rule 67 (exp -> termino quad_term .)
+    SEMICOLON       reduce using rule 67 (exp -> termino quad_term .)
+    PLUS            shift and go to state 109
+    MINUS           shift and go to state 110
 
-
-state 84
-
-    (22) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE . RBRACE endProc
-    (23) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE . vars bloqueAux RBRACE endProc
-    (24) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE . RBRACE endProc function
-    (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE . vars bloqueAux RBRACE endProc function
-    (8) vars -> . VAR varAux1
-
-    RBRACE          shift and go to state 115
-    VAR             shift and go to state 8
-
-    vars                           shift and go to state 116
+    exp1                           shift and go to state 108
 
 state 85
 
-    (26) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN . LBRACE RBRACE endProc
-    (27) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN . LBRACE vars bloqueAux RBRACE endProc
-    (28) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN . LBRACE RBRACE endProc function
-    (29) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN . LBRACE vars bloqueAux RBRACE endProc function
+    (80) factorAux -> MINUS push_poper . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    LBRACE          shift and go to state 117
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    var_cte                        shift and go to state 111
 
 state 86
+
+    (79) factorAux -> PLUS push_poper . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    var_cte                        shift and go to state 112
+
+state 87
 
     (31) param -> tipo ID .
     (32) param -> tipo ID . COMA param
 
-    RPAREN          reduce using rule 31 (param -> tipo ID .)
-    COMA            shift and go to state 118
+    PLUS            reduce using rule 73 (termino -> factor quad_fact .)
+    MINUS           reduce using rule 73 (termino -> factor quad_fact .)
+    LOWERTHAN       reduce using rule 73 (termino -> factor quad_fact .)
+    MORETHAN        reduce using rule 73 (termino -> factor quad_fact .)
+    DIFFERENT       reduce using rule 73 (termino -> factor quad_fact .)
+    DOUBLEEQUAL     reduce using rule 73 (termino -> factor quad_fact .)
+    SEMICOLON       reduce using rule 73 (termino -> factor quad_fact .)
+    RPAREN          reduce using rule 73 (termino -> factor quad_fact .)
+    TIMES           shift and go to state 115
+    DIVIDE          shift and go to state 113
 
+    termino1                       shift and go to state 114
 
-state 87
+state 88
 
     (6) main -> nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc .
 
@@ -1459,25 +1489,39 @@ state 87
     $end            reduce using rule 6 (main -> nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc .)
 
 
-state 88
+state 89
 
-    (70) escrituraAux -> CTE_STRING .
-    (72) escrituraAux -> CTE_STRING . COMA escrituraAux
+    (88) var_cte -> CTE_STRING push_cte .
+
+    TIMES           reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    DIVIDE          reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    PLUS            reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    MINUS           reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    LOWERTHAN       reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    MORETHAN        reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    DIFFERENT       reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    DOUBLEEQUAL     reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    RPAREN          reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+    SEMICOLON       reduce using rule 88 (var_cte -> CTE_STRING push_cte .)
+
+
+state 90
+
+    (86) var_cte -> CTE_I push_cte .
 
     RPAREN          reduce using rule 70 (escrituraAux -> CTE_STRING .)
     COMA            shift and go to state 119
 
 
-state 89
+state 91
 
     (69) escrituraAux -> expresion .
     (71) escrituraAux -> expresion . COMA escrituraAux
 
-    RPAREN          reduce using rule 69 (escrituraAux -> expresion .)
-    COMA            shift and go to state 120
+    RPAREN          shift and go to state 116
 
 
-state 90
+state 92
 
     (50) llamadaAFuncion -> ID . generarEra LPAREN paramFuncion gosub RPAREN expresion
     (51) llamadaAFuncion -> ID . generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
@@ -1500,175 +1544,220 @@ state 90
     push_id                        shift and go to state 100
     generarEra                     shift and go to state 56
 
-state 91
+state 93
 
     (67) escritura -> PRINT push_poper LPAREN escrituraAux . RPAREN quad_print SEMICOLON
 
     RPAREN          shift and go to state 121
 
+    cond                           shift and go to state 117
 
-state 92
+state 94
 
     (73) escrituraAux -> llamadaAFuncion .
 
-    RPAREN          reduce using rule 73 (escrituraAux -> llamadaAFuncion .)
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
+    push_poper                     shift and go to state 118
 
-state 93
+state 95
 
     (81) exp -> termino quad_term .
     (82) exp -> termino quad_term . exp1
     (83) exp1 -> . PLUS push_poper exp
     (84) exp1 -> . MINUS push_poper exp
 
-    LOWERTHAN       reduce using rule 81 (exp -> termino quad_term .)
-    MORETHAN        reduce using rule 81 (exp -> termino quad_term .)
-    DIFFERENT       reduce using rule 81 (exp -> termino quad_term .)
-    DOUBLEEQUAL     reduce using rule 81 (exp -> termino quad_term .)
-    RPAREN          reduce using rule 81 (exp -> termino quad_term .)
-    COMA            reduce using rule 81 (exp -> termino quad_term .)
-    SEMICOLON       reduce using rule 81 (exp -> termino quad_term .)
-    ID              reduce using rule 81 (exp -> termino quad_term .)
-    IF              reduce using rule 81 (exp -> termino quad_term .)
-    PRINT           reduce using rule 81 (exp -> termino quad_term .)
-    WHILE           reduce using rule 81 (exp -> termino quad_term .)
-    FROM            reduce using rule 81 (exp -> termino quad_term .)
-    RBRACE          reduce using rule 81 (exp -> termino quad_term .)
-    PLUS            shift and go to state 123
-    MINUS           shift and go to state 124
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    exp1                           shift and go to state 122
+    push_poper                     shift and go to state 119
 
-state 94
+state 96
 
     (94) factorAux -> MINUS push_poper . var_cte
     (99) var_cte -> . ID push_id
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    var_cte                        shift and go to state 125
+    push_poper                     shift and go to state 120
 
-state 95
+state 97
 
-    (93) factorAux -> PLUS push_poper . var_cte
-    (99) var_cte -> . ID push_id
-    (100) var_cte -> . CTE_I push_cte
-    (101) var_cte -> . CTE_F push_cte
+    (61) expresion -> exp comp . exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
-    var_cte                        shift and go to state 126
+    factor                         shift and go to state 67
+    termino                        shift and go to state 64
+    exp                            shift and go to state 121
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
 
-state 96
+state 98
 
     (87) termino -> factor quad_fact .
     (88) termino -> factor quad_fact . termino1
     (89) termino1 -> . TIMES push_poper termino
     (90) termino1 -> . DIVIDE push_poper termino
 
-    PLUS            reduce using rule 87 (termino -> factor quad_fact .)
-    MINUS           reduce using rule 87 (termino -> factor quad_fact .)
-    LOWERTHAN       reduce using rule 87 (termino -> factor quad_fact .)
-    MORETHAN        reduce using rule 87 (termino -> factor quad_fact .)
-    DIFFERENT       reduce using rule 87 (termino -> factor quad_fact .)
-    DOUBLEEQUAL     reduce using rule 87 (termino -> factor quad_fact .)
-    ID              reduce using rule 87 (termino -> factor quad_fact .)
-    IF              reduce using rule 87 (termino -> factor quad_fact .)
-    PRINT           reduce using rule 87 (termino -> factor quad_fact .)
-    WHILE           reduce using rule 87 (termino -> factor quad_fact .)
-    FROM            reduce using rule 87 (termino -> factor quad_fact .)
-    RBRACE          reduce using rule 87 (termino -> factor quad_fact .)
-    RPAREN          reduce using rule 87 (termino -> factor quad_fact .)
-    COMA            reduce using rule 87 (termino -> factor quad_fact .)
-    SEMICOLON       reduce using rule 87 (termino -> factor quad_fact .)
-    TIMES           shift and go to state 129
-    DIVIDE          shift and go to state 127
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    termino1                       shift and go to state 128
-
-state 97
-
-    (101) var_cte -> CTE_F push_cte .
-
-    TIMES           reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    DIVIDE          reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    PLUS            reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    MINUS           reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    LOWERTHAN       reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    MORETHAN        reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    DIFFERENT       reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    DOUBLEEQUAL     reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    COMA            reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    RPAREN          reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    SEMICOLON       reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    ID              reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    IF              reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    PRINT           reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    WHILE           reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    FROM            reduce using rule 101 (var_cte -> CTE_F push_cte .)
-    RBRACE          reduce using rule 101 (var_cte -> CTE_F push_cte .)
-
-
-state 98
-
-    (100) var_cte -> CTE_I push_cte .
-
-    TIMES           reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    DIVIDE          reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    PLUS            reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    MINUS           reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    LOWERTHAN       reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    MORETHAN        reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    DIFFERENT       reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    DOUBLEEQUAL     reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    COMA            reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    RPAREN          reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    SEMICOLON       reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    ID              reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    IF              reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    PRINT           reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    WHILE           reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    FROM            reduce using rule 100 (var_cte -> CTE_I push_cte .)
-    RBRACE          reduce using rule 100 (var_cte -> CTE_I push_cte .)
-
+    push_poper                     shift and go to state 122
 
 state 99
 
-    (91) factor -> LPAREN expresion . RPAREN
+    (48) comparacion -> ID push_id DOUBLEEQUAL push_poper . expresion SEMICOLON
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    RPAREN          shift and go to state 130
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    expresion                      shift and go to state 123
+    factor                         shift and go to state 67
+    var_cte                        shift and go to state 63
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
 
 state 100
 
-    (99) var_cte -> ID push_id .
+    (46) asignacion -> ID push_id EQUAL push_poper . expresion create_asign SEMICOLON
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    TIMES           reduce using rule 99 (var_cte -> ID push_id .)
-    DIVIDE          reduce using rule 99 (var_cte -> ID push_id .)
-    PLUS            reduce using rule 99 (var_cte -> ID push_id .)
-    MINUS           reduce using rule 99 (var_cte -> ID push_id .)
-    LOWERTHAN       reduce using rule 99 (var_cte -> ID push_id .)
-    MORETHAN        reduce using rule 99 (var_cte -> ID push_id .)
-    DIFFERENT       reduce using rule 99 (var_cte -> ID push_id .)
-    DOUBLEEQUAL     reduce using rule 99 (var_cte -> ID push_id .)
-    COMA            reduce using rule 99 (var_cte -> ID push_id .)
-    RPAREN          reduce using rule 99 (var_cte -> ID push_id .)
-    SEMICOLON       reduce using rule 99 (var_cte -> ID push_id .)
-    ID              reduce using rule 99 (var_cte -> ID push_id .)
-    IF              reduce using rule 99 (var_cte -> ID push_id .)
-    PRINT           reduce using rule 99 (var_cte -> ID push_id .)
-    WHILE           reduce using rule 99 (var_cte -> ID push_id .)
-    FROM            reduce using rule 99 (var_cte -> ID push_id .)
-    RBRACE          reduce using rule 99 (var_cte -> ID push_id .)
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    expresion                      shift and go to state 124
+    var_cte                        shift and go to state 63
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+    factor                         shift and go to state 67
 
 state 101
+
+    (39) loopFromDo -> FROM LPAREN ID EQUAL . expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    expresion                      shift and go to state 125
+    factor                         shift and go to state 67
+    var_cte                        shift and go to state 63
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+
+state 102
+
+    (99) var_cte -> ID push_id .
+
+    RPAREN          shift and go to state 126
+
+
+state 103
 
     (62) condicion -> IF LPAREN expresion RPAREN . cond bloque condFinal
     (63) condicion -> IF LPAREN expresion RPAREN . cond bloque ELSE condElse bloque condFinal
@@ -1676,9 +1765,9 @@ state 101
 
     LBRACE          reduce using rule 64 (cond -> .)
 
-    cond                           shift and go to state 131
+    function                       shift and go to state 127
 
-state 102
+state 104
 
     (78) comp -> DIFFERENT . push_poper
     (98) push_poper -> .
@@ -1690,23 +1779,26 @@ state 102
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 132
+    estatuto                       shift and go to state 35
+    condicion                      shift and go to state 37
+    loopFromDo                     shift and go to state 39
+    asignacion                     shift and go to state 41
+    bloqueAux                      shift and go to state 128
+    while                          shift and go to state 44
+    comparacion                    shift and go to state 45
+    escritura                      shift and go to state 46
 
-state 103
+state 105
 
     (79) comp -> DOUBLEEQUAL . push_poper
     (98) push_poper -> .
 
-    LPAREN          reduce using rule 98 (push_poper -> .)
-    PLUS            reduce using rule 98 (push_poper -> .)
-    MINUS           reduce using rule 98 (push_poper -> .)
-    ID              reduce using rule 98 (push_poper -> .)
-    CTE_I           reduce using rule 98 (push_poper -> .)
-    CTE_F           reduce using rule 98 (push_poper -> .)
+    RBRACE          shift and go to state 129
+    VAR             shift and go to state 8
 
-    push_poper                     shift and go to state 133
+    vars                           shift and go to state 130
 
-state 104
+state 106
 
     (76) comp -> LOWERTHAN . push_poper
     (98) push_poper -> .
@@ -1718,9 +1810,10 @@ state 104
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 134
+    param                          shift and go to state 131
+    tipo                           shift and go to state 60
 
-state 105
+state 107
 
     (75) expresion -> exp comp . exp quad_comp
     (81) exp -> . termino quad_term
@@ -1743,13 +1836,9 @@ state 105
     CTE_I           shift and go to state 72
     CTE_F           shift and go to state 71
 
-    factor                         shift and go to state 70
-    termino                        shift and go to state 67
-    exp                            shift and go to state 135
-    factorAux                      shift and go to state 77
-    var_cte                        shift and go to state 66
+    quad_print                     shift and go to state 132
 
-state 106
+state 108
 
     (77) comp -> MORETHAN . push_poper
     (98) push_poper -> .
@@ -1763,7 +1852,7 @@ state 106
 
     push_poper                     shift and go to state 136
 
-state 107
+state 109
 
     (61) comparacion -> ID push_id DOUBLEEQUAL push_poper . expresion SEMICOLON
     (74) expresion -> . exp
@@ -1781,21 +1870,17 @@ state 107
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    expresion                      shift and go to state 137
-    factor                         shift and go to state 70
-    var_cte                        shift and go to state 66
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
+    push_poper                     shift and go to state 133
 
-state 108
+state 110
 
     (59) asignacion -> ID push_id EQUAL push_poper . expresion create_asign SEMICOLON
     (74) expresion -> . exp
@@ -1813,21 +1898,17 @@ state 108
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    expresion                      shift and go to state 138
-    var_cte                        shift and go to state 66
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
-    factor                         shift and go to state 70
+    push_poper                     shift and go to state 134
 
-state 109
+state 111
 
     (50) llamadaAFuncion -> ID generarEra LPAREN paramFuncion . gosub RPAREN expresion
     (51) llamadaAFuncion -> ID generarEra LPAREN paramFuncion . gosub RPAREN SEMICOLON
@@ -1837,43 +1918,46 @@ state 109
 
     gosub                          shift and go to state 139
 
-state 110
+state 112
 
     (58) paramFuncion -> empty .
 
     RPAREN          reduce using rule 58 (paramFuncion -> empty .)
 
 
-state 111
+state 113
 
     (54) paramFuncion -> ID . push_id
     (55) paramFuncion -> ID . push_id COMA paramFuncion
     (99) var_cte -> ID . push_id
     (96) push_id -> .
 
-    COMA            reduce using rule 96 (push_id -> .)
-    RPAREN          reduce using rule 96 (push_id -> .)
-    TIMES           reduce using rule 96 (push_id -> .)
-    DIVIDE          reduce using rule 96 (push_id -> .)
-    PLUS            reduce using rule 96 (push_id -> .)
-    MINUS           reduce using rule 96 (push_id -> .)
-    LOWERTHAN       reduce using rule 96 (push_id -> .)
-    MORETHAN        reduce using rule 96 (push_id -> .)
-    DIFFERENT       reduce using rule 96 (push_id -> .)
-    DOUBLEEQUAL     reduce using rule 96 (push_id -> .)
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    push_id                        shift and go to state 140
+    push_poper                     shift and go to state 135
 
-state 112
+state 114
 
     (56) paramFuncion -> expresion .
     (57) paramFuncion -> expresion . COMA paramFuncion
 
-    RPAREN          reduce using rule 56 (paramFuncion -> expresion .)
-    COMA            shift and go to state 141
+    PLUS            reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    MINUS           reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    LOWERTHAN       reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    MORETHAN        reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    DIFFERENT       reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    DOUBLEEQUAL     reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    SEMICOLON       reduce using rule 74 (termino -> factor quad_fact termino1 .)
+    RPAREN          reduce using rule 74 (termino -> factor quad_fact termino1 .)
 
 
-state 113
+state 115
 
     (42) loopFromDo -> FROM LPAREN ID EQUAL . expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
     (74) expresion -> . exp
@@ -1891,39 +1975,34 @@ state 113
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          reduce using rule 84 (push_poper -> .)
+    PLUS            reduce using rule 84 (push_poper -> .)
+    MINUS           reduce using rule 84 (push_poper -> .)
+    ID              reduce using rule 84 (push_poper -> .)
+    CTE_I           reduce using rule 84 (push_poper -> .)
+    CTE_F           reduce using rule 84 (push_poper -> .)
+    CTE_STRING      reduce using rule 84 (push_poper -> .)
 
-    expresion                      shift and go to state 142
-    factor                         shift and go to state 70
-    var_cte                        shift and go to state 66
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
+    push_poper                     shift and go to state 136
 
-state 114
+state 116
 
     (38) while -> WHILE while1 LPAREN expresion . RPAREN while2 LBRACE bloqueAux RBRACE while3
 
     RPAREN          shift and go to state 143
 
 
-state 115
+state 117
 
     (22) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE . endProc
     (24) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE . endProc function
     (30) endProc -> .
 
-    FUNCTION        reduce using rule 30 (endProc -> .)
-    $end            reduce using rule 30 (endProc -> .)
+    LBRACE          shift and go to state 137
 
-    endProc                        shift and go to state 144
+    bloque                         shift and go to state 138
 
-state 116
+state 118
 
     (23) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars . bloqueAux RBRACE endProc
     (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars . bloqueAux RBRACE endProc function
@@ -1946,11 +2025,13 @@ state 116
     (50) llamadaAFuncion -> . ID generarEra LPAREN paramFuncion gosub RPAREN expresion
     (51) llamadaAFuncion -> . ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
 
-    ID              shift and go to state 38
-    IF              shift and go to state 36
-    PRINT           shift and go to state 34
-    WHILE           shift and go to state 43
-    FROM            shift and go to state 41
+    LPAREN          reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    PLUS            reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    MINUS           reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    ID              reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    CTE_I           reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    CTE_F           reduce using rule 64 (comp -> DIFFERENT push_poper .)
+    CTE_STRING      reduce using rule 64 (comp -> DIFFERENT push_poper .)
 
     estatuto                       shift and go to state 35
     condicion                      shift and go to state 37
@@ -1962,7 +2043,7 @@ state 116
     comparacion                    shift and go to state 46
     escritura                      shift and go to state 47
 
-state 117
+state 119
 
     (26) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE . RBRACE endProc
     (27) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE . vars bloqueAux RBRACE endProc
@@ -1970,12 +2051,17 @@ state 117
     (29) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE . vars bloqueAux RBRACE endProc function
     (8) vars -> . VAR varAux1
 
-    RBRACE          shift and go to state 146
-    VAR             shift and go to state 8
+    LPAREN          reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    PLUS            reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    MINUS           reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    ID              reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    CTE_I           reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    CTE_F           reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
+    CTE_STRING      reduce using rule 65 (comp -> DOUBLEEQUAL push_poper .)
 
     vars                           shift and go to state 147
 
-state 118
+state 120
 
     (32) param -> tipo ID COMA . param
     (31) param -> . tipo ID
@@ -1986,16 +2072,19 @@ state 118
     (15) tipo -> . CHAR
     (34) empty -> .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    CHAR            shift and go to state 12
-    RPAREN          reduce using rule 34 (empty -> .)
+    LPAREN          reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    PLUS            reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    MINUS           reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    ID              reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    CTE_I           reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    CTE_F           reduce using rule 62 (comp -> LOWERTHAN push_poper .)
+    CTE_STRING      reduce using rule 62 (comp -> LOWERTHAN push_poper .)
 
     empty                          shift and go to state 62
     param                          shift and go to state 148
     tipo                           shift and go to state 63
 
-state 119
+state 121
 
     (72) escrituraAux -> CTE_STRING COMA . escrituraAux
     (69) escrituraAux -> . expresion
@@ -2028,16 +2117,9 @@ state 119
     CTE_I           shift and go to state 72
     CTE_F           shift and go to state 71
 
-    escrituraAux                   shift and go to state 149
-    expresion                      shift and go to state 89
-    llamadaAFuncion                shift and go to state 92
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
-    factor                         shift and go to state 70
-    var_cte                        shift and go to state 66
+    quad_comp                      shift and go to state 139
 
-state 120
+state 122
 
     (71) escrituraAux -> expresion COMA . escrituraAux
     (69) escrituraAux -> . expresion
@@ -2062,13 +2144,13 @@ state 120
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    CTE_STRING      shift and go to state 88
-    ID              shift and go to state 90
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          reduce using rule 63 (comp -> MORETHAN push_poper .)
+    PLUS            reduce using rule 63 (comp -> MORETHAN push_poper .)
+    MINUS           reduce using rule 63 (comp -> MORETHAN push_poper .)
+    ID              reduce using rule 63 (comp -> MORETHAN push_poper .)
+    CTE_I           reduce using rule 63 (comp -> MORETHAN push_poper .)
+    CTE_F           reduce using rule 63 (comp -> MORETHAN push_poper .)
+    CTE_STRING      reduce using rule 63 (comp -> MORETHAN push_poper .)
 
     expresion                      shift and go to state 89
     escrituraAux                   shift and go to state 150
@@ -2079,16 +2161,16 @@ state 120
     factor                         shift and go to state 70
     var_cte                        shift and go to state 66
 
-state 121
+state 123
 
     (67) escritura -> PRINT push_poper LPAREN escrituraAux RPAREN . quad_print SEMICOLON
     (68) quad_print -> .
 
-    SEMICOLON       reduce using rule 68 (quad_print -> .)
+    SEMICOLON       shift and go to state 140
 
     quad_print                     shift and go to state 151
 
-state 122
+state 124
 
     (82) exp -> termino quad_term exp1 .
 
@@ -2106,22 +2188,18 @@ state 122
     FROM            reduce using rule 82 (exp -> termino quad_term exp1 .)
     RBRACE          reduce using rule 82 (exp -> termino quad_term exp1 .)
 
+    create_asign                   shift and go to state 141
 
-state 123
+state 125
 
     (83) exp1 -> PLUS . push_poper exp
     (98) push_poper -> .
 
-    LPAREN          reduce using rule 98 (push_poper -> .)
-    PLUS            reduce using rule 98 (push_poper -> .)
-    MINUS           reduce using rule 98 (push_poper -> .)
-    ID              reduce using rule 98 (push_poper -> .)
-    CTE_I           reduce using rule 98 (push_poper -> .)
-    CTE_F           reduce using rule 98 (push_poper -> .)
+    RPAREN          shift and go to state 142
 
     push_poper                     shift and go to state 152
 
-state 124
+state 126
 
     (84) exp1 -> MINUS . push_poper exp
     (98) push_poper -> .
@@ -2133,9 +2211,9 @@ state 124
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 153
+    while2                         shift and go to state 143
 
-state 125
+state 127
 
     (94) factorAux -> MINUS push_poper var_cte .
 
@@ -2158,30 +2236,14 @@ state 125
     RBRACE          reduce using rule 94 (factorAux -> MINUS push_poper var_cte .)
 
 
-state 126
+state 128
 
     (93) factorAux -> PLUS push_poper var_cte .
 
-    TIMES           reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    DIVIDE          reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    PLUS            reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    MINUS           reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    LOWERTHAN       reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    MORETHAN        reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    DIFFERENT       reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    DOUBLEEQUAL     reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    RPAREN          reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    COMA            reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    SEMICOLON       reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    ID              reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    IF              reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    PRINT           reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    WHILE           reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    FROM            reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
-    RBRACE          reduce using rule 93 (factorAux -> PLUS push_poper var_cte .)
+    RBRACE          shift and go to state 144
 
 
-state 127
+state 129
 
     (90) termino1 -> DIVIDE . push_poper termino
     (98) push_poper -> .
@@ -2193,9 +2255,9 @@ state 127
     CTE_I           reduce using rule 98 (push_poper -> .)
     CTE_F           reduce using rule 98 (push_poper -> .)
 
-    push_poper                     shift and go to state 154
+    function                       shift and go to state 145
 
-state 128
+state 130
 
     (88) termino -> factor quad_fact termino1 .
 
@@ -2215,8 +2277,16 @@ state 128
     COMA            reduce using rule 88 (termino -> factor quad_fact termino1 .)
     SEMICOLON       reduce using rule 88 (termino -> factor quad_fact termino1 .)
 
+    estatuto                       shift and go to state 35
+    condicion                      shift and go to state 37
+    loopFromDo                     shift and go to state 39
+    asignacion                     shift and go to state 41
+    bloqueAux                      shift and go to state 146
+    while                          shift and go to state 44
+    comparacion                    shift and go to state 45
+    escritura                      shift and go to state 46
 
-state 129
+state 131
 
     (89) termino1 -> TIMES . push_poper termino
     (98) push_poper -> .
@@ -2230,113 +2300,174 @@ state 129
 
     push_poper                     shift and go to state 155
 
-state 130
+state 132
 
     (91) factor -> LPAREN expresion RPAREN .
 
-    TIMES           reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    DIVIDE          reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    PLUS            reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    MINUS           reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    LOWERTHAN       reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    MORETHAN        reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    DIFFERENT       reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    DOUBLEEQUAL     reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    RPAREN          reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    COMA            reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    SEMICOLON       reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    ID              reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    IF              reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    PRINT           reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    WHILE           reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    FROM            reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-    RBRACE          reduce using rule 91 (factor -> LPAREN expresion RPAREN .)
-
-
-state 131
-
-    (62) condicion -> IF LPAREN expresion RPAREN cond . bloque condFinal
-    (63) condicion -> IF LPAREN expresion RPAREN cond . bloque ELSE condElse bloque condFinal
-    (20) bloque -> . LBRACE RBRACE
-    (21) bloque -> . LBRACE bloqueAux RBRACE
-
-    LBRACE          shift and go to state 156
-
-    bloque                         shift and go to state 157
-
-state 132
-
-    (78) comp -> DIFFERENT push_poper .
-
-    LPAREN          reduce using rule 78 (comp -> DIFFERENT push_poper .)
-    PLUS            reduce using rule 78 (comp -> DIFFERENT push_poper .)
-    MINUS           reduce using rule 78 (comp -> DIFFERENT push_poper .)
-    ID              reduce using rule 78 (comp -> DIFFERENT push_poper .)
-    CTE_I           reduce using rule 78 (comp -> DIFFERENT push_poper .)
-    CTE_F           reduce using rule 78 (comp -> DIFFERENT push_poper .)
+    SEMICOLON       shift and go to state 147
 
 
 state 133
 
-    (79) comp -> DOUBLEEQUAL push_poper .
+    (69) exp1 -> PLUS push_poper . exp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    LPAREN          reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
-    PLUS            reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
-    MINUS           reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
-    ID              reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
-    CTE_I           reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
-    CTE_F           reduce using rule 79 (comp -> DOUBLEEQUAL push_poper .)
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    termino                        shift and go to state 64
+    exp                            shift and go to state 148
+    factor                         shift and go to state 67
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
 
 state 134
 
-    (76) comp -> LOWERTHAN push_poper .
+    (70) exp1 -> MINUS push_poper . exp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
 
-    LPAREN          reduce using rule 76 (comp -> LOWERTHAN push_poper .)
-    PLUS            reduce using rule 76 (comp -> LOWERTHAN push_poper .)
-    MINUS           reduce using rule 76 (comp -> LOWERTHAN push_poper .)
-    ID              reduce using rule 76 (comp -> LOWERTHAN push_poper .)
-    CTE_I           reduce using rule 76 (comp -> LOWERTHAN push_poper .)
-    CTE_F           reduce using rule 76 (comp -> LOWERTHAN push_poper .)
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
 
+    termino                        shift and go to state 64
+    exp                            shift and go to state 149
+    factor                         shift and go to state 67
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
 
 state 135
+
+    (76) termino1 -> DIVIDE push_poper . termino
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    termino                        shift and go to state 150
+    factor                         shift and go to state 67
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
+
+state 136
+
+    (75) termino1 -> TIMES push_poper . termino
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    termino                        shift and go to state 151
+    factor                         shift and go to state 67
+    factorAux                      shift and go to state 75
+    var_cte                        shift and go to state 63
+
+state 137
 
     (75) expresion -> exp comp exp . quad_comp
     (80) quad_comp -> .
 
-    RPAREN          reduce using rule 80 (quad_comp -> .)
-    COMA            reduce using rule 80 (quad_comp -> .)
-    SEMICOLON       reduce using rule 80 (quad_comp -> .)
-    ID              reduce using rule 80 (quad_comp -> .)
-    IF              reduce using rule 80 (quad_comp -> .)
-    PRINT           reduce using rule 80 (quad_comp -> .)
-    WHILE           reduce using rule 80 (quad_comp -> .)
-    FROM            reduce using rule 80 (quad_comp -> .)
-    RBRACE          reduce using rule 80 (quad_comp -> .)
+    RBRACE          shift and go to state 152
+    ID              shift and go to state 38
+    IF              shift and go to state 36
+    PRINT           shift and go to state 34
+    WHILE           shift and go to state 42
+    FROM            shift and go to state 40
 
-    quad_comp                      shift and go to state 158
+    asignacion                     shift and go to state 41
+    estatuto                       shift and go to state 35
+    bloqueAux                      shift and go to state 153
+    while                          shift and go to state 44
+    condicion                      shift and go to state 37
+    comparacion                    shift and go to state 45
+    loopFromDo                     shift and go to state 39
+    escritura                      shift and go to state 46
 
-state 136
+state 138
 
     (77) comp -> MORETHAN push_poper .
 
-    LPAREN          reduce using rule 77 (comp -> MORETHAN push_poper .)
-    PLUS            reduce using rule 77 (comp -> MORETHAN push_poper .)
-    MINUS           reduce using rule 77 (comp -> MORETHAN push_poper .)
-    ID              reduce using rule 77 (comp -> MORETHAN push_poper .)
-    CTE_I           reduce using rule 77 (comp -> MORETHAN push_poper .)
-    CTE_F           reduce using rule 77 (comp -> MORETHAN push_poper .)
+    ELSE            shift and go to state 155
+    ID              reduce using rule 53 (condFinal -> .)
+    IF              reduce using rule 53 (condFinal -> .)
+    PRINT           reduce using rule 53 (condFinal -> .)
+    WHILE           reduce using rule 53 (condFinal -> .)
+    FROM            reduce using rule 53 (condFinal -> .)
+    RBRACE          reduce using rule 53 (condFinal -> .)
 
+    condFinal                      shift and go to state 154
 
-state 137
+state 139
 
     (61) comparacion -> ID push_id DOUBLEEQUAL push_poper expresion . SEMICOLON
 
     SEMICOLON       shift and go to state 159
 
 
-state 138
+state 140
 
     (59) asignacion -> ID push_id EQUAL push_poper expresion . create_asign SEMICOLON
     (60) create_asign -> .
@@ -2345,38 +2476,26 @@ state 138
 
     create_asign                   shift and go to state 160
 
-state 139
+state 141
 
     (50) llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub . RPAREN expresion
     (51) llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub . RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 161
+    SEMICOLON       shift and go to state 156
 
 
-state 140
+state 142
 
     (54) paramFuncion -> ID push_id .
     (55) paramFuncion -> ID push_id . COMA paramFuncion
     (99) var_cte -> ID push_id .
 
-  ! shift/reduce conflict for COMA resolved as shift
-  ! reduce/reduce conflict for RPAREN resolved using rule 54 (paramFuncion -> ID push_id .)
-    RPAREN          reduce using rule 54 (paramFuncion -> ID push_id .)
-    COMA            shift and go to state 162
-    TIMES           reduce using rule 99 (var_cte -> ID push_id .)
-    DIVIDE          reduce using rule 99 (var_cte -> ID push_id .)
-    PLUS            reduce using rule 99 (var_cte -> ID push_id .)
-    MINUS           reduce using rule 99 (var_cte -> ID push_id .)
-    LOWERTHAN       reduce using rule 99 (var_cte -> ID push_id .)
-    MORETHAN        reduce using rule 99 (var_cte -> ID push_id .)
-    DIFFERENT       reduce using rule 99 (var_cte -> ID push_id .)
-    DOUBLEEQUAL     reduce using rule 99 (var_cte -> ID push_id .)
+    TO              shift and go to state 157
 
   ! COMA            [ reduce using rule 99 (var_cte -> ID push_id .) ]
   ! RPAREN          [ reduce using rule 99 (var_cte -> ID push_id .) ]
 
-
-state 141
+state 143
 
     (57) paramFuncion -> expresion COMA . paramFuncion
     (54) paramFuncion -> . ID push_id
@@ -2400,13 +2519,7 @@ state 141
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    ID              shift and go to state 111
-    RPAREN          reduce using rule 34 (empty -> .)
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LBRACE          shift and go to state 158
 
     expresion                      shift and go to state 112
     paramFuncion                   shift and go to state 163
@@ -2417,14 +2530,15 @@ state 141
     factor                         shift and go to state 70
     empty                          shift and go to state 110
 
-state 142
+state 144
 
     (42) loopFromDo -> FROM LPAREN ID EQUAL expresion . RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
 
     RPAREN          shift and go to state 164
 
+    function                       shift and go to state 159
 
-state 143
+state 145
 
     (38) while -> WHILE while1 LPAREN expresion RPAREN . while2 LBRACE bloqueAux RBRACE while3
     (40) while2 -> .
@@ -2433,7 +2547,7 @@ state 143
 
     while2                         shift and go to state 165
 
-state 144
+state 146
 
     (22) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc .
     (24) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc . function
@@ -2446,12 +2560,11 @@ state 144
     (28) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
     (29) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
 
-    $end            reduce using rule 22 (function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc .)
-    FUNCTION        shift and go to state 18
+    RBRACE          shift and go to state 160
 
     function                       shift and go to state 166
 
-state 145
+state 147
 
     (23) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux . RBRACE endProc
     (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux . RBRACE endProc function
@@ -2459,7 +2572,7 @@ state 145
     RBRACE          shift and go to state 167
 
 
-state 146
+state 148
 
     (26) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE . endProc
     (28) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE . endProc function
@@ -2470,7 +2583,7 @@ state 146
 
     endProc                        shift and go to state 168
 
-state 147
+state 149
 
     (27) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars . bloqueAux RBRACE endProc
     (29) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars . bloqueAux RBRACE endProc function
@@ -2509,35 +2622,41 @@ state 147
     comparacion                    shift and go to state 46
     escritura                      shift and go to state 47
 
-state 148
+state 150
 
     (32) param -> tipo ID COMA param .
 
     RPAREN          reduce using rule 32 (param -> tipo ID COMA param .)
 
 
-state 149
+state 151
 
     (72) escrituraAux -> CTE_STRING COMA escrituraAux .
 
     RPAREN          reduce using rule 72 (escrituraAux -> CTE_STRING COMA escrituraAux .)
 
 
-state 150
+state 152
 
     (71) escrituraAux -> expresion COMA escrituraAux .
 
-    RPAREN          reduce using rule 71 (escrituraAux -> expresion COMA escrituraAux .)
+    ELSE            reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    ID              reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    IF              reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    PRINT           reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    WHILE           reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    FROM            reduce using rule 20 (bloque -> LBRACE RBRACE .)
+    RBRACE          reduce using rule 20 (bloque -> LBRACE RBRACE .)
 
 
-state 151
+state 153
 
     (67) escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print . SEMICOLON
 
-    SEMICOLON       shift and go to state 170
+    RBRACE          shift and go to state 161
 
 
-state 152
+state 154
 
     (83) exp1 -> PLUS push_poper . exp
     (81) exp -> . termino quad_term
@@ -2566,7 +2685,7 @@ state 152
     factorAux                      shift and go to state 77
     var_cte                        shift and go to state 66
 
-state 153
+state 155
 
     (84) exp1 -> MINUS push_poper . exp
     (81) exp -> . termino quad_term
@@ -2589,13 +2708,9 @@ state 153
     CTE_I           shift and go to state 72
     CTE_F           shift and go to state 71
 
-    termino                        shift and go to state 67
-    exp                            shift and go to state 172
-    factor                         shift and go to state 70
-    factorAux                      shift and go to state 77
-    var_cte                        shift and go to state 66
+    condElse                       shift and go to state 162
 
-state 154
+state 156
 
     (90) termino1 -> DIVIDE push_poper . termino
     (87) termino -> . factor quad_fact
@@ -2621,7 +2736,7 @@ state 154
     factorAux                      shift and go to state 77
     var_cte                        shift and go to state 66
 
-state 155
+state 157
 
     (89) termino1 -> TIMES push_poper . termino
     (87) termino -> . factor quad_fact
@@ -2635,19 +2750,14 @@ state 155
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    LPAREN          shift and go to state 163
 
     termino                        shift and go to state 174
     factor                         shift and go to state 70
     factorAux                      shift and go to state 77
     var_cte                        shift and go to state 66
 
-state 156
+state 158
 
     (20) bloque -> LBRACE . RBRACE
     (21) bloque -> LBRACE . bloqueAux RBRACE
@@ -2678,6 +2788,8 @@ state 156
     FROM            shift and go to state 41
 
     estatuto                       shift and go to state 35
+    while                          shift and go to state 44
+    bloqueAux                      shift and go to state 164
     condicion                      shift and go to state 37
     loopFromDo                     shift and go to state 39
     llamadaAFuncion                shift and go to state 40
@@ -2687,7 +2799,7 @@ state 156
     comparacion                    shift and go to state 46
     escritura                      shift and go to state 47
 
-state 157
+state 159
 
     (62) condicion -> IF LPAREN expresion RPAREN cond bloque . condFinal
     (63) condicion -> IF LPAREN expresion RPAREN cond bloque . ELSE condElse bloque condFinal
@@ -2703,7 +2815,7 @@ state 157
 
     condFinal                      shift and go to state 177
 
-state 158
+state 160
 
     (75) expresion -> exp comp exp quad_comp .
 
@@ -2717,61 +2829,64 @@ state 158
     FROM            reduce using rule 75 (expresion -> exp comp exp quad_comp .)
     RBRACE          reduce using rule 75 (expresion -> exp comp exp quad_comp .)
 
-
-state 159
-
-    (61) comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .
-
-    ID              reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-    IF              reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-    PRINT           reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-    WHILE           reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-    FROM            reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-    RBRACE          reduce using rule 61 (comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .)
-
-
-state 160
-
-    (59) asignacion -> ID push_id EQUAL push_poper expresion create_asign . SEMICOLON
-
-    SEMICOLON       shift and go to state 179
-
+    function                       shift and go to state 165
 
 state 161
 
-    (50) llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub RPAREN . expresion
-    (51) llamadaAFuncion -> ID generarEra LPAREN paramFuncion gosub RPAREN . SEMICOLON
-    (74) expresion -> . exp
-    (75) expresion -> . exp comp exp quad_comp
-    (81) exp -> . termino quad_term
-    (82) exp -> . termino quad_term exp1
-    (87) termino -> . factor quad_fact
-    (88) termino -> . factor quad_fact termino1
-    (91) factor -> . LPAREN expresion RPAREN
-    (92) factor -> . factorAux
-    (93) factorAux -> . PLUS push_poper var_cte
-    (94) factorAux -> . MINUS push_poper var_cte
-    (95) factorAux -> . var_cte
-    (99) var_cte -> . ID push_id
-    (100) var_cte -> . CTE_I push_cte
-    (101) var_cte -> . CTE_F push_cte
+    (61) comparacion -> ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON .
 
-    SEMICOLON       shift and go to state 180
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    ID              shift and go to state 74
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    ELSE            reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    ID              reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    IF              reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    PRINT           reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    WHILE           reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    FROM            reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
+    RBRACE          reduce using rule 21 (bloque -> LBRACE bloqueAux RBRACE .)
 
-    expresion                      shift and go to state 181
-    termino                        shift and go to state 67
-    exp                            shift and go to state 76
-    factorAux                      shift and go to state 77
-    factor                         shift and go to state 70
-    var_cte                        shift and go to state 66
 
 state 162
+
+    (59) asignacion -> ID push_id EQUAL push_poper expresion create_asign . SEMICOLON
+
+    LBRACE          shift and go to state 137
+
+    bloque                         shift and go to state 166
+
+state 163
+
+    (39) loopFromDo -> FROM LPAREN ID EQUAL expresion RPAREN TO LPAREN . expresion RPAREN DO LBRACE bloqueAux RBRACE
+    (60) expresion -> . exp
+    (61) expresion -> . exp comp exp quad_comp
+    (67) exp -> . termino quad_term
+    (68) exp -> . termino quad_term exp1
+    (73) termino -> . factor quad_fact
+    (74) termino -> . factor quad_fact termino1
+    (77) factor -> . LPAREN expresion RPAREN
+    (78) factor -> . factorAux
+    (79) factorAux -> . PLUS push_poper var_cte
+    (80) factorAux -> . MINUS push_poper var_cte
+    (81) factorAux -> . var_cte
+    (85) var_cte -> . ID push_id
+    (86) var_cte -> . CTE_I push_cte
+    (87) var_cte -> . CTE_F push_cte
+    (88) var_cte -> . CTE_STRING push_cte
+
+    LPAREN          shift and go to state 71
+    PLUS            shift and go to state 66
+    MINUS           shift and go to state 65
+    ID              shift and go to state 72
+    CTE_I           shift and go to state 70
+    CTE_F           shift and go to state 68
+    CTE_STRING      shift and go to state 69
+
+    expresion                      shift and go to state 167
+    factor                         shift and go to state 67
+    var_cte                        shift and go to state 63
+    termino                        shift and go to state 64
+    exp                            shift and go to state 74
+    factorAux                      shift and go to state 75
+
+state 164
 
     (55) paramFuncion -> ID push_id COMA . paramFuncion
     (54) paramFuncion -> . ID push_id
@@ -2795,13 +2910,7 @@ state 162
     (100) var_cte -> . CTE_I push_cte
     (101) var_cte -> . CTE_F push_cte
 
-    ID              shift and go to state 111
-    RPAREN          reduce using rule 34 (empty -> .)
-    LPAREN          shift and go to state 73
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 68
-    CTE_I           shift and go to state 72
-    CTE_F           shift and go to state 71
+    RBRACE          shift and go to state 168
 
     expresion                      shift and go to state 112
     paramFuncion                   shift and go to state 182
@@ -2812,35 +2921,37 @@ state 162
     factor                         shift and go to state 70
     empty                          shift and go to state 110
 
-state 163
+state 165
 
     (57) paramFuncion -> expresion COMA paramFuncion .
 
     RPAREN          reduce using rule 57 (paramFuncion -> expresion COMA paramFuncion .)
 
 
-state 164
+state 166
 
     (42) loopFromDo -> FROM LPAREN ID EQUAL expresion RPAREN . TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
 
     TO              shift and go to state 183
 
+    condFinal                      shift and go to state 169
 
-state 165
+state 167
 
     (38) while -> WHILE while1 LPAREN expresion RPAREN while2 . LBRACE bloqueAux RBRACE while3
 
-    LBRACE          shift and go to state 184
+    RPAREN          shift and go to state 170
 
 
-state 166
+state 168
 
     (24) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function .
 
     $end            reduce using rule 24 (function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function .)
 
+    while3                         shift and go to state 171
 
-state 167
+state 169
 
     (23) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE . endProc
     (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE . endProc function
@@ -2851,7 +2962,7 @@ state 167
 
     endProc                        shift and go to state 185
 
-state 168
+state 170
 
     (26) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc .
     (28) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc . function
@@ -2864,12 +2975,11 @@ state 168
     (28) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
     (29) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
 
-    $end            reduce using rule 26 (function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc .)
-    FUNCTION        shift and go to state 18
+    DO              shift and go to state 172
 
     function                       shift and go to state 186
 
-state 169
+state 171
 
     (27) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux . RBRACE endProc
     (29) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux . RBRACE endProc function
@@ -2877,19 +2987,14 @@ state 169
     RBRACE          shift and go to state 187
 
 
-state 170
+state 172
 
     (67) escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .
 
-    ID              reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
-    IF              reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
-    PRINT           reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
-    WHILE           reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
-    FROM            reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
-    RBRACE          reduce using rule 67 (escritura -> PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON .)
+    LBRACE          shift and go to state 173
 
 
-state 171
+state 173
 
     (83) exp1 -> PLUS push_poper exp .
 
@@ -3091,6 +3196,8 @@ state 184
     FROM            shift and go to state 41
 
     estatuto                       shift and go to state 35
+    bloqueAux                      shift and go to state 174
+    while                          shift and go to state 44
     condicion                      shift and go to state 37
     loopFromDo                     shift and go to state 39
     llamadaAFuncion                shift and go to state 40
@@ -3100,7 +3207,7 @@ state 184
     comparacion                    shift and go to state 46
     escritura                      shift and go to state 47
 
-state 185
+state 174
 
     (23) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc .
     (25) function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc . function
@@ -3113,12 +3220,11 @@ state 185
     (28) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
     (29) function -> . FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
 
-    $end            reduce using rule 23 (function -> FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc .)
-    FUNCTION        shift and go to state 18
+    RBRACE          shift and go to state 175
 
     function                       shift and go to state 192
 
-state 186
+state 175
 
     (28) function -> FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function .
 
