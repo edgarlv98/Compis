@@ -126,8 +126,8 @@ def p_program(p):
         pass
 
 def p_main(p):
-    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE
-            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc
+            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc
     '''
 
 def p_nomMain(p):
@@ -188,15 +188,20 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE 
-              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function 
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
     '''
+
+def p_endProc(p):
+    '''endProc :
+    '''
+    quad.endproc()
 
 def p_param(p):
     '''param : tipo ID 
@@ -262,14 +267,9 @@ def p_estatuto(p):
                 | llamadaAFuncion
     '''
 def p_llamadaAFuncion(p):
-    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub endProc RPAREN expresion
-                        | ID generarEra LPAREN paramFuncion gosub endProc RPAREN SEMICOLON
+    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub RPAREN expresion
+                        | ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
-
-def p_endProc(p):
-    '''endProc :
-    '''
-    quad.endproc(p[-5])
 
 def p_gosub(p):
     '''gosub :

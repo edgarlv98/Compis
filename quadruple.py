@@ -265,6 +265,6 @@ def miReturn():
     quadr = quadruple(len(Quad), 'return', None, None, result)
     Quad.append(quadr)
     
-def endproc(id):
-    quadr = quadruple(len(Quad), 'endproc', None, None, id)
+def endproc():
+    quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
