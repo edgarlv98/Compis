@@ -329,7 +329,7 @@ def p_escrituraAux(p):
                     | CTE_STRING
                     | expresion COMA escrituraAux
                     | CTE_STRING COMA escrituraAux
-                    | llamadaFuncion
+                    | llamadaAFuncion
     '''
 
 def p_expresion(p):
