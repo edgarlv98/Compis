@@ -188,21 +188,25 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE funcionSeis
-              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE funcionSeis
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE funcionSeis function 
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE funcionSeis function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE funcionSeis
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE funcionSeis
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE funcionSeis function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE funcionSeis function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE 
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
     '''
 
 def p_param(p):
     '''param : tipo ID funcionTres
              | tipo ID COMA funcionTres funcionCuatro param
+             | empty
     '''
-    varsTable.insert(p[2], varsTable.tipo, 0, funcionPadreDeVariables)
+
+def p_empty(p):
+    '''empty : 
+    '''
 
 def p_nomFunc(p):
     '''nomFunc : ID
@@ -214,7 +218,6 @@ def p_nomFunc(p):
     directorioFunc.insert(p[1], directorioFunc.tipo, len(quad.Quad))
     global idFuncActual
     idFuncActual = p[1]
-    funcionDos(p[1])
 
 
 def p_funcionTres(p):
@@ -274,7 +277,13 @@ def p_estatuto(p):
                 | while
                 | loopFromDo
                 | comparacion
+                | llamadaAFuncion
     '''
+def p_llamadaAFuncion(p):
+    '''llamadaAFuncion : ID LPAREN param RPAREN expresion
+                        | ID LPAREN param RPAREN SEMICOLON
+    '''
+    print(p[1])
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
@@ -308,7 +317,7 @@ def p_quad_condFinal(p):
     quad.updateQuadCondIFJump()
 
 def p_escritura(p):
-    '''escritura : PRINT push_poper LPAREN exp RPAREN quad_print SEMICOLON
+    '''escritura : PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON
     '''
 
 def p_quad_print(p):
@@ -320,6 +329,7 @@ def p_escrituraAux(p):
                     | CTE_STRING
                     | expresion COMA escrituraAux
                     | CTE_STRING COMA escrituraAux
+                    | llamadaFuncion
     '''
 
 def p_expresion(p):
@@ -453,7 +463,7 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    quad.cuadruplos()
+    #quad.cuadruplos()
     #varsTable.show()
     sys.exit()
 else:
