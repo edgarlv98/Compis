@@ -199,8 +199,8 @@ def p_function(p):
     '''
 
 def p_param(p):
-    '''param : tipo ID funcionTres
-             | tipo ID COMA funcionTres funcionCuatro param
+    '''param : tipo ID 
+             | tipo ID COMA param
              | empty
     '''
 
@@ -280,10 +280,29 @@ def p_estatuto(p):
                 | llamadaAFuncion
     '''
 def p_llamadaAFuncion(p):
-    '''llamadaAFuncion : ID LPAREN param RPAREN expresion
-                        | ID LPAREN param RPAREN SEMICOLON
+    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub RPAREN expresion
+                        | ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
-    print(p[1])
+
+def p_gosub(p):
+    '''gosub :
+    '''
+    quad.moduloSeis(p[-4])
+
+def p_generarEra(p):
+    '''generarEra :
+    '''
+    quad.moduloDos(p[-1])
+
+def p_paramFuncion(p):
+    '''paramFuncion : ID push_id
+                     | ID push_id COMA paramFuncion
+                     | expresion
+                     | expresion COMA paramFuncion
+                     | empty
+    '''
+    quad.moduloTres()
+
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
@@ -463,7 +482,7 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #quad.cuadruplos()
+    quad.cuadruplos()
     #varsTable.show()
     sys.exit()
 else:

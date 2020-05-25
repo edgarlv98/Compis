@@ -7,11 +7,11 @@ main(){
 }
 
 %%Este es un comentario
-function int pruebafuncion(){
+function int pruebafuncion(int a, int b){
     var int prueba2, otraPrueba, prueba;
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
-    print(pruebafuncion() + 1);
+    pruebafuncion(prueba2 + 2, otraPrueba);
     prueba = 3 * 3 + 11;
     print(prueba);
     

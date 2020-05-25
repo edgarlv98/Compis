@@ -226,27 +226,38 @@ def mostrarSize():
     for i in range(len(POper)):
         print(POper[i])
 
+auxCuadruploFuncion = 0
+
 def moduloDos(id):
     quadr = quadruple(len(Quad), 'era', None, None, id)
     Quad.append(quadr)
     global paramCont
     paramCont = 1
+    global auxCuadruploFuncion
+    auxCuadruploFuncion = len(Quad)
+
+quadAuxParaParametros = []
+
 
 def moduloTres():
     argument = PilaO.pop()
-    PTypes.pop()
-    valor = AVAIL.pop()
-    num = str(paramCont)
-    quadr = quadruple(len(Quad), 'param', argument, None, 'param'+num)
-    Quad.append(quadr)
-    return valor
+    AVAIL.pop()
+    quadr = quadruple(0, 'param', argument, None, 'param')
+    quadAuxParaParametros.append(quadr)
+    sumaParametro()
 
-def moduloCuatro():
+def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
-def moduloSeis(id, addr):
-    quadr = quadruple(len(Quad), 'gosub', id, None, addr)
+def moduloSeis(id):
+    for i in range(1,paramCont):
+        x = quadAuxParaParametros.pop()
+        num = str(i)
+        x.contQua = len(Quad)
+        x.result = 'param' + num
+        Quad.append(x)
+    quadr = quadruple(len(Quad), 'gosub', id, None, auxCuadruploFuncion)
     Quad.append(quadr)
 
 def miReturn():
