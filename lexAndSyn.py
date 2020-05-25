@@ -219,24 +219,6 @@ def p_nomFunc(p):
     global idFuncActual
     idFuncActual = p[1]
 
-
-def p_funcionTres(p):
-    "funcionTres :"
-    quad.moduloTres()
-
-def p_funcionCuatro(p):
-    "funcionCuatro :"
-    quad.moduloCuatro()
-
-def p_funcionSeis(p):
-    "funcionSeis :"
-    aux = None
-    for x in directorioFunc.funciones:
-        if x.id == idFuncActual:
-            aux = x
-            break
-    quad.moduloSeis(idFuncActual, aux.direccion)
-
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
                  | estatuto bloqueAux
@@ -280,14 +262,24 @@ def p_estatuto(p):
                 | llamadaAFuncion
     '''
 def p_llamadaAFuncion(p):
-    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub RPAREN expresion
-                        | ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
+    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub endProc RPAREN expresion
+                        | ID generarEra LPAREN paramFuncion gosub endProc RPAREN SEMICOLON
     '''
+
+def p_endProc(p):
+    '''endProc :
+    '''
+    quad.endproc(p[-5])
 
 def p_gosub(p):
     '''gosub :
     '''
-    quad.moduloSeis(p[-4])
+    aux = None
+    for x in directorioFunc.funciones:
+        if x.id == idFuncActual:
+            aux = x
+            break
+    quad.moduloSeis(idFuncActual, aux.direccion)
 
 def p_generarEra(p):
     '''generarEra :
@@ -295,14 +287,13 @@ def p_generarEra(p):
     quad.moduloDos(p[-1])
 
 def p_paramFuncion(p):
-    '''paramFuncion : ID push_id
+    '''paramFuncion : ID  push_id 
                      | ID push_id COMA paramFuncion
                      | expresion
                      | expresion COMA paramFuncion
                      | empty
     '''
     quad.moduloTres()
-
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON

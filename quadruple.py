@@ -226,15 +226,13 @@ def mostrarSize():
     for i in range(len(POper)):
         print(POper[i])
 
-auxCuadruploFuncion = 0
+
 
 def moduloDos(id):
     quadr = quadruple(len(Quad), 'era', None, None, id)
     Quad.append(quadr)
     global paramCont
     paramCont = 1
-    global auxCuadruploFuncion
-    auxCuadruploFuncion = len(Quad)
 
 quadAuxParaParametros = []
 
@@ -250,14 +248,14 @@ def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
-def moduloSeis(id):
+def moduloSeis(id, addres):
     for i in range(1,paramCont):
         x = quadAuxParaParametros.pop()
         num = str(i)
         x.contQua = len(Quad)
         x.result = 'param' + num
         Quad.append(x)
-    quadr = quadruple(len(Quad), 'gosub', id, None, auxCuadruploFuncion)
+    quadr = quadruple(len(Quad), 'gosub', id, None, addres)
     Quad.append(quadr)
 
 def miReturn():
