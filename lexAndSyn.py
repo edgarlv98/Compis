@@ -307,7 +307,10 @@ def p_gosub(p):
 def p_generarEra(p):
     '''generarEra :
     '''
-    quad.moduloDos(p[-2])
+    for x in directorioFunc.funciones:
+        if x.id == p[-2]:
+            quad.moduloDos(x.direccion)
+            break
 
 def p_paramFuncion(p):
     '''paramFuncion : ID  push_id2
@@ -502,14 +505,14 @@ def printTablaDeVariablePorFuncion():
 if success == True:
     #print("Archivo aprobado")
     print("Funciones")
-    #directorioFunc.show()
+    directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     quad.cuadruplos()
-    varsTable.show()
+    #varsTable.show()
     #virtual.inicio()
     #memoria.show()
     sys.exit()

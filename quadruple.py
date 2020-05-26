@@ -241,8 +241,8 @@ def mostrarSize():
 
 
 
-def moduloDos(id):
-    quadr = quadruple(len(Quad), 'era', None, None, id)
+def moduloDos(direccion):
+    quadr = quadruple(len(Quad), 'era', None, None, direccion)
     Quad.append(quadr)
     global paramCont
     paramCont = 1
