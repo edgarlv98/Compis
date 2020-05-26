@@ -10,13 +10,14 @@ variables = []
 
 #Objeto directorio funciones#
 class funcion(object):
-    def __init__(self, id, tipo, direccion):
+    def __init__(self, id, tipo, alcance, direccion):
         self.id = str(id)
         self.tipo = str(tipo)
+        self.alcance = alcance
         self.direccion = direccion
 
-def insert(id, tipo, direccion):
-    temp = funcion(id, tipo, direccion)
+def insert(id, tipo, alcance, direccion):
+    temp = funcion(id, tipo, alcance, direccion)
     if (len(funciones) >= 1 and not repeatID(id)) or len(funciones) == 0:
         funciones.append(temp)
 

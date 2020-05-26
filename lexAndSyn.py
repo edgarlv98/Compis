@@ -8,6 +8,7 @@ import memoria
 success = True
 funcionPadreDeVariables = 'global'
 idFuncActual = None
+tipoFuncion = None
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -119,13 +120,31 @@ import vars_table as varsTable
 import directorio_funciones as directorioFunc
 
 def p_program(p):
-    '''program : PROGRAM ID COLON vars main function
+    '''program : PROGRAM ID COLON varsGlobal main function
                | PROGRAM ID COLON main function
-               | PROGRAM ID COLON vars main
+               | PROGRAM ID COLON varsGlobal main
                | PROGRAM ID COLON main
     '''
     if p[4]== 'main':
         pass
+
+def p_varsGlobal(p):
+    '''varsGlobal : VAR varAuxGlobal1
+    '''
+
+def p_varAuxGlobal1(p):
+    '''varAuxGlobal1 : tipo varAuxGlobal2 SEMICOLON
+                     | tipo varAuxGlobal2 SEMICOLON varAuxGlobal1
+    '''
+
+def p_varAuxGlobal2(p):
+    '''varAuxGlobal2 : ID
+                     | ID COMA varAuxGlobal2
+    '''
+    tipo = varsTable.tipo
+    direccion = memoria.getDirVarGlobal(tipo)
+    memoria.updateGlobalVariable(None, direccion, tipo)
+    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 def p_main(p):
     '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc
@@ -137,9 +156,10 @@ def p_nomMain(p):
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
+    direccion = memoria.getDirFuncion('int')
     #global direccion_func
     #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], 'int', len(quad.Quad))
+    directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -214,14 +234,23 @@ def p_empty(p):
     '''empty : 
     '''
 
+def p_push_function(p):
+    "push_function :"
+    tipo = directorioFunc.tipo
+    if(directorioFunc.tipo != 'void'):
+        direccion = memoria.getDirVarGlobal(tipo)
+        memoria.updateGlobalVariable(None, direccion, tipo)
+        varsTable.insert(p[-1], tipo, direccion, 'global')
+
+
 def p_nomFunc(p):
-    '''nomFunc : ID
+    '''nomFunc : ID push_function
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = p[1]
-    #global direccion_func
-    #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], directorioFunc.tipo, len(quad.Quad))
+    tipo = directorioFunc.tipo
+    direccion = memoria.getDirFuncion(tipo)
+    directorioFunc.insert(p[1], tipo, len(quad.Quad), direccion)
     global idFuncActual
     idFuncActual = p[1]
 
@@ -280,7 +309,7 @@ def p_gosub(p):
         if x.id == idFuncActual:
             aux = x
             break
-    quad.moduloSeis(idFuncActual, aux.direccion)
+    quad.moduloSeis(idFuncActual, aux.alcance)
 
 def p_generarEra(p):
     '''generarEra :
@@ -288,13 +317,17 @@ def p_generarEra(p):
     quad.moduloDos(p[-1])
 
 def p_paramFuncion(p):
-    '''paramFuncion : ID  push_id 
-                     | ID push_id COMA paramFuncion
+    '''paramFuncion : ID  push_id2
+                     | ID push_id2 COMA paramFuncion
                      | expresion
                      | expresion COMA paramFuncion
                      | empty
     '''
     quad.moduloTres()
+
+def p_push_id2(p):
+    "push_id2 :"
+    quad.pushID(p[-1])
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
@@ -475,7 +508,7 @@ def printTablaDeVariablePorFuncion():
 if success == True:
     #print("Archivo aprobado")
     print("Funciones")
-    #directorioFunc.show()
+    directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()

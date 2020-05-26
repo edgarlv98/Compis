@@ -281,3 +281,4 @@ def miReturn():
 def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
+    memoria.cleanMemory()

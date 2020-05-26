@@ -1,4 +1,5 @@
 import sys
+import memoria
 
 simbolos = []
 
@@ -36,8 +37,12 @@ def update(id, value):
     for i in range (len(simbolos)):
         if simbolos[i].id == id:
             simbolos[i].value = value
+            direccion = simbolos[i].direccion
+            tipo = simbolos[i].tipo
+            if(simbolos[i].funcion == 'global'):
+                memoria.updateGlobalVariable(value, direccion, tipo)
 
 def show():
     longitud = len(simbolos)
     for i in range(0, longitud):
-        print(simbolos[i].tipo, simbolos[i].id, simbolos[i].value)
+        print(simbolos[i].tipo, simbolos[i].id, simbolos[i].value, simbolos[i].direccion, simbolos[i].funcion)
