@@ -242,8 +242,6 @@ def p_nomFunc(p):
     tipo = directorioFunc.tipo
     direccion = memoria.getDirFuncion(tipo)
     directorioFunc.insert(p[1], tipo, len(quad.Quad), direccion)
-    global idFuncActual
-    idFuncActual = p[1]
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
@@ -288,24 +286,28 @@ def p_estatuto(p):
                 | llamadaAFuncion
     '''
 def p_llamadaAFuncion(p):
-    '''llamadaAFuncion : ID generarEra LPAREN paramFuncion gosub RPAREN expresion
-                        | ID generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
+    '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
+                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
+    
+def p_actualizaFuncion(p):
+    'actualizaFuncion : '
+    global idFuncActual
+    idFuncActual = p[-1]
 
 def p_gosub(p):
     '''gosub :
     '''
-    aux = None
     for x in directorioFunc.funciones:
         if x.id == idFuncActual:
-            aux = x
+            quad.moduloSeis(x.id, x.alcance, x.direccion)
             break
-    quad.moduloSeis(idFuncActual, aux.alcance, aux.direccion)
+    
 
 def p_generarEra(p):
     '''generarEra :
     '''
-    quad.moduloDos(p[-1])
+    quad.moduloDos(p[-2])
 
 def p_paramFuncion(p):
     '''paramFuncion : ID  push_id2
@@ -500,7 +502,7 @@ def printTablaDeVariablePorFuncion():
 if success == True:
     #print("Archivo aprobado")
     print("Funciones")
-    directorioFunc.show()
+    #directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
@@ -509,7 +511,7 @@ if success == True:
     quad.cuadruplos()
     varsTable.show()
     #virtual.inicio()
-    memoria.show()
+    #memoria.show()
     sys.exit()
 else:
     print("Archivo no aprobado")
