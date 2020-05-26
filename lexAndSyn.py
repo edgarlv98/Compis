@@ -300,7 +300,7 @@ def p_gosub(p):
     '''
     for x in directorioFunc.funciones:
         if x.id == idFuncActual:
-            quad.moduloSeis(x.id, x.alcance)
+            quad.moduloSeis(x.id, x.alcance, x.direccion)
             break
     
 
