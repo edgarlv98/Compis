@@ -11,6 +11,11 @@ globalInt = 5000
 globalFloat = 5100
 globalChar = 5200
 
+# Direccion de memoria locales
+memoLocalInt = 15000
+memoLocalFloat = 15100
+memoLocalChar = 15200
+
 # Direccion de memoria temporales
 memoTempInt = 10000
 memoTempFloat = 10100
@@ -258,7 +263,9 @@ def updateGlobalVariable(valor, dir, tipo):
     if(tipo == "char"):
         memoria_global.char[dir] = valor
 
-def updateVariable(valor, dir, tipo):
+# Actualiza el valor de una direccion local dado un
+# tipo y una direccion
+def updateVariableLocal(valor, dir, tipo):
     if(tipo == "int"):
         memoria_local.int[dir] = valor
     if(tipo == "float"):
@@ -266,6 +273,8 @@ def updateVariable(valor, dir, tipo):
     if(tipo == "char"):
         memoria_local.char[dir] = valor
 
+# Funcion que regresa una direccion para una fucion
+# dependiendo de su tipo
 def getDirFuncion(tipo):
     global memoFuncInt 
     global memoFuncFloat
@@ -285,6 +294,24 @@ def getDirFuncion(tipo):
         memoFuncVoid += 1
     return temp
 
+# Funcion que regresa una direccion para una variable
+# dependiendo de su tipo
+def getDirvariableLocal(tipo):
+    global memoLocalInt
+    global memoLocalFloat
+    global memoLocalChar
+    if(tipo == 'int'):
+        temp = memoLocalInt
+        memoLocalInt += 1
+    elif(tipo == 'float'):
+        temp = memoLocalFloat
+        memoLocalFloat += 1
+    elif(tipo == 'char'):
+        temp = memoLocalChar
+        memoLocalChar += 1
+    return temp
+
+# Funcion que limpia las direcciones de los temporales
 def cleanMemory():
     global memoTempInt
     global memoTempFloat
@@ -296,21 +323,28 @@ def cleanMemory():
     memoTempChar = 10200
     memoTempBool = 10300
 
+    #global memoLocalInt 
+    #global memoLocalFloat
+    #global memoLocalChar
+    #memoLocalInt = 15000
+    #memoLocalFloat = 15100
+    #memoLocalChar = 15200
+
 def show():
     print("GLOBAL")
     print("INT")
     pprint(memoria_global.int, width=1)
-    #print("TEMPORALES")
-    #print("INT")
-    #pprint(memoria_temporal.int, width=1)
-    #print("FLOAT")
-    #pprint(memoria_temporal.float, width=1)
-    #print("BOOL")
-    #pprint(memoria_temporal.bool, width=1)
-    #print("CTEEE")
-    #print("INT")
-    #pprint(memoria_local.int, width=1)
-    #print("FLOAT")
-    #pprint(memoria_local.float, width=1)
-    #print("CHAR")
-    #pprint(memoria_local.char, width=1)
+    print("TEMPORALES")
+    print("INT")
+    pprint(memoria_temporal.int, width=1)
+    print("FLOAT")
+    pprint(memoria_temporal.float, width=1)
+    print("BOOL")
+    pprint(memoria_temporal.bool, width=1)
+    print("CTEEE")
+    print("INT")
+    pprint(memoria_local.int, width=1)
+    print("FLOAT")
+    pprint(memoria_local.float, width=1)
+    print("CHAR")
+    pprint(memoria_local.char, width=1)

@@ -44,7 +44,8 @@ function int pruebafuncion(int a, int b){
     }
 }
 
-function int otraFuncion(int a){
+function void otraFuncion(int a){
     var int prueba25;
     prueba25 = 2 + 2 * 5;
+    prueba25 = 5 + 95;
 }

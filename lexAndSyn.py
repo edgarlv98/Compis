@@ -174,18 +174,9 @@ def p_varAux2(p):
     '''varAux2 : ID
             | ID COMA varAux2
     '''
-    if varsTable.tipo == 'int':
-        #global vars_int
-        #vars_int = vars_int + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_int, funcionPadreDeVariables)
-    elif varsTable.tipo == 'char':
-        #global vars_char
-        #vars_char = vars_char + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_char, funcionPadreDeVariables)
-    elif varsTable.tipo == 'float':
-        #global vars_float
-        #vars_float = vars_float + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_float, funcionPadreDeVariables)
+    tipo = varsTable.tipo
+    direccion = memoria.getDirvariableLocal(tipo)
+    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 
 def p_tipo(p):
@@ -309,7 +300,7 @@ def p_gosub(p):
         if x.id == idFuncActual:
             aux = x
             break
-    quad.moduloSeis(idFuncActual, aux.alcance)
+    quad.moduloSeis(idFuncActual, aux.alcance, aux.direccion)
 
 def p_generarEra(p):
     '''generarEra :
@@ -335,6 +326,7 @@ def p_asignacion(p):
 
 def p_create_asign(p):
     "create_asign :"
+    
     valor = quad.createQuadAssign()
     myVar = p[-5]
     varsTable.update(myVar, valor)
@@ -515,7 +507,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     quad.cuadruplos()
-    #varsTable.show()
+    varsTable.show()
     #virtual.inicio()
     memoria.show()
     sys.exit()

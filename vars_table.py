@@ -41,6 +41,8 @@ def update(id, value):
             tipo = simbolos[i].tipo
             if(simbolos[i].funcion == 'global'):
                 memoria.updateGlobalVariable(value, direccion, tipo)
+            else:
+                memoria.updateVariableLocal(value, direccion, tipo)
 
 def show():
     longitud = len(simbolos)

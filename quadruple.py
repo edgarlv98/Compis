@@ -24,12 +24,12 @@ class quadruple(object):
         self.result = result
 
 def pushID(id):
-    PilaO.append(id)
     size = len(simbolos)
     for i in range(size):
         if(id == simbolos[i].id):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
+            PilaO.append(simbolos[i].direccion)
 
 def is_float(cte):
     try:
@@ -261,14 +261,14 @@ def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
-def moduloSeis(id, addres):
+def moduloSeis(id, alcance, direccion):
     for i in range(1,paramCont):
         x = quadAuxParaParametros.pop()
         num = str(i)
         x.contQua = len(Quad)
         x.result = 'param' + num
         Quad.append(x)
-    quadr = quadruple(len(Quad), 'gosub', id, None, addres)
+    quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
 
 def miReturn():
