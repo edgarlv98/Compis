@@ -1,9 +1,14 @@
 import sys
 import ply.lex as lex
 import ply.yacc as yacc
+import quadruple as quad
+import maquinaVirtual as virtual
+import memoria
 
 success = True
 funcionPadreDeVariables = 'global'
+idFuncActual = None
+tipoFuncion = None
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -26,7 +31,9 @@ reserved = {
     'print' : 'PRINT',
     'function' : 'FUNCTION',
     'while' : 'WHILE',
-    'for' : 'FOR',
+    'from' : 'FROM',
+    'do' : 'DO',
+    'to' : 'TO',
     'main' : 'MAIN'
 }
 
@@ -113,17 +120,35 @@ import vars_table as varsTable
 import directorio_funciones as directorioFunc
 
 def p_program(p):
-    '''program : PROGRAM ID COLON vars main function
+    '''program : PROGRAM ID COLON varsGlobal main function
                | PROGRAM ID COLON main function
-               | PROGRAM ID COLON vars main
+               | PROGRAM ID COLON varsGlobal main
                | PROGRAM ID COLON main
     '''
     if p[4]== 'main':
         pass
 
+def p_varsGlobal(p):
+    '''varsGlobal : VAR varAuxGlobal1
+    '''
+
+def p_varAuxGlobal1(p):
+    '''varAuxGlobal1 : tipo varAuxGlobal2 SEMICOLON
+                     | tipo varAuxGlobal2 SEMICOLON varAuxGlobal1
+    '''
+
+def p_varAuxGlobal2(p):
+    '''varAuxGlobal2 : ID
+                     | ID COMA varAuxGlobal2
+    '''
+    tipo = varsTable.tipo
+    direccion = memoria.getDirVarGlobal(tipo)
+    memoria.updateGlobalVariable(None, direccion, tipo)
+    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
+
 def p_main(p):
-    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE
-            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc
+            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc
     '''
 
 def p_nomMain(p):
@@ -131,9 +156,10 @@ def p_nomMain(p):
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
+    direccion = memoria.getDirFuncion('int')
     #global direccion_func
     #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], 'int', direccion_func)
+    directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -148,19 +174,9 @@ def p_varAux2(p):
     '''varAux2 : ID
             | ID COMA varAux2
     '''
-
-    if varsTable.tipo == 'int':
-        #global vars_int
-        #vars_int = vars_int + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_int, funcionPadreDeVariables)
-    elif varsTable.tipo == 'char':
-        #global vars_char
-        #vars_char = vars_char + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_char, funcionPadreDeVariables)
-    elif varsTable.tipo == 'float':
-        #global vars_float
-        #vars_float = vars_float + 1
-        varsTable.insert(p[1], varsTable.tipo, vars_float, funcionPadreDeVariables)
+    tipo = varsTable.tipo
+    direccion = memoria.getDirvariableLocal(tipo)
+    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 
 def p_tipo(p):
@@ -184,30 +200,48 @@ def p_bloque(p):
     '''
 
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
     '''
+
+def p_endProc(p):
+    '''endProc :
+    '''
+    quad.endproc()
 
 def p_param(p):
-    '''param : tipo ID
+    '''param : tipo ID 
              | tipo ID COMA param
+             | empty
     '''
-    varsTable.insert(p[2], varsTable.tipo, 0, funcionPadreDeVariables)
+
+def p_empty(p):
+    '''empty : 
+    '''
+
+def p_push_function(p):
+    "push_function :"
+    tipo = directorioFunc.tipo
+    if(directorioFunc.tipo != 'void'):
+        direccion = memoria.getDirVarGlobal(tipo)
+        memoria.updateGlobalVariable(None, direccion, tipo)
+        varsTable.insert(p[-1], tipo, direccion, 'global')
+
 
 def p_nomFunc(p):
-    '''nomFunc : ID
+    '''nomFunc : ID push_function
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = p[1]
-    #global direccion_func
-    #direccion_func = direccion_func + 1
-    directorioFunc.insert(p[1], directorioFunc.tipo, direccion_func)
+    tipo = directorioFunc.tipo
+    direccion = memoria.getDirFuncion(tipo)
+    directorioFunc.insert(p[1], tipo, len(quad.Quad), direccion)
 
 def p_bloqueAux(p):
     '''bloqueAux : estatuto
@@ -215,59 +249,169 @@ def p_bloqueAux(p):
     '''
 
 def p_while(p):
-    '''while : WHILE LPAREN expresion RPAREN bloque
+    '''while : WHILE while1 LPAREN expresion RPAREN while2 LBRACE bloqueAux RBRACE while3
     '''
+
+def p_while1(p):
+    "while1 :"
+    quad.while1()
+
+def p_while2(p):
+    "while2 :"
+    quad.while2()
+
+def p_while3(p):
+    "while3 :"
+    quad.while3()
+
+def p_loopFromDo(p):
+    '''loopFromDo : FROM LPAREN ID EQUAL expresion RPAREN TO LPAREN expresion RPAREN DO LBRACE bloqueAux RBRACE
+    '''
+
+#def p_loop1(p):
+#    "loop1 :"
+#    quad.loop1()
+#
+#def p_loop2(p):
+#    "loop2 :"
+#    quad.loop2()
 
 def p_estatuto(p):
     '''estatuto : asignacion
                 | condicion
                 | escritura
                 | while
+                | loopFromDo
                 | comparacion
+                | llamadaAFuncion
     '''
+def p_llamadaAFuncion(p):
+    '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
+                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
+    '''
+    
+def p_actualizaFuncion(p):
+    'actualizaFuncion : '
+    global idFuncActual
+    idFuncActual = p[-1]
+
+def p_gosub(p):
+    '''gosub :
+    '''
+    for x in directorioFunc.funciones:
+        if x.id == idFuncActual:
+            quad.moduloSeis(x.id, x.alcance, x.direccion)
+            break
+    
+
+def p_generarEra(p):
+    '''generarEra :
+    '''
+    quad.moduloDos(p[-2])
+
+def p_paramFuncion(p):
+    '''paramFuncion : ID  push_id2
+                     | ID push_id2 COMA paramFuncion
+                     | expresion
+                     | expresion COMA paramFuncion
+                     | empty
+    '''
+    quad.moduloTres()
+
+def p_push_id2(p):
+    "push_id2 :"
+    quad.pushID(p[-1])
 
 def p_asignacion(p):
-    '''asignacion : ID EQUAL expresion SEMICOLON
+    '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
     '''
-    varsTable.update(p[1], varsTable.valor)
+
+def p_create_asign(p):
+    "create_asign :"
+    
+    valor = quad.createQuadAssign()
+    myVar = p[-5]
+    varsTable.update(myVar, valor)
 
 def p_comparacion(p):
-    '''comparacion : ID DOUBLEEQUAL expresion SEMICOLON
+    '''comparacion : ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
     '''
 
 def p_condicion(p):
-    '''condicion : IF LPAREN expresion RPAREN bloque SEMICOLON
-                 | IF LPAREN expresion RPAREN bloque ELSE bloque SEMICOLON
+    '''condicion : IF LPAREN expresion RPAREN cond bloque condFinal
+                 | IF LPAREN expresion RPAREN cond bloque ELSE condElse bloque condFinal
     '''
 
+def p_quad_cond(p):
+    "cond :"
+    quad.createQuadCond()
+
+def p_quad_condElse(p):
+    "condElse :"
+    quad.updateQuadCondIfElseJump()
+
+def p_quad_condFinal(p):
+    "condFinal :"
+    quad.updateQuadCondIFJump()
+
 def p_escritura(p):
-    '''escritura : PRINT LPAREN escrituraAux RPAREN SEMICOLON
+    '''escritura : PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON
     '''
+
+def p_quad_print(p):
+    "quad_print :"
+    quad.createQuadPrint()
 
 def p_escrituraAux(p):
     '''escrituraAux : expresion
                     | CTE_STRING
                     | expresion COMA escrituraAux
                     | CTE_STRING COMA escrituraAux
+                    | llamadaAFuncion
     '''
 
 def p_expresion(p):
     '''expresion : exp
-                 | exp LOWERTHAN exp
-                 | exp MORETHAN exp
-                 | exp DIFFERENT exp
+                 | exp comp exp quad_comp
     '''
+
+def p_comp(p):
+    '''comp : LOWERTHAN push_poper
+            | MORETHAN push_poper
+            | DIFFERENT push_poper
+            | DOUBLEEQUAL push_poper
+    '''
+
+def p_quad_comp(p):
+    "quad_comp :"
+    quad.createQuadComp()
 
 def p_exp(p):
-    '''exp : termino
-           | termino PLUS exp
-           | termino MINUS exp
+    '''exp : termino quad_term
+           | termino quad_term exp1
     '''
 
+def p_exp1(p):
+    '''exp1 : PLUS push_poper exp
+            | MINUS push_poper exp
+    '''
+
+def p_quad_term(p):
+    "quad_term :"
+    quad.createQuadTerm()
+
+def p_quad_fact(p):
+    "quad_fact :"
+    quad.createQuadFact()
+
 def p_termino(p):
-    '''termino : factor
-               | factor TIMES termino
-               | factor DIVIDE termino
+    '''termino : factor quad_fact
+               | factor quad_fact termino1
+    '''
+
+def p_termino1(p):
+    '''termino1 : TIMES push_poper termino
+                | DIVIDE push_poper termino
     '''
 
 def p_factor(p):
@@ -276,15 +420,34 @@ def p_factor(p):
     '''
 
 def p_factorAux(p):
-    '''factorAux : PLUS var_cte
-                 | MINUS var_cte
-                 | var_cte
+    '''factorAux : PLUS push_poper var_cte
+                 | MINUS push_poper var_cte
+                 | var_cte 
     '''
 
+def p_push_id(p):
+    "push_id :"
+    quad.pushID(p[-1])
+
+def p_push_cte(p):
+    "push_cte :"
+    tipo = memoria.getTipoCte(p[-1])
+    repeat = memoria.repeatCte(p[-1])
+    if(repeat == False):
+        direccion = memoria.getDirCte(tipo)
+        memoria.updateCte(p[-1], direccion, tipo)
+    direccion = memoria.getDirRepeatCte(p[-1])
+    quad.pushCTE(p[-1], direccion)
+
+def p_push_poper(p):
+    "push_poper :"
+    quad.pushPoper(p[-1])
+
 def p_var_cte(p):
-    '''var_cte : ID
-               | CTE_I
-               | CTE_F
+    '''var_cte : ID push_id
+               | CTE_I push_cte
+               | CTE_F push_cte
+               | CTE_STRING push_cte
     '''
     varsTable.valor = p[1]
 
@@ -293,6 +456,10 @@ def p_error(p):
     success = False
     print("Error en la Sintaxis en '%s" % p.value)
     sys.exit()
+
+def funcionDos(id):
+    quad.moduloDos(id)
+
 
 parser = yacc.yacc()
 
@@ -333,13 +500,18 @@ def printTablaDeVariablePorFuncion():
 
 
 if success == True:
-    print("Archivo aprobado")
+    #print("Archivo aprobado")
     print("Funciones")
-    directorioFunc.show()
-    print("Variables")
+    #directorioFunc.show()
+    #print("Variables")
+    #varsTable.show()
+    #printGlobal()
+    #printTablaDeVariablePorFuncion()
+    #quad.mostrarSize()
+    quad.cuadruplos()
     varsTable.show()
-    printGlobal()
-    printTablaDeVariablePorFuncion()
+    #virtual.inicio()
+    #memoria.show()
     sys.exit()
 else:
     print("Archivo no aprobado")

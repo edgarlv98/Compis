@@ -1,28 +1,50 @@
 program prueba:
 
-var int j,k,l;
+var int global1, global2;
 
 main(){
-    var float por;
-    por=30;
+    var float por, por2;
+    int pruebaInt;
+    char pruebaChar;
+    pruebaInt = 10;
+    por=5.11;
+    pruebaChar="hola";
+    global1 = 2345;
+}
+
+function int otraFuncion(){
+    var int prueba25;
+    prueba25 = 2 + 2 * 5;
 }
 
 %%Este es un comentario
-function int pruebafuncion(int www, int eee){
-    var float po;
-        int a,b;
-    po=30;
-    if(x<3){
-        x=2;
-    };
-
-    while(x<3){
-        z = z+1;
-        z == x;
+function int pruebafuncion(int a, int b){
+    var int prueba2, otraPrueba, prueba;
+    float blabla;
+    prueba2=10;
+    otraPrueba = 2 + prueba2 / 2 * 10;
+    pruebafuncion(prueba2 + 2, otraPrueba);
+    otraFuncion(3);
+    prueba = 3 * 3 + 11;
+    print(prueba);
+    
+    if ( prueba2 > 2){
+        prueba2 = prueba2 + 1;
+    } else {
+        prueba2 = prueba2 - 2;
     }
-}
 
-function int pruebafuncion2(){
-    var int il;
-    il=300;
+    if ( prueba2 == 10){
+        prueba2 = prueba2 + 1;
+        blabla = 34.56;
+    }
+
+    from ( j = 0) to (9) do {
+        prueba = prueba - 1;
+    }
+
+    while (prueba2 > 3) {
+        print(hola);
+        global2 = 987;
+    }
 }
