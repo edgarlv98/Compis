@@ -1,5 +1,7 @@
 program prueba:
 
+var int global1, global2;
+
 main(){
     var float por, por2;
     int pruebaInt;
@@ -7,6 +9,7 @@ main(){
     pruebaInt = 10;
     por=5.11;
     pruebaChar="hola";
+    global1 = 2345;
 }
 
 %%Este es un comentario
@@ -16,6 +19,7 @@ function int pruebafuncion(int a, int b){
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
     pruebafuncion(prueba2 + 2, otraPrueba);
+    otraFuncion(3);
     prueba = 3 * 3 + 11;
     print(prueba);
     
@@ -36,5 +40,11 @@ function int pruebafuncion(int a, int b){
 
     while (prueba2 > 3) {
         print(hola);
+        global2 = 987;
     }
+}
+
+function int otraFuncion(int a){
+    var int prueba25;
+    prueba25 = 2 + 2 * 5;
 }
