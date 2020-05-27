@@ -28,6 +28,12 @@ def era(quad, i):
 def gosub(quad, i):
     print("GOSUUUUUUUB")
 
+def param(quad, i):
+    print("PARAAAAAAM")
+
+def endproc(quad, i):
+    print("ENDPROOOOOOOC")
+
 def acciones(quad, i):
 
     switch = {
@@ -41,6 +47,8 @@ def acciones(quad, i):
 
         'era': era,
         'gosub': gosub,
+        'param': param,
+        'endproc': endproc,
 
         'print': printt
     }
