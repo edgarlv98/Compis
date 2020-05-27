@@ -504,16 +504,15 @@ def printTablaDeVariablePorFuncion():
 
 if success == True:
     #print("Archivo aprobado")
-    print("Funciones")
-    directorioFunc.show()
+    #directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    quad.cuadruplos()
+    #quad.cuadruplos()
     #varsTable.show()
-    #virtual.inicio()
+    virtual.inicio()
     #memoria.show()
     sys.exit()
 else:

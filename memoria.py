@@ -96,6 +96,18 @@ def updateCte(valor, dir, tipo):
     if(tipo == "char"):
         memoria_local.char[dir] = valor
 
+# Funcion que regresa el valor de una direccion 
+# dada una direccion
+def regresaValor(direccion, tipo):
+    valor = None
+    if(tipo == "int"):
+        valor = memoria_local.int.get(direccion)
+    if(tipo == "float"):
+        valor = memoria_local.float.get(direccion)
+    if(tipo == "char"):
+        valor = memoria_local.char.get(direccion)
+    return valor
+
 # Funcion que regresa el valor dada una direccion y un tipo
 def getValor(direccion, tipo):
     if tipo is None:
