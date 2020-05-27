@@ -157,8 +157,6 @@ def p_nomMain(p):
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
     direccion = memoria.getDirFuncion('int')
-    #global direccion_func
-    #direccion_func = direccion_func + 1
     directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
 
 def p_vars(p):
@@ -367,9 +365,9 @@ def p_quad_print(p):
 
 def p_escrituraAux(p):
     '''escrituraAux : expresion
-                    | CTE_STRING
+                    | CTE_STRING push_cte
                     | expresion COMA escrituraAux
-                    | CTE_STRING COMA escrituraAux
+                    | CTE_STRING push_cte COMA escrituraAux
                     | llamadaAFuncion
     '''
 

@@ -11,7 +11,7 @@ globalInt = 5000
 globalFloat = 5100
 globalChar = 5200
 
-# Direccion de memoria locales
+# Direccion de memoria variables locales
 memoLocalInt = 15000
 memoLocalFloat = 15100
 memoLocalChar = 15200
@@ -45,6 +45,23 @@ tempMainChar = 2200
 tempMainBool = 2300
 
 
+def getTipo(cte):
+    tipo = str(type(cte))
+    temp = None
+    if cte == 'true' or cte == 'false':
+        temp = 'bool'
+        return temp
+    if tipo == "<class 'float'>":
+        temp = 'float'
+        return temp
+    if tipo == "<class 'int'>":
+        temp = 'int'
+        return temp
+    if tipo == "<class 'str'>":
+        temp = 'string'
+        return temp
+
+
 ## MEMORIA CONSTANTES ##
 
 # Funcion que checa si una cte es FLOAT,
@@ -55,7 +72,7 @@ def is_float(cte):
     except ValueError:
         return False
 
-# Funcion que checa que tipo es la constante
+# Funcion que checa de que tipo es la constante
 def getTipoCte(cte):
     isFloat = is_float(cte)
     if(isFloat):
@@ -95,6 +112,8 @@ def updateCte(valor, dir, tipo):
         memoria_local.float[dir] = valor
     if(tipo == "char"):
         memoria_local.char[dir] = valor
+    if(tipo == "bool"):
+        memoria_local.bool[dir] = valor
 
 # Funcion que regresa el valor de una direccion 
 # dada una direccion
@@ -102,11 +121,16 @@ def regresaValor(direccion, tipo):
     valor = None
     if(tipo == "int"):
         valor = memoria_local.int.get(direccion)
+        return int(valor)
     if(tipo == "float"):
         valor = memoria_local.float.get(direccion)
+        return float(valor)
     if(tipo == "char"):
         valor = memoria_local.char.get(direccion)
-    return valor
+        return valor
+    if(tipo == "bool"):
+        valor = memoria_local.bool.get(direccion)
+        return valor
 
 # Funcion que regresa el valor dada una direccion y un tipo
 def getValor(direccion, tipo):
@@ -224,13 +248,13 @@ def getDirTemporal(tipo):
 # en memoria local TEMPORALES
 def updateTemporal(valor, dir, tipo):
     if(tipo == "int"):
-        memoria_temporal.int[dir] = valor
+        memoria_local.int[dir] = valor
     if(tipo == "float"):
-        memoria_temporal.float[dir] = valor
+        memoria_local.float[dir] = valor
     if(tipo == "char"):
-        memoria_temporal.char[dir] = valor
+        memoria_local.char[dir] = valor
     if(tipo == "bool"):
-        memoria_temporal.bool[dir] = valor
+        memoria_local.bool[dir] = valor
 
 # Funcion que regresa el tipo dada una direccion
 def getTipoDireccion(direccion):
@@ -284,6 +308,8 @@ def updateVariableLocal(valor, dir, tipo):
         memoria_local.float[dir] = valor
     if(tipo == "char"):
         memoria_local.char[dir] = valor
+    if(tipo == "bool"):
+        memoria_local.bool[dir] = valor
 
 # Funcion que regresa una direccion para una fucion
 # dependiendo de su tipo
@@ -341,22 +367,30 @@ def cleanMemory():
     #memoLocalInt = 15000
     #memoLocalFloat = 15100
     #memoLocalChar = 15200
+    #global memoCteInt 
+    #global memoCteFloat
+    #global memoCteChar
+    #memoCteInt = 20000
+    #memoCteFloat = 21000
+    #memoCteChar = 22000
 
 def show():
     print("GLOBAL")
     print("INT")
     pprint(memoria_global.int, width=1)
-    print("TEMPORALES")
-    print("INT")
-    pprint(memoria_temporal.int, width=1)
-    print("FLOAT")
-    pprint(memoria_temporal.float, width=1)
-    print("BOOL")
-    pprint(memoria_temporal.bool, width=1)
-    print("CTEEE")
+    #print("TEMPORALES")
+    #print("INT")
+    #pprint(memoria_temporal.int, width=1)
+    #print("FLOAT")
+    #pprint(memoria_temporal.float, width=1)
+    #print("BOOL")
+    #pprint(memoria_temporal.bool, width=1)
+    print("LOCAAAAAAAAL")
     print("INT")
     pprint(memoria_local.int, width=1)
     print("FLOAT")
     pprint(memoria_local.float, width=1)
     print("CHAR")
     pprint(memoria_local.char, width=1)
+    print("BOOL")
+    pprint(memoria_local.bool, width=1)
