@@ -120,13 +120,18 @@ import vars_table as varsTable
 import directorio_funciones as directorioFunc
 
 def p_program(p):
-    '''program : PROGRAM ID COLON varsGlobal main function
-               | PROGRAM ID COLON main function
-               | PROGRAM ID COLON varsGlobal main
-               | PROGRAM ID COLON main
+    '''program : PROGRAM ID COLON varsGlobal main function endPrograma
+               | PROGRAM ID COLON main function endPrograma
+               | PROGRAM ID COLON varsGlobal main endPrograma
+               | PROGRAM ID COLON main endPrograma
     '''
     if p[4]== 'main':
         pass
+
+def p_endPrograma(p):
+    "endPrograma :"
+    quad.endPrograma()
+
 
 def p_varsGlobal(p):
     '''varsGlobal : VAR varAuxGlobal1

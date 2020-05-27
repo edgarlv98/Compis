@@ -282,3 +282,7 @@ def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
     memoria.cleanMemory()
+
+def endPrograma():
+    quadr = quadruple(len(Quad), 'end', None, None, None)
+    Quad.append(quadr)
