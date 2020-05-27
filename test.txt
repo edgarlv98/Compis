@@ -26,8 +26,9 @@ function int pruebafuncion(int a, int b){
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
     
-    while(otraPrueba < 55){
-        otraPrueba = otraPrueba + 1;
-        print(otraPrueba);
+    if(otraPrueba == 52){
+        print("Equal");
+    } else {
+        print("No equal");
     }
 }

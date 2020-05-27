@@ -131,6 +131,38 @@ def equal(quad, i):
 
     return i + 1
 
+def doubleEqual(quad, i):
+    left = quad.left_operand
+    right = quad.right_operand
+
+    tipoLeft = memoria.getTipoDireccion(left)
+    tipoRight = memoria.getTipoDireccion(right)
+
+    valorLeft = memoria.regresaValor(left, tipoLeft)
+    valorRight = memoria.regresaValor(right, tipoRight)
+
+    resultado = valorLeft == valorRight
+    
+    memoria.updateTemporal(resultado, quad.result, 'bool')
+
+    return i + 1
+
+def different(quad, i):
+    left = quad.left_operand
+    right = quad.right_operand
+
+    tipoLeft = memoria.getTipoDireccion(left)
+    tipoRight = memoria.getTipoDireccion(right)
+
+    valorLeft = memoria.regresaValor(left, tipoLeft)
+    valorRight = memoria.regresaValor(right, tipoRight)
+
+    resultado = valorLeft != valorRight
+    
+    memoria.updateTemporal(resultado, quad.result, 'bool')
+
+    return i + 1
+
 def era(quad, i):
     print("ERAAAAAAAAAAA")
 
@@ -161,7 +193,9 @@ def acciones(quad, i):
 
         '>': mayor,
         '=': equal,
-        '<': menor, 
+        '<': menor,
+        '==': doubleEqual,
+        '!=': different,
 
         'print': printt
     }

@@ -50,6 +50,8 @@ tokens = [
     "DIFFERENT",
     'LOWERTHAN',
     'MORETHAN',
+    'LOWEREQUAL',
+    'MOREEQUAL',
     'DOUBLEEQUAL',
     'AND',
     'OR',
@@ -70,9 +72,11 @@ t_DIVIDE = r'\/'
 
 # Operadores de Comparacion
 t_EQUAL = r'\='
-t_DIFFERENT = r'\[!=]'
+t_DIFFERENT = r'\!='
 t_LOWERTHAN = r'\<'
 t_MORETHAN = r'\>'
+t_LOWEREQUAL = r'\<='
+t_MOREEQUAL = r'\=>'
 t_DOUBLEEQUAL = r'\=='
 t_AND = r'\&'
 t_OR = r'\|'
@@ -386,6 +390,8 @@ def p_comp(p):
             | MORETHAN push_poper
             | DIFFERENT push_poper
             | DOUBLEEQUAL push_poper
+            | LOWEREQUAL push_poper
+            | MOREEQUAL push_poper
     '''
 
 def p_quad_comp(p):
