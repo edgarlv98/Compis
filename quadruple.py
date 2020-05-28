@@ -170,7 +170,7 @@ def createQuadComp():
 def createQuadPrint():
     POperSize = len(POper)
     if POperSize > 0:
-        if POper[POperSize-1] == 'print':
+        if (POper[POperSize-1] == 'print') or (POper[POperSize-1] == 'input'):
             right_operand = PilaO.pop()
             PTypes.pop()
             AVAIL.pop()

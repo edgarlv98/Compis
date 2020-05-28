@@ -119,6 +119,16 @@ def printt(quad, i):
 
     return i + 1
 
+def inputt(quad, i):
+    direccionVariable = quad.result
+    tipoVariable = memoria.getTipoDireccion(direccionVariable)
+
+    miInput = input()
+
+    memoria.updateTemporal(miInput, direccionVariable, tipoVariable)
+
+    return i + 1
+
 def equal(quad, i):
     left = quad.left_operand
     tipoLeft = memoria.getTipoDireccion(left)
@@ -197,7 +207,8 @@ def acciones(quad, i):
         '==': doubleEqual,
         '!=': different,
 
-        'print': printt
+        'print': printt,
+        'input': inputt
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

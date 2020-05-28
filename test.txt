@@ -2,16 +2,6 @@ program prueba:
 
 var int global1, global2;
 
-main(){
-    var float por, por2;
-    int pruebaInt;
-    char pruebaChar;
-    pruebaInt = 10;
-    por=5.11;
-    pruebaChar="hola";
-    global1 = 2345;
-}
-
 function int otraFuncion(){
     var int prueba25;
     float pruebaFloat;
@@ -25,10 +15,23 @@ function int pruebafuncion(int a, int b){
     float blabla;
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
+
+    print("Escribe un valor para otraPrueba");
+    input(otraPrueba);
     
-    if(otraPrueba == 52){
-        print("Equal");
+    if(otraPrueba < 50){
+        print("Menor a 50");
     } else {
-        print("No equal");
+        print("Mayor a 50");
     }
+}
+
+main(){
+    var float por, por2;
+    int pruebaInt;
+    char pruebaChar;
+    pruebaInt = 10;
+    por=5.11;
+    pruebaChar="hola";
+    global1 = 2345;
 }

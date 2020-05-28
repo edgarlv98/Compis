@@ -29,6 +29,7 @@ reserved = {
     'char' : 'CHAR',
     'void' : 'VOID',
     'print' : 'PRINT',
+    'input' : 'INPUT',
     'function' : 'FUNCTION',
     'while' : 'WHILE',
     'from' : 'FROM',
@@ -124,8 +125,8 @@ import vars_table as varsTable
 import directorio_funciones as directorioFunc
 
 def p_program(p):
-    '''program : PROGRAM ID COLON varsGlobal main function endPrograma
-               | PROGRAM ID COLON main function endPrograma
+    '''program : PROGRAM ID COLON varsGlobal function main endPrograma
+               | PROGRAM ID COLON function main endPrograma
                | PROGRAM ID COLON varsGlobal main endPrograma
                | PROGRAM ID COLON main endPrograma
     '''
@@ -291,6 +292,7 @@ def p_estatuto(p):
                 | loopFromDo
                 | comparacion
                 | llamadaAFuncion
+                | lectura
     '''
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
@@ -366,6 +368,10 @@ def p_quad_condFinal(p):
 
 def p_escritura(p):
     '''escritura : PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON
+    '''
+
+def p_lectura(p):
+    '''lectura : INPUT push_poper LPAREN ID push_id RPAREN quad_print SEMICOLON
     '''
 
 def p_quad_print(p):
