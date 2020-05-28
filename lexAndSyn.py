@@ -9,6 +9,8 @@ success = True
 funcionPadreDeVariables = 'global'
 idFuncActual = None
 tipoFuncion = None
+contadorParams = 0
+quadMain = None
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -168,6 +170,8 @@ def p_nomMain(p):
     funcionPadreDeVariables = 'main'
     direccion = memoria.getDirFuncion('int')
     directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
+    global quadMain
+    quadMain = len(quad.Quad)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -212,10 +216,10 @@ def p_function(p):
               | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function 
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param guardaParamCont RPAREN LBRACE RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param guardaParamCont RPAREN LBRACE vars bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param guardaParamCont RPAREN LBRACE RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param guardaParamCont RPAREN LBRACE vars bloqueAux RBRACE endProc function
     '''
 
 def p_endProc(p):
@@ -228,6 +232,14 @@ def p_param(p):
              | tipo ID COMA param
              | empty
     '''
+    global contadorParams
+    contadorParams += 1
+
+def p_guardaParamCont(p):
+    'guardaParamCont : '
+    global contadorParams
+    directorioFunc.funciones[len(directorioFunc.funciones) - 1].params = contadorParams
+    contadorParams = 0
 
 def p_empty(p):
     '''empty : 
@@ -328,7 +340,10 @@ def p_paramFuncion(p):
                      | expresion COMA paramFuncion
                      | empty
     '''
-    quad.moduloTres()
+    aux = False
+    if(p[1] != None):
+        aux = True
+    quad.moduloTres(aux)
 
 def p_push_id2(p):
     "push_id2 :"
@@ -527,7 +542,7 @@ if success == True:
     #quad.mostrarSize()
     #quad.cuadruplos()
     #varsTable.show()
-    virtual.inicio()
+    virtual.inicio(quadMain)
     #memoria.show()
     sys.exit()
 else:

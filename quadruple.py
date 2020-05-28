@@ -250,12 +250,13 @@ def moduloDos(direccion):
 quadAuxParaParametros = []
 
 
-def moduloTres():
-    argument = PilaO.pop()
-    AVAIL.pop()
-    quadr = quadruple(0, 'param', argument, None, 'param')
-    quadAuxParaParametros.append(quadr)
-    sumaParametro()
+def moduloTres(tieneParam):
+    if tieneParam:
+        argument = PilaO.pop()
+        AVAIL.pop()
+        quadr = quadruple(0, 'param', argument, None, 'param')
+        quadAuxParaParametros.append(quadr)
+        sumaParametro()
 
 def sumaParametro():
     global paramCont

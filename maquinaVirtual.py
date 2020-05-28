@@ -1,5 +1,10 @@
 from quadruple import Quad
 import memoria
+import estructuraMemorias
+import directorio_funciones as direcFunc
+
+quadAntesFuncion = 0
+llamoFuncion = False
 
 def division(quad, i):
     left = quad.left_operand
@@ -174,16 +179,34 @@ def different(quad, i):
     return i + 1
 
 def era(quad, i):
-    print("ERAAAAAAAAAAA")
+    memoria.memoria_local.append(estructuraMemorias.memoria())
+    memoria.indiceMemoria += 1
+    return i + 1
 
 def gosub(quad, i):
-    print("GOSUUUUUUUB")
+    global quadAntesFuncion
+    quadAntesFuncion = i
+    global llamoFuncion
+    llamoFuncion = True
+    i = quad.result
+    return i
 
 def param(quad, i):
-    print("PARAAAAAAM")
+    left = quad.left_operand
+    tipoLeft = memoria.getTipoDireccion(left)
+    valorLeft = memoria.regresaValor(left, tipoLeft)
 
-#def endproc(quad, i):
-#    print("ENDPROOOOOOOC")
+    result = quad.result
+    tipoResult = memoria.getTipoDireccion(result)
+
+    memoria.updateTemporal(valorLeft, result, tipoResult)
+
+    return i + 1
+
+def endproc(quad, i):
+    if (llamoFuncion):
+        i = quadAntesFuncion
+    return i + 1
 
 def acciones(quad, i):
 
@@ -199,7 +222,7 @@ def acciones(quad, i):
         'era': era,
         'gosub': gosub,
         'param': param,
-        #'endproc': endproc,
+        'endproc': endproc,
 
         '>': mayor,
         '=': equal,
@@ -216,8 +239,8 @@ def acciones(quad, i):
         return position
     return i + 1
 
-def inicio():
-    i = 0
+def inicio(quadInicial):
+    i = quadInicial
     while Quad[i].operator != 'end':
         #print(Quad[i].contQua, Quad[i].operator, Quad[i].left_operand, Quad[i].right_operand, Quad[i].result)
         i = acciones(Quad[i], i)
