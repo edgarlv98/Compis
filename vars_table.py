@@ -1,5 +1,5 @@
 import sys
-import memoria
+import memoriaPadre
 
 simbolos = []
 
@@ -40,9 +40,9 @@ def update(id, value):
             direccion = simbolos[i].direccion
             tipo = simbolos[i].tipo
             if(simbolos[i].funcion == 'global'):
-                memoria.updateGlobalVariable(value, direccion, tipo)
+                memoriaPadre.memoria_global.updateGlobalVariable(value, direccion, tipo)
             else:
-                memoria.updateVariableLocal(value, direccion, tipo)
+                memoriaPadre.memoria_local[0].updateVariableLocal(value, direccion, tipo)
 
 def show():
     longitud = len(simbolos)

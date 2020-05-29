@@ -1,19 +1,21 @@
 from quadruple import Quad
-import memoria
+import memoriaPadre
+
+indexMemoria = 0
 
 def division(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft / valorRight
 
-    memoria.updateTemporal(resultado, quad.result, 'int')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'int')
 
     return i + 1
     
@@ -21,15 +23,15 @@ def mult(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft * valorRight
 
-    memoria.updateTemporal(resultado, quad.result, 'int')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'int')
 
     return i + 1
 
@@ -37,15 +39,15 @@ def resta(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft - valorRight
 
-    memoria.updateTemporal(resultado, quad.result, 'int')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'int')
 
     return i + 1
 
@@ -53,15 +55,15 @@ def suma(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft + valorRight
 
-    memoria.updateTemporal(resultado, quad.result, 'int')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'int')
 
     return i + 1
 
@@ -69,15 +71,15 @@ def mayor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft > valorRight
     
-    memoria.updateTemporal(resultado, quad.result, 'bool')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'bool')
 
     return i + 1
 
@@ -85,21 +87,21 @@ def menor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft < valorRight
     
-    memoria.updateTemporal(resultado, quad.result, 'bool')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'bool')
 
     return i + 1
 
 def gotof(quad, i):
     left = quad.left_operand
-    valor = memoria.regresaValor(left, 'bool')
+    valor = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, 'bool')
 
     if(valor == 'False' or valor == False):
         return quad.result
@@ -111,9 +113,9 @@ def goto(quad, i):
 
 def printt(quad, i):
     direccionVariable = quad.result
-    tipoVariable = memoria.getTipoDireccion(direccionVariable)
+    tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
 
-    imprime = memoria.regresaValor(direccionVariable, tipoVariable)
+    imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
 
     print(imprime)
 
@@ -121,23 +123,23 @@ def printt(quad, i):
 
 def inputt(quad, i):
     direccionVariable = quad.result
-    tipoVariable = memoria.getTipoDireccion(direccionVariable)
+    tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
 
     miInput = input()
 
-    memoria.updateTemporal(miInput, direccionVariable, tipoVariable)
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(miInput, direccionVariable, tipoVariable)
 
     return i + 1
 
 def equal(quad, i):
     left = quad.left_operand
-    tipoLeft = memoria.getTipoDireccion(left)
-    valorLeft = memoria.regresaValor(left, tipoLeft)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
 
     result = quad.result
-    tipoResult = memoria.getTipoDireccion(result)
+    tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
 
-    memoria.updateTemporal(valorLeft, result, tipoResult)
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, result, tipoResult)
 
     return i + 1
 
@@ -145,15 +147,15 @@ def doubleEqual(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft == valorRight
     
-    memoria.updateTemporal(resultado, quad.result, 'bool')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'bool')
 
     return i + 1
 
@@ -161,15 +163,15 @@ def different(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    tipoLeft = memoria.getTipoDireccion(left)
-    tipoRight = memoria.getTipoDireccion(right)
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
-    valorLeft = memoria.regresaValor(left, tipoLeft)
-    valorRight = memoria.regresaValor(right, tipoRight)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
 
     resultado = valorLeft != valorRight
     
-    memoria.updateTemporal(resultado, quad.result, 'bool')
+    memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'bool')
 
     return i + 1
 
@@ -216,8 +218,8 @@ def acciones(quad, i):
         return position
     return i + 1
 
-def inicio():
-    i = 0
+def inicio(quadrupleMain):
+    i = quadrupleMain
     while Quad[i].operator != 'end':
         #print(Quad[i].contQua, Quad[i].operator, Quad[i].left_operand, Quad[i].right_operand, Quad[i].result)
         i = acciones(Quad[i], i)

@@ -15,8 +15,6 @@ function int pruebafuncion(int a, int b){
     float blabla;
     prueba2=10;
     otraPrueba = 2 + prueba2 / 2 * 10;
-
-    print("Escribe un valor para otraPrueba");
     input(otraPrueba);
     
     if(otraPrueba < 50){
@@ -32,6 +30,5 @@ main(){
     char pruebaChar;
     pruebaInt = 10;
     por=5.11;
-    pruebaChar="hola";
-    global1 = 2345;
+    print(por);
 }

@@ -1,7 +1,7 @@
 import sys
 from vars_table import simbolos
 from sematic_cube import semantic
-import memoria
+import memoriaPadre
 
 #Pilas
 POper = []
@@ -13,6 +13,8 @@ PJumps = []
 paramCont = 0
 temporales = []
 auxFuncSalto = 0
+
+indice_memoria = 0
 
 #Clase del cuadruplo
 class quadruple(object):
@@ -100,8 +102,8 @@ def createQuadTerm():
                     result = left_value + right_value
                 else:
                     result = left_value - right_value
-                direccion = memoria.getDirTemporal(result_type)
-                memoria.updateTemporal(result, direccion, result_type)
+                direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
+                memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(result)
@@ -127,8 +129,8 @@ def createQuadFact():
                     result = left_value * right_value
                 else:
                     result = left_value / right_value
-                direccion = memoria.getDirTemporal(result_type)
-                memoria.updateTemporal(result, direccion, result_type)
+                direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
+                memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(result)
@@ -157,8 +159,8 @@ def createQuadComp():
                 result = left_value == right_value
             elif(operator == '!='):
                 result = left_value != right_value
-            direccion = memoria.getDirTemporal(result_type)
-            memoria.updateTemporal(result, direccion, result_type)
+            direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
+            memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
             quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
             Quad.append(quadr)
             AVAIL.append(result)
@@ -281,7 +283,7 @@ def miReturn():
 def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
-    memoria.cleanMemory()
+    memoriaPadre.memoria_local[0].cleanMemory()
 
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)

@@ -1,4 +1,4 @@
-class memoria(object):
+class estrmemoria(object):
     def __init__(self):
         self.int = {}
         self.float = {}

@@ -3,12 +3,14 @@ import ply.lex as lex
 import ply.yacc as yacc
 import quadruple as quad
 import maquinaVirtual as virtual
-import memoria
+import memoriaPadre
 
 success = True
 funcionPadreDeVariables = 'global'
 idFuncActual = None
 tipoFuncion = None
+
+quadMain = 0
 
 #Direcciones de funciones
 direccion_func = 1000
@@ -152,8 +154,8 @@ def p_varAuxGlobal2(p):
                      | ID COMA varAuxGlobal2
     '''
     tipo = varsTable.tipo
-    direccion = memoria.getDirVarGlobal(tipo)
-    memoria.updateGlobalVariable(None, direccion, tipo)
+    direccion = memoriaPadre.memoria_global.getDirVarGlobal(tipo)
+    memoriaPadre.memoria_global.updateGlobalVariable(None, direccion, tipo)
     varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 def p_main(p):
@@ -166,8 +168,10 @@ def p_nomMain(p):
     '''
     global funcionPadreDeVariables
     funcionPadreDeVariables = 'main'
-    direccion = memoria.getDirFuncion('int')
+    direccion = memoriaPadre.memoria_local[0].getDirFuncion('int')
     directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
+    global quadMain
+    quadMain = len(quad.Quad)
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -183,7 +187,7 @@ def p_varAux2(p):
             | ID COMA varAux2
     '''
     tipo = varsTable.tipo
-    direccion = memoria.getDirvariableLocal(tipo)
+    direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
     varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 
@@ -237,8 +241,8 @@ def p_push_function(p):
     "push_function :"
     tipo = directorioFunc.tipo
     if(directorioFunc.tipo != 'void'):
-        direccion = memoria.getDirVarGlobal(tipo)
-        memoria.updateGlobalVariable(None, direccion, tipo)
+        direccion = memoriaPadre.memoria_local[0].getDirVarGlobal(tipo)
+        memoriaPadre.memoria_local[0].updateGlobalVariable(None, direccion, tipo)
         varsTable.insert(p[-1], tipo, direccion, 'global')
 
 
@@ -248,7 +252,7 @@ def p_nomFunc(p):
     global funcionPadreDeVariables
     funcionPadreDeVariables = p[1]
     tipo = directorioFunc.tipo
-    direccion = memoria.getDirFuncion(tipo)
+    direccion = memoriaPadre.memoria_local[0].getDirFuncion(tipo)
     directorioFunc.insert(p[1], tipo, len(quad.Quad), direccion)
 
 def p_bloqueAux(p):
@@ -449,12 +453,12 @@ def p_push_id(p):
 
 def p_push_cte(p):
     "push_cte :"
-    tipo = memoria.getTipoCte(p[-1])
-    repeat = memoria.repeatCte(p[-1])
+    tipo = memoriaPadre.memoria_local[0].getTipoCte(p[-1])
+    repeat = memoriaPadre.memoria_local[0].repeatCte(p[-1])
     if(repeat == False):
-        direccion = memoria.getDirCte(tipo)
-        memoria.updateCte(p[-1], direccion, tipo)
-    direccion = memoria.getDirRepeatCte(p[-1])
+        direccion = memoriaPadre.memoria_local[0].getDirCte(tipo)
+        memoriaPadre.memoria_local[0].updateCte(p[-1], direccion, tipo)
+    direccion = memoriaPadre.memoria_local[0].getDirRepeatCte(p[-1])
     quad.pushCTE(p[-1], direccion)
 
 def p_push_poper(p):
@@ -527,7 +531,7 @@ if success == True:
     #quad.mostrarSize()
     #quad.cuadruplos()
     #varsTable.show()
-    virtual.inicio()
+    virtual.inicio(quadMain)
     #memoria.show()
     sys.exit()
 else:
