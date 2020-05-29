@@ -1,7 +1,10 @@
 from quadruple import Quad
 import memoriaPadre
+import memoria
+import vars_table as varTable
 
 indexMemoria = 0
+indexAntesdeFuncion = 0
 
 def division(quad, i):
     left = quad.left_operand
@@ -175,17 +178,31 @@ def different(quad, i):
 
     return i + 1
 
+
 def era(quad, i):
-    print("ERAAAAAAAAAAA")
+    global indexMemoria
+    memoriaPadre.memoria_local.append(memoria.memoria())
+    indexMemoria += 1
+    memoriaPadre.memoria_local[indexMemoria] = memoriaPadre.memoria_local[indexMemoria - 1]
+    return i + 1
 
 def gosub(quad, i):
-    print("GOSUUUUUUUB")
+    global indexAntesdeFuncion
+    indexAntesdeFuncion = i
+    i = quad.result
+    return i
 
 def param(quad, i):
-    print("PARAAAAAAM")
+    tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.left_operand)
+    valorParam = memoriaPadre.memoria_local[indexMemoria].getValor(quad.left_operand, tipo)
+    memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorParam, quad.result, tipo)
+    return i + 1
 
-#def endproc(quad, i):
-#    print("ENDPROOOOOOOC")
+def endproc(quad, i):
+    global indexMemoria
+    indexMemoria -= 1
+    i = indexAntesdeFuncion
+    return i + 1
 
 def acciones(quad, i):
 
@@ -201,7 +218,7 @@ def acciones(quad, i):
         'era': era,
         'gosub': gosub,
         'param': param,
-        #'endproc': endproc,
+        'endproc': endproc,
 
         '>': mayor,
         '=': equal,
@@ -219,7 +236,9 @@ def acciones(quad, i):
     return i + 1
 
 def inicio(quadrupleMain):
-    i = quadrupleMain
+    i = quadrupleMain + 1
     while Quad[i].operator != 'end':
         #print(Quad[i].contQua, Quad[i].operator, Quad[i].left_operand, Quad[i].right_operand, Quad[i].result)
         i = acciones(Quad[i], i)
+        
+        

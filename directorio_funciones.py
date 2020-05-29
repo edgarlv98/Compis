@@ -15,6 +15,7 @@ class funcion(object):
         self.tipo = str(tipo)
         self.alcance = alcance
         self.direccion = direccion
+        self.variables = []
 
 def insert(id, tipo, alcance, direccion):
     temp = funcion(id, tipo, alcance, direccion)

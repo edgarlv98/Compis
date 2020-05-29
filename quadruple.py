@@ -1,5 +1,6 @@
 import sys
 from vars_table import simbolos
+import directorio_funciones as directFunc
 from sematic_cube import semantic
 import memoriaPadre
 
@@ -27,6 +28,7 @@ class quadruple(object):
 
 def pushID(id):
     size = len(simbolos)
+    print(id)
     for i in range(size):
         if(id == simbolos[i].id):
             AVAIL.append(simbolos[i].value)
@@ -40,6 +42,7 @@ def is_float(cte):
         return False
 
 def pushCTE(cte, direccion):
+    print(cte, direccion)
     isFloat = is_float(cte)
     if(isFloat):
         PTypes.append('float')
@@ -89,6 +92,7 @@ def createQuadTerm():
     POperSize = len(POper)
     if(POperSize > 0):
         if(POper[POperSize-1] == '+' or POper[POperSize-1] == '-'):
+            
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
             right_value = AVAIL.pop()
@@ -96,9 +100,11 @@ def createQuadTerm():
             left_type = PTypes.pop()
             left_value = AVAIL.pop()
             operator = POper.pop()
+            print(left_value, right_value)
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
                 if(operator == '+'):
+                    print(left_value, right_value)
                     result = left_value + right_value
                 else:
                     result = left_value - right_value
@@ -245,12 +251,15 @@ def mostrarSize():
 
 def moduloDos(direccion):
     quadr = quadruple(len(Quad), 'era', None, None, direccion)
+    getFunc(direccion)
     Quad.append(quadr)
     global paramCont
     paramCont = 1
 
 quadAuxParaParametros = []
-
+funcName = None
+paramDireccion = None
+varsTableAux = []
 
 def moduloTres():
     argument = PilaO.pop()
@@ -259,6 +268,20 @@ def moduloTres():
     quadAuxParaParametros.append(quadr)
     sumaParametro()
 
+
+
+def getFunc(direccion):
+    for x in directFunc.funciones:
+        if x.direccion == direccion:
+            global funcName 
+            funcName = x.id
+    filterSimbolosDeFunc()
+            
+def filterSimbolosDeFunc():
+    for x in simbolos:
+        if x.funcion == funcName:
+            varsTableAux.append(x)
+    
 def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
@@ -266,9 +289,8 @@ def sumaParametro():
 def moduloSeis(id, alcance, direccion):
     for i in range(1,paramCont):
         x = quadAuxParaParametros.pop()
-        num = str(i)
         x.contQua = len(Quad)
-        x.result = 'param' + num
+        x.result = varsTableAux[i-1].direccion
         Quad.append(x)
     quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
@@ -283,7 +305,7 @@ def miReturn():
 def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
-    memoriaPadre.memoria_local[0].cleanMemory()
+    #memoriaPadre.memoria_local[0].cleanMemory()
 
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)

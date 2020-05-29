@@ -224,10 +224,6 @@ class memoria(object):
 
     # Funcion que regresa una direccion para un temporal
     def getDirTemporal(self, tipo):
-        global memoTempInt
-        global memoTempFloat
-        global memoTempChar
-        global memoTempBool
         if(tipo == 'int'):
             temp = self.memoTempInt
             self.memoTempInt += 1
@@ -272,10 +268,6 @@ class memoria(object):
     # Funcion que agrega las variables globales a una
     # memoria global
     def getDirVarGlobal(self, tipo):
-        global globalInt
-        global globalFloat
-        global globalChar
-
         if(tipo == 'int'):
             temp = self.globalInt
             self.globalInt += 1

@@ -159,8 +159,8 @@ def p_varAuxGlobal2(p):
     varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 def p_main(p):
-    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE endProc
-            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc
+    '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE
+            | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE
     '''
 
 def p_nomMain(p):
@@ -171,7 +171,7 @@ def p_nomMain(p):
     direccion = memoriaPadre.memoria_local[0].getDirFuncion('int')
     directorioFunc.insert(p[1], 'int', len(quad.Quad), direccion)
     global quadMain
-    quadMain = len(quad.Quad)
+    quadMain = len(quad.Quad) - 1
 
 def p_vars(p):
     '''vars : VAR varAux1
@@ -228,10 +228,17 @@ def p_endProc(p):
     quad.endproc()
 
 def p_param(p):
-    '''param : tipo ID 
-             | tipo ID COMA param
+    '''param : tipo ID paramAvarTable
+             | tipo ID paramAvarTable COMA param
              | empty
     '''
+
+
+def p_paramAvarTable(p):
+    'paramAvarTable : '
+    tipo = varsTable.tipo
+    direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
+    varsTable.insert(p[-1], tipo, direccion, funcionPadreDeVariables)
 
 def p_empty(p):
     '''empty : 
@@ -516,10 +523,6 @@ def printGlobal():
     for x in varsTableGlobal:
         print(x.id)
 
-def printTablaDeVariablePorFuncion():
-    for x in directorioFunc.funciones:
-        x
-
 
 if success == True:
     #print("Archivo aprobado")
@@ -529,10 +532,10 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #quad.cuadruplos()
-    #varsTable.show()
+    quad.cuadruplos()
+    varsTable.show()
     virtual.inicio(quadMain)
-    #memoria.show()
+    #memoriaPadre.memoria_local[0].show()
     sys.exit()
 else:
     print("Archivo no aprobado")

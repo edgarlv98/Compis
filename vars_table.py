@@ -20,14 +20,14 @@ class variable(object):
 
 def insert(id, tipo, direccion, funcion):
     temp = variable(id, tipo, direccion, funcion)
-    if (len(simbolos) >= 1 and not repeatID(id)) or len(simbolos) == 0:
+    if (len(simbolos) >= 1 and not repeatID(id, funcion)) or len(simbolos) == 0:
         simbolos.append(temp)
 
-def repeatID(id):
+def repeatID(id, funcion):
     aux = False
 
     for i in range (len(simbolos)):
-        if simbolos[i].id == id:
+        if simbolos[i].id == id and simbolos[i].funcion == funcion:
             aux = True
             print("ERROR: El ID ya existe: ", id)
             sys.exit()
