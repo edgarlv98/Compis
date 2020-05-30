@@ -37,7 +37,7 @@ reserved = {
     'from' : 'FROM',
     'do' : 'DO',
     'to' : 'TO',
-    'main' : 'MAIN'
+    'main' : 'MAIN',
 }
 
 tokens = [
@@ -64,7 +64,9 @@ tokens = [
     'RBRACE',
     'COMA',
     "SEMICOLON",
-    "COLON"
+    "COLON",
+    'LCORCH',
+    'RCORCH'
 ]
 
 # Operadores Aritmeticos
@@ -92,6 +94,8 @@ t_RBRACE = r'\}'
 t_COMA = r'\,'
 t_SEMICOLON = r'\;'
 t_COLON = r'\:'
+t_LCORCH = r'\['
+t_RCORCH = r'\]'
 
 # Constantes
 t_CTE_I = r'[0-9]+'
@@ -152,6 +156,10 @@ def p_varAuxGlobal1(p):
 def p_varAuxGlobal2(p):
     '''varAuxGlobal2 : ID
                      | ID COMA varAuxGlobal2
+                     | ID LCORCH CTE_I RCORCH
+                     | ID LCORCH CTE_I RCORCH COMA varAuxGlobal2
+                     | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+                     | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMA varAuxGlobal2
     '''
     tipo = varsTable.tipo
     direccion = memoriaPadre.memoria_global.getDirVarGlobal(tipo)
@@ -185,6 +193,10 @@ def p_varAux1(p):
 def p_varAux2(p):
     '''varAux2 : ID
             | ID COMA varAux2
+            | ID LCORCH CTE_I RCORCH
+            | ID LCORCH CTE_I RCORCH COMA varAux2
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMA varAux2
     '''
     tipo = varsTable.tipo
     direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
@@ -532,8 +544,8 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    quad.cuadruplos()
-    varsTable.show()
+    #quad.cuadruplos()
+    #varsTable.show()
     virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
     sys.exit()

@@ -28,7 +28,6 @@ class quadruple(object):
 
 def pushID(id):
     size = len(simbolos)
-    print(id)
     for i in range(size):
         if(id == simbolos[i].id):
             AVAIL.append(simbolos[i].value)
@@ -42,7 +41,6 @@ def is_float(cte):
         return False
 
 def pushCTE(cte, direccion):
-    print(cte, direccion)
     isFloat = is_float(cte)
     if(isFloat):
         PTypes.append('float')
@@ -100,19 +98,13 @@ def createQuadTerm():
             left_type = PTypes.pop()
             left_value = AVAIL.pop()
             operator = POper.pop()
-            print(left_value, right_value)
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
-                if(operator == '+'):
-                    print(left_value, right_value)
-                    result = left_value + right_value
-                else:
-                    result = left_value - right_value
                 direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
-                memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
+                memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
-                AVAIL.append(result)
+                AVAIL.append(direccion)
                 PilaO.append(direccion)
                 PTypes.append(result_type)
     #else:
@@ -131,15 +123,11 @@ def createQuadFact():
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
-                if(operator == '*'):
-                    result = left_value * right_value
-                else:
-                    result = left_value / right_value
                 direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
-                memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
+                memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
-                AVAIL.append(result)
+                AVAIL.append(direccion)
                 PilaO.append(direccion)
                 PTypes.append(result_type)
     #else:
@@ -157,19 +145,11 @@ def createQuadComp():
         operator = POper.pop()
         result_type = semantic(left_type, right_type, operator)
         if(result_type != 'error'):
-            if(operator == '>'):
-                result = left_value > right_value
-            elif(operator == '<'):
-                result = left_value < right_value
-            elif(operator == '=='):
-                result = left_value == right_value
-            elif(operator == '!='):
-                result = left_value != right_value
             direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
-            memoriaPadre.memoria_local[0].updateTemporal(result, direccion, result_type)
+            memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
             quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
             Quad.append(quadr)
-            AVAIL.append(result)
+            AVAIL.append(direccion)
             PilaO.append(direccion)
             PTypes.append('bool')
     #else:
