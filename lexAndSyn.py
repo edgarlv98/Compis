@@ -191,17 +191,44 @@ def p_varAux1(p):
     '''
 
 def p_varAux2(p):
-    '''varAux2 : ID
-            | ID COMA varAux2
-            | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMA varAux2
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMA varAux2
+    '''varAux2 : ID push_var
+            | ID push_var COMA varAux2
+            | ID push_var LCORCH CTE_I RCORCH push_arreglo
+            | ID push_var LCORCH CTE_I RCORCH push_arreglo COMA varAux2
+            | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz
+            | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz COMA varAux2
     '''
+
+def p_pushVariable(p):
+    "push_var :"
     tipo = varsTable.tipo
     direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
-    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
+    varsTable.insert(p[-1], tipo, direccion, funcionPadreDeVariables)
 
+
+def p_arreglo(p):
+    "push_arreglo :"
+    varsTable.esArreglo = True
+    tipo = varsTable.tipo
+    dimension = int(p[-2])
+    i = 0
+    while(i < dimension-1):
+        direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
+        varsTable.insert(p[-5], tipo, direccion, funcionPadreDeVariables)
+        i = i + 1
+
+def p_matriz(p):
+    "push_matriz :"
+    varsTable.esArreglo = True
+    dim1 = int(p[-5])
+    dim2 = int(p[-2])
+    dimension = dim1 * dim2
+    tipo = varsTable.tipo
+    i = 0
+    while(i < dimension-1):
+        direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
+        varsTable.insert(p[-8], tipo, direccion, funcionPadreDeVariables)
+        i = i + 1
 
 def p_tipo(p):
     '''tipo : INT
@@ -540,13 +567,13 @@ if success == True:
     #print("Archivo aprobado")
     #directorioFunc.show()
     #print("Variables")
-    #varsTable.show()
+    varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     #quad.cuadruplos()
     #varsTable.show()
-    virtual.inicio(quadMain)
+    #virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
     sys.exit()
 else:

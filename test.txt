@@ -29,7 +29,8 @@ function int pruebafuncion(int a, int b){
 }
 
 main(){
-    var float por, por2, matriz[2][2], arreglo[2];
+    var float por, por2;
+    int matriz[2][2], arreglo[2];
     int pruebaInt;
     pruebaInt = 2 + 3;
     pruebafuncion(pruebaInt, 8);

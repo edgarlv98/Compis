@@ -8,6 +8,7 @@ Id = None
 direccion = None
 valor = None
 funcion = None
+esArreglo = False
 
 #Objeto tabla variables#
 class variable(object):
@@ -27,7 +28,7 @@ def repeatID(id, funcion):
     aux = False
 
     for i in range (len(simbolos)):
-        if simbolos[i].id == id and simbolos[i].funcion == funcion:
+        if simbolos[i].id == id and simbolos[i].funcion == funcion and esArreglo == False:
             aux = True
             print("ERROR: El ID ya existe: ", id)
             sys.exit()
