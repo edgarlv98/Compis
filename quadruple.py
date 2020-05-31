@@ -14,6 +14,7 @@ PJumps = []
 paramCont = 0
 temporales = []
 auxFuncSalto = 0
+PilaDim = []
 
 indice_memoria = 0
 
@@ -289,4 +290,17 @@ def endproc():
 
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)
+    Quad.append(quadr)
+
+def verificaDim(id):
+    size = len(simbolos)
+    for i in range(size):
+        if(simbolos[i].id == id):
+            dimension = simbolos[i].dimension
+
+    direccion = memoriaPadre.memoria_local[0].getDirTemporal('bool')
+    operand = PilaO.pop()
+    value = AVAIL.pop()
+    tipo = PTypes.pop()
+    quadr = quadruple(len(Quad), 'ver', value, dimension, direccion)
     Quad.append(quadr)

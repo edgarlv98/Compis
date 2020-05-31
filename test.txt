@@ -30,9 +30,13 @@ function int pruebafuncion(int a, int b){
 
 main(){
     var float por, por2;
-    int matriz[2][2], arreglo[2];
+    int arreglo[2];
     int pruebaInt;
+    arreglo[1 * 4] = 1 + 1;
     pruebaInt = 2 + 3;
+    global1 = pruebaInt;
+    por = 89.57;
+    print("MAIN");
     pruebafuncion(pruebaInt, 8);
     otraFuncion(4);
 }

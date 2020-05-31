@@ -193,8 +193,8 @@ def p_varAux1(p):
 def p_varAux2(p):
     '''varAux2 : ID push_var
             | ID push_var COMA varAux2
-            | ID push_var LCORCH CTE_I RCORCH push_arreglo
-            | ID push_var LCORCH CTE_I RCORCH push_arreglo COMA varAux2
+            | ID LCORCH CTE_I RCORCH push_arreglo
+            | ID LCORCH CTE_I RCORCH push_arreglo COMA varAux2
             | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz
             | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz COMA varAux2
     '''
@@ -205,16 +205,15 @@ def p_pushVariable(p):
     direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
     varsTable.insert(p[-1], tipo, direccion, funcionPadreDeVariables)
 
-
 def p_arreglo(p):
     "push_arreglo :"
     varsTable.esArreglo = True
     tipo = varsTable.tipo
     dimension = int(p[-2])
     i = 0
-    while(i < dimension-1):
+    while(i < dimension):
         direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
-        varsTable.insert(p[-5], tipo, direccion, funcionPadreDeVariables)
+        varsTable.insertDimensionada(p[-4], tipo, direccion, funcionPadreDeVariables, dimension)
         i = i + 1
 
 def p_matriz(p):
@@ -346,7 +345,7 @@ def p_estatuto(p):
     '''
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
-                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
+                       | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
     
 def p_actualizaFuncion(p):
@@ -386,11 +385,17 @@ def p_push_id2(p):
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL expresion SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL ID LCORCH exp RCORCH SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL ID LCORCH exp RCORCH LCORCH exp RCORCH SEMICOLON
     '''
+
+def p_ver_dim(p):
+    "ver_dim :"
+    quad.verificaDim(p[-5])
 
 def p_create_asign(p):
     "create_asign :"
-    
     valor = quad.createQuadAssign()
     myVar = p[-5]
     varsTable.update(myVar, valor)
@@ -567,11 +572,11 @@ if success == True:
     #print("Archivo aprobado")
     #directorioFunc.show()
     #print("Variables")
-    varsTable.show()
+    #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #quad.cuadruplos()
+    quad.cuadruplos()
     #varsTable.show()
     #virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
