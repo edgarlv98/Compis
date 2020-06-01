@@ -203,8 +203,8 @@ def p_varAux2(p):
             | ID push_var COMA varAux2
             | ID LCORCH CTE_I RCORCH push_arreglo
             | ID LCORCH CTE_I RCORCH push_arreglo COMA varAux2
-            | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz
-            | ID push_var LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz COMA varAux2
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz COMA varAux2
     '''
 
 def p_pushVariable(p):
@@ -234,7 +234,7 @@ def p_matriz(p):
     i = 0
     while(i < dimension-1):
         direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
-        varsTable.insert(p[-8], tipo, direccion, funcionPadreDeVariables)
+        varsTable.insert(p[-7], tipo, direccion, funcionPadreDeVariables)
         i = i + 1
 
 def p_tipo(p):
@@ -391,10 +391,13 @@ def p_push_id2(p):
     "push_id2 :"
     quad.pushID(p[-1])
 
+def p_array(p):
+    '''arreglo : ID push_id LCORCH exp RCORCH ver_dim1
+    '''
+
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper expresion create_asign_dim SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper ID push_id LCORCH exp RCORCH ver_dim1 create_asign_dim SEMICOLON
+                  | arreglo EQUAL push_poper expresion create_asign SEMICOLON
     '''
 
 def p_push_id_dimensionada(p):
@@ -535,6 +538,7 @@ def p_var_cte(p):
                | CTE_I push_cte
                | CTE_F push_cte
                | CTE_STRING push_cte
+               | arreglo
     '''
     varsTable.valor = p[1]
 
@@ -591,7 +595,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     quad.cuadruplos()
-    varsTable.show()
+    #varsTable.show()
     #virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()
