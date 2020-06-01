@@ -2,6 +2,7 @@ from quadruple import Quad
 import memoriaPadre
 import memoria
 import vars_table as varTable
+import sys
 
 indexMemoria = 0
 indexAntesdeFuncion = 0
@@ -204,6 +205,19 @@ def endproc(quad, i):
     i = indexAntesdeFuncion
     return i + 1
 
+def verifica(quad, i):
+    left = quad.left_operand
+    right = quad.right_operand
+
+    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+
+    if(valorLeft > int(right)):
+        print("ERROR: El indice del arreglo/matriz es mayor a sus dimensiones")
+        sys.exit
+    else:
+        return i + 1
+
 def acciones(quad, i):
 
     switch = {
@@ -227,7 +241,9 @@ def acciones(quad, i):
         '!=': different,
 
         'print': printt,
-        'input': inputt
+        'input': inputt,
+
+        'ver': verifica
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

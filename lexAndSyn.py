@@ -66,7 +66,10 @@ tokens = [
     "SEMICOLON",
     "COLON",
     'LCORCH',
-    'RCORCH'
+    'RCORCH',
+    'DETERMINANT',
+    'TRANSPUESTA',
+    'INVERSA'
 ]
 
 # Operadores Aritmeticos
@@ -96,6 +99,11 @@ t_SEMICOLON = r'\;'
 t_COLON = r'\:'
 t_LCORCH = r'\['
 t_RCORCH = r'\]'
+
+# Caracteres especiales para operaciones especiales
+t_DETERMINANT = r'\$'
+t_TRANSPUESTA = r'\!' # No funciona con el otro signo
+t_INVERSA = r'\?'
 
 # Constantes
 t_CTE_I = r'[0-9]+'
@@ -385,14 +393,25 @@ def p_push_id2(p):
 
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL expresion SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL ID LCORCH exp RCORCH SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim EQUAL ID LCORCH exp RCORCH LCORCH exp RCORCH SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper expresion create_asign_dim SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper ID LCORCH exp RCORCH ver_dim2 create_asign_dim SEMICOLON
     '''
 
-def p_ver_dim(p):
-    "ver_dim :"
+def p_push_id_dimensionada(p):
+    "push_id_dimensionada :"
+
+def p_create_asign_dim(p):
+    "create_asign_dim :"
+    quad.asignacionDimensionada()
+
+def p_ver_dim1(p):
+    "ver_dim1 :"
     quad.verificaDim(p[-5])
+
+def p_ver_dim2(p):
+    "ver_dim2 :"
+    quad.verificaDim(p[-4])
+
 
 def p_create_asign(p):
     "create_asign :"
@@ -580,6 +599,7 @@ if success == True:
     #varsTable.show()
     #virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
+    #quad.mostraPilaDim()
     sys.exit()
 else:
     print("Archivo no aprobado")

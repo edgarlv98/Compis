@@ -298,9 +298,25 @@ def verificaDim(id):
         if(simbolos[i].id == id):
             dimension = simbolos[i].dimension
 
-    direccion = memoriaPadre.memoria_local[0].getDirTemporal('bool')
+    direccion = memoriaPadre.memoria_local[0].getDirTemporal('int')
     operand = PilaO.pop()
     value = AVAIL.pop()
     tipo = PTypes.pop()
     quadr = quadruple(len(Quad), 'ver', value, dimension, direccion)
     Quad.append(quadr)
+
+def asignacionDimensionada():
+    PoperSize = len(POper)
+    if (PoperSize > 0):
+        if(POper[PoperSize- 1] == '='):
+            leftDireccion = PilaO.pop()
+            rightDireccion = PilaO.pop()
+            #if(leftDireccion >= 15000):
+            #    for i in range(len(simbolos)):
+            #        if(leftDireccion == simbolos[i].direccion):
+            #            dimensionLeft = simbolos[i].dimension
+            #elif(rightDireccion >)
+            operator = POper.pop()
+            quadr = quadruple(len(Quad), operator, leftDireccion, None, rightDireccion)
+            Quad.append(quadr)
+            result = rightDireccion
