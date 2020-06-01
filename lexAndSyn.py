@@ -394,7 +394,7 @@ def p_push_id2(p):
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
                   | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper expresion create_asign_dim SEMICOLON
-                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper ID LCORCH exp RCORCH ver_dim2 create_asign_dim SEMICOLON
+                  | ID push_id LCORCH exp RCORCH ver_dim1 EQUAL push_poper ID push_id LCORCH exp RCORCH ver_dim1 create_asign_dim SEMICOLON
     '''
 
 def p_push_id_dimensionada(p):
@@ -407,11 +407,6 @@ def p_create_asign_dim(p):
 def p_ver_dim1(p):
     "ver_dim1 :"
     quad.verificaDim(p[-5])
-
-def p_ver_dim2(p):
-    "ver_dim2 :"
-    quad.verificaDim(p[-4])
-
 
 def p_create_asign(p):
     "create_asign :"
@@ -596,7 +591,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     quad.cuadruplos()
-    #varsTable.show()
+    varsTable.show()
     #virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()

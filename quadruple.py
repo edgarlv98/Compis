@@ -34,6 +34,7 @@ def pushID(id):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
             PilaO.append(simbolos[i].direccion)
+            break
 
 def is_float(cte):
     try:
@@ -298,12 +299,13 @@ def verificaDim(id):
         if(simbolos[i].id == id):
             dimension = simbolos[i].dimension
 
-    direccion = memoriaPadre.memoria_local[0].getDirTemporal('int')
+    #direccion = memoriaPadre.memoria_local[0].getDirTemporal('int')
     operand = PilaO.pop()
     value = AVAIL.pop()
     tipo = PTypes.pop()
-    quadr = quadruple(len(Quad), 'ver', value, dimension, direccion)
+    quadr = quadruple(len(Quad), 'ver', value, dimension, value)
     Quad.append(quadr)
+    AVAIL.append(value)
 
 def asignacionDimensionada():
     PoperSize = len(POper)
@@ -311,12 +313,12 @@ def asignacionDimensionada():
         if(POper[PoperSize- 1] == '='):
             leftDireccion = PilaO.pop()
             rightDireccion = PilaO.pop()
-            #if(leftDireccion >= 15000):
-            #    for i in range(len(simbolos)):
-            #        if(leftDireccion == simbolos[i].direccion):
-            #            dimensionLeft = simbolos[i].dimension
-            #elif(rightDireccion >)
+            dim1 = AVAIL.pop()
+            AVAIL.pop()
+            dim2 = AVAIL.pop()
             operator = POper.pop()
-            quadr = quadruple(len(Quad), operator, leftDireccion, None, rightDireccion)
+            left = int(leftDireccion) + int(dim1)
+            right = int(rightDireccion) + int(dim2)
+            quadr = quadruple(len(Quad), operator, left, None, right)
             Quad.append(quadr)
             result = rightDireccion

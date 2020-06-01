@@ -30,10 +30,9 @@ function int pruebafuncion(int a, int b){
 
 main(){
     var float por, por2;
-    int arreglo[10], arr[8];
+    int arreglo[10], pruebaArreglo[8];
     int pruebaInt;
-    arreglo[1] = 4 * 2;
-    arreglo[1 + 1] = arr[8];
+    arreglo[1] = pruebaArreglo[5];
     pruebaInt = 2 + 3;
     global1 = pruebaInt;
     print("MAIN");
