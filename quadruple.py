@@ -93,10 +93,10 @@ def createQuadTerm():
             
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
-            right_value = AVAIL.pop()
+            AVAIL.pop()
             left_operand = PilaO.pop()
             left_type = PTypes.pop()
-            left_value = AVAIL.pop()
+            AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
@@ -165,6 +165,19 @@ def createQuadPrint():
             operator = POper.pop()
             quadr = quadruple(len(Quad), operator, None, None, right_operand)
             Quad.append(quadr)
+
+def createQuadReturn(funcionPadre):
+    direccion = 0
+    for x in simbolos:
+        if x.id == funcionPadre:
+            direccion = x.direccion
+            break
+
+    right_operand = PilaO.pop()
+    PTypes.pop()
+    AVAIL.pop()
+    quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
+    Quad.append(quadr)
 
 def fill(cuadruplo, salto):
     Quad[cuadruplo].result = salto

@@ -38,6 +38,7 @@ reserved = {
     'do' : 'DO',
     'to' : 'TO',
     'main' : 'MAIN',
+    'return' : 'RETURN'
 }
 
 tokens = [
@@ -223,16 +224,28 @@ def p_bloque(p):
               | LBRACE bloqueAux RBRACE
     '''
 
+boolNeedsReturn = False
+
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function 
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
     '''
+
+def p_functionReturn(p):
+    '''functionReturn : RETURN exp creaCuadReturn SEMICOLON
+                    | empty
+    '''
+
+def p_creaCuadReturn(p):
+    '''creaCuadReturn :
+    '''
+    quad.createQuadReturn(funcionPadreDeVariables)
 
 def p_endProc(p):
     '''endProc :
@@ -544,10 +557,10 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #quad.cuadruplos()
-    #varsTable.show()
+    quad.cuadruplos()
     virtual.inicio(quadMain)
-    #memoriaPadre.memoria_local[0].show()
+    varsTable.show()
+    memoriaPadre.memoria_local[0].show()
     sys.exit()
 else:
     print("Archivo no aprobado")
