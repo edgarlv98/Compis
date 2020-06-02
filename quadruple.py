@@ -76,14 +76,6 @@ def createQuadAssign():
             left_type = PTypes.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
-            if(len(PilaDim) == 1):
-                dim1 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-            elif(len(PilaDim) > 1):
-                dim1 = PilaDim.pop()
-                dim2 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-                right_operand = int(right_operand) + int(dim2)
             if(result_type != 'error'):
                 quadr = quadruple(len(Quad), operator, right_operand, None, left_operand)
                 Quad.append(quadr)
@@ -108,14 +100,6 @@ def createQuadTerm():
             left_value = AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
-            if(len(PilaDim) == 1):
-                dim1 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-            elif(len(PilaDim) > 1):
-                dim1 = PilaDim.pop()
-                dim2 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-                right_operand = int(right_operand) + int(dim2)
             if(result_type != 'error'):
                 direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
                 memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
@@ -139,14 +123,6 @@ def createQuadFact():
             left_value = AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
-            if(len(PilaDim) == 1):
-                dim1 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-            elif(len(PilaDim) > 1):
-                dim1 = PilaDim.pop()
-                dim2 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-                right_operand = int(right_operand) + int(dim2)
             if(result_type != 'error'):
                 direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
                 memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
@@ -169,14 +145,6 @@ def createQuadComp():
         left_value = AVAIL.pop()
         operator = POper.pop()
         result_type = semantic(left_type, right_type, operator)
-        if(len(PilaDim) == 1):
-                dim1 = PilaDim.pop()
-                left_operand = int(left_operand) + int(dim1)
-        elif(len(PilaDim) > 1):
-            dim1 = PilaDim.pop()
-            dim2 = PilaDim.pop()
-            left_operand = int(left_operand) + int(dim1)
-            right_operand = int(right_operand) + int(dim2)
         if(result_type != 'error'):
             direccion = memoriaPadre.memoria_local[0].getDirTemporal(result_type)
             memoriaPadre.memoria_local[0].updateTemporal(None, direccion, result_type)
@@ -336,6 +304,9 @@ def verificaDim(id):
     tipo = PTypes.pop()
     quadr = quadruple(len(Quad), 'ver', value, dimension, value)
     Quad.append(quadr)
+    prueba = PilaO.pop()
+    prueba = int(prueba) + int(value)
+    PilaO.append(prueba)
     PilaDim.append(value)
 
 def asignacionDimensionada():

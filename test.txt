@@ -32,11 +32,14 @@ main(){
     var float por, por2;
     int arreglo[10], pruebaArreglo[8], matriz[4][4];
     int pruebaInt;
-    pruebaArreglo[2] = arreglo[4];
-    pruebaArreglo[3] = arreglo[1] + 2 + 2;
     pruebaInt = 2 + 3 * 3;
-    global1 = pruebaInt;
-    print("MAIN");
-    pruebafuncion(pruebaInt, 8);
-    otraFuncion(4);
+    pruebaArreglo[2] = 2 * 5;
+    arreglo[5] = pruebaArreglo[2] + 1;
+    print("ARREGLO");
+    print(pruebaArreglo[2]);
+    print(arreglo[5]);
+    %%global1 = pruebaInt;
+    %%print("MAIN");
+    %%pruebafuncion(pruebaInt, 8);
+    %%otraFuncion(4);
 }
