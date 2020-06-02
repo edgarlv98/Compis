@@ -2,6 +2,7 @@ from quadruple import Quad
 import memoriaPadre
 import memoria
 import vars_table as varTable
+import sys
 
 indexMemoria = 0
 indexAntesdeFuncion = 0
@@ -218,6 +219,19 @@ def returnN(quad, i):
     memoriaPadre.memoria_local[indexMemoria - 1].updateVariableLocal(valor, quad.left_operand, tipo)
     return i + 1
 
+def verifica(quad, i):
+    miDim = quad.left_operand
+    dimOriginal = quad.right_operand
+
+    miDim = int(miDim)
+    dimOriginal = int(dimOriginal)
+
+    if(miDim > dimOriginal or miDim < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
+    else:
+        return i + 1
+
 def acciones(quad, i):
 
     switch = {
@@ -244,6 +258,9 @@ def acciones(quad, i):
         'input': inputt,
 
         'return': returnN
+        'input': inputt,
+
+        'ver': verifica
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

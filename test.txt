@@ -17,7 +17,16 @@ function void fibonacci(int a, int b, int c){
 
 main(){
     var float por, por2;
-    int x;
-    input(x);
-    fibonacci(x,1,1);
+    int arreglo[10], pruebaArreglo[8], matriz[2][4];
+    int pruebaInt;
+    pruebaInt = 2 + 3 * 3;
+    pruebaArreglo[2] = 2 * 2;
+    arreglo[3] = pruebaArreglo[2] + 1;
+    print("ARREGLO");
+    print(pruebaArreglo[2]);
+    print(arreglo[3]);
+    %%global1 = pruebaInt;
+    %%print("MAIN");
+    %%pruebafuncion(pruebaInt, 8);
+    %%otraFuncion(4);
 }

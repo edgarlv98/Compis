@@ -14,6 +14,7 @@ PJumps = []
 paramCont = 0
 temporales = []
 auxFuncSalto = 0
+PilaDim = []
 
 indice_memoria = 0
 
@@ -33,6 +34,7 @@ def pushID(id):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
             PilaO.append(simbolos[i].direccion)
+            break
 
 def is_float(cte):
     try:
@@ -90,7 +92,6 @@ def createQuadTerm():
     POperSize = len(POper)
     if(POperSize > 0):
         if(POper[POperSize-1] == '+' or POper[POperSize-1] == '-'):
-            
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
             AVAIL.pop()
@@ -296,3 +297,39 @@ def endproc():
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)
     Quad.append(quadr)
+
+def verificaDim(id):
+    size = len(simbolos)
+    for i in range(size):
+        if(simbolos[i].id == id):
+            dimension = simbolos[i].dimension
+    
+    operand = PilaO.pop()
+    value = AVAIL.pop()
+    tipo = PTypes.pop()
+    quadr = quadruple(len(Quad), 'ver', value, dimension, value)
+    if(value > dimension or value < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
+    else:
+        Quad.append(quadr)
+        aux = PilaO.pop()
+        aux = int(aux) + int(value)
+        PilaO.append(aux)
+        PilaDim.append(value)
+
+def asignacionDimensionada():
+    PoperSize = len(POper)
+    if (PoperSize > 0):
+        if(POper[PoperSize- 1] == '='):
+            leftDireccion = PilaO.pop()
+            rightDireccion = PilaO.pop()
+            dim1 = AVAIL.pop()
+            AVAIL.pop()
+            dim2 = AVAIL.pop()
+            operator = POper.pop()
+            left = int(leftDireccion) + int(dim1)
+            right = int(rightDireccion) + int(dim2)
+            quadr = quadruple(len(Quad), operator, left, None, right)
+            Quad.append(quadr)
+            result = rightDireccion
