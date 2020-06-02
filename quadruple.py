@@ -14,6 +14,7 @@ PJumps = []
 paramCont = 0
 temporales = []
 auxFuncSalto = 0
+PilaDim = []
 
 indice_memoria = 0
 
@@ -33,6 +34,7 @@ def pushID(id):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
             PilaO.append(simbolos[i].direccion)
+            break
 
 def is_float(cte):
     try:
@@ -90,13 +92,12 @@ def createQuadTerm():
     POperSize = len(POper)
     if(POperSize > 0):
         if(POper[POperSize-1] == '+' or POper[POperSize-1] == '-'):
-            
             right_operand = PilaO.pop()
             right_type = PTypes.pop()
-            right_value = AVAIL.pop()
+            AVAIL.pop()
             left_operand = PilaO.pop()
             left_type = PTypes.pop()
-            left_value = AVAIL.pop()
+            AVAIL.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
             if(result_type != 'error'):
@@ -166,6 +167,19 @@ def createQuadPrint():
             quadr = quadruple(len(Quad), operator, None, None, right_operand)
             Quad.append(quadr)
 
+def createQuadReturn(funcionPadre):
+    direccion = 0
+    for x in simbolos:
+        if x.id == funcionPadre:
+            direccion = x.direccion
+            break
+
+    right_operand = PilaO.pop()
+    PTypes.pop()
+    AVAIL.pop()
+    quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
+    Quad.append(quadr)
+
 def fill(cuadruplo, salto):
     Quad[cuadruplo].result = salto
 
@@ -233,47 +247,40 @@ def moduloDos(direccion):
     quadr = quadruple(len(Quad), 'era', None, None, direccion)
     getFunc(direccion)
     Quad.append(quadr)
-    global paramCont
-    paramCont = 1
 
 quadAuxParaParametros = []
 funcName = None
+
 paramDireccion = None
 varsTableAux = []
 
 def moduloTres():
     argument = PilaO.pop()
     AVAIL.pop()
-    quadr = quadruple(0, 'param', argument, None, 'param')
-    quadAuxParaParametros.append(quadr)
+    quadr = quadruple(len(Quad), 'param', argument, None, getDireccionParam() + paramCont)
+    Quad.append(quadr)
     sumaParametro()
-
-
 
 def getFunc(direccion):
     for x in directFunc.funciones:
         if x.direccion == direccion:
             global funcName 
             funcName = x.id
-    filterSimbolosDeFunc()
-            
-def filterSimbolosDeFunc():
+
+def getDireccionParam():
     for x in simbolos:
         if x.funcion == funcName:
-            varsTableAux.append(x)
-    
+            return x.direccion
+
 def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
 def moduloSeis(id, alcance, direccion):
-    for i in range(1,paramCont):
-        x = quadAuxParaParametros.pop()
-        x.contQua = len(Quad)
-        x.result = varsTableAux[i-1].direccion
-        Quad.append(x)
     quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
+    global paramCont
+    paramCont = 0
 
 def miReturn():
     result = PilaO.pop()
@@ -290,3 +297,39 @@ def endproc():
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)
     Quad.append(quadr)
+
+def verificaDim(id):
+    size = len(simbolos)
+    for i in range(size):
+        if(simbolos[i].id == id):
+            dimension = simbolos[i].dimension
+    
+    operand = PilaO.pop()
+    value = AVAIL.pop()
+    tipo = PTypes.pop()
+    quadr = quadruple(len(Quad), 'ver', value, dimension, value)
+    if(value > dimension or value < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
+    else:
+        Quad.append(quadr)
+        aux = PilaO.pop()
+        aux = int(aux) + int(value)
+        PilaO.append(aux)
+        PilaDim.append(value)
+
+def asignacionDimensionada():
+    PoperSize = len(POper)
+    if (PoperSize > 0):
+        if(POper[PoperSize- 1] == '='):
+            leftDireccion = PilaO.pop()
+            rightDireccion = PilaO.pop()
+            dim1 = AVAIL.pop()
+            AVAIL.pop()
+            dim2 = AVAIL.pop()
+            operator = POper.pop()
+            left = int(leftDireccion) + int(dim1)
+            right = int(rightDireccion) + int(dim2)
+            quadr = quadruple(len(Quad), operator, left, None, right)
+            Quad.append(quadr)
+            result = rightDireccion

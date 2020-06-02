@@ -38,6 +38,7 @@ reserved = {
     'do' : 'DO',
     'to' : 'TO',
     'main' : 'MAIN',
+    'return' : 'RETURN'
 }
 
 tokens = [
@@ -66,7 +67,10 @@ tokens = [
     "SEMICOLON",
     "COLON",
     'LCORCH',
-    'RCORCH'
+    'RCORCH',
+    'DETERMINANT',
+    'TRANSPUESTA',
+    'INVERSA'
 ]
 
 # Operadores Aritmeticos
@@ -96,6 +100,11 @@ t_SEMICOLON = r'\;'
 t_COLON = r'\:'
 t_LCORCH = r'\['
 t_RCORCH = r'\]'
+
+# Caracteres especiales para operaciones especiales
+t_DETERMINANT = r'\$'
+t_TRANSPUESTA = r'\!' # No funciona con el otro signo
+t_INVERSA = r'\?'
 
 # Constantes
 t_CTE_I = r'[0-9]+'
@@ -191,17 +200,44 @@ def p_varAux1(p):
     '''
 
 def p_varAux2(p):
-    '''varAux2 : ID
-            | ID COMA varAux2
-            | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMA varAux2
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMA varAux2
+    '''varAux2 : ID push_var
+            | ID push_var COMA varAux2
+            | ID LCORCH CTE_I RCORCH push_arreglo
+            | ID LCORCH CTE_I RCORCH push_arreglo COMA varAux2
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH push_matriz COMA varAux2
     '''
+
+def p_pushVariable(p):
+    "push_var :"
     tipo = varsTable.tipo
     direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
-    varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
+    varsTable.insert(p[-1], tipo, direccion, funcionPadreDeVariables)
 
+def p_arreglo(p):
+    "push_arreglo :"
+    varsTable.esArreglo = True
+    tipo = varsTable.tipo
+    dimension = int(p[-2])
+    i = 0
+    while(i < dimension):
+        direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
+        varsTable.insertDimensionada(p[-4], tipo, direccion, funcionPadreDeVariables, dimension)
+        i = i + 1
+
+def p_matriz(p):
+    "push_matriz :"
+    varsTable.esArreglo = True
+    dim1 = int(p[-5])
+    dim2 = int(p[-2])
+    dimension = dim1 * dim2
+    valor = (p[-5], p[-2])
+    tipo = varsTable.tipo
+    i = 0
+    while(i < dimension):
+        direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
+        varsTable.insertDimensionada(p[-7], tipo, direccion, funcionPadreDeVariables, valor)
+        i = i + 1
 
 def p_tipo(p):
     '''tipo : INT
@@ -223,16 +259,29 @@ def p_bloque(p):
               | LBRACE bloqueAux RBRACE
     '''
 
+boolNeedsReturn = False
+
 def p_function(p):
-    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE RBRACE endProc function 
-              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux RBRACE endProc function
+    '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc function 
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
     '''
+
+def p_functionReturn(p):
+    '''functionReturn : RETURN exp creaCuadReturn SEMICOLON
+                    | empty
+    '''
+
+def p_creaCuadReturn(p):
+    '''creaCuadReturn :
+    '''
+    quad.createQuadReturn(funcionPadreDeVariables)
 
 def p_endProc(p):
     '''endProc :
@@ -319,7 +368,7 @@ def p_estatuto(p):
     '''
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
-                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
+                       | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
     
 def p_actualizaFuncion(p):
@@ -335,7 +384,6 @@ def p_gosub(p):
             quad.moduloSeis(x.id, x.alcance, x.direccion)
             break
     
-
 def p_generarEra(p):
     '''generarEra :
     '''
@@ -345,25 +393,43 @@ def p_generarEra(p):
             break
 
 def p_paramFuncion(p):
-    '''paramFuncion : ID  push_id2
-                     | ID push_id2 COMA paramFuncion
-                     | expresion
-                     | expresion COMA paramFuncion
+    '''paramFuncion : ID push_id2 paramFuncionAux
+                     | ID push_id2 paramFuncionAux COMA paramFuncion
+                     | exp paramFuncionAux
+                     | exp paramFuncionAux COMA paramFuncion
                      | empty
     '''
+
+def p_paramFuncionAux(p):
+    "paramFuncionAux : "
     quad.moduloTres()
 
 def p_push_id2(p):
     "push_id2 :"
     quad.pushID(p[-1])
 
+def p_array(p):
+    '''arreglo : ID push_id LCORCH exp RCORCH ver_dim1
+    '''
+
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
+                  | arreglo EQUAL push_poper expresion create_asign SEMICOLON
     '''
+
+def p_push_id_dimensionada(p):
+    "push_id_dimensionada :"
+
+def p_create_asign_dim(p):
+    "create_asign_dim :"
+    quad.asignacionDimensionada()
+
+def p_ver_dim1(p):
+    "ver_dim1 :"
+    quad.verificaDim(p[-5])
 
 def p_create_asign(p):
     "create_asign :"
-    
     valor = quad.createQuadAssign()
     myVar = p[-5]
     varsTable.update(myVar, valor)
@@ -489,6 +555,7 @@ def p_var_cte(p):
                | CTE_I push_cte
                | CTE_F push_cte
                | CTE_STRING push_cte
+               | arreglo
     '''
     varsTable.valor = p[1]
 
@@ -538,16 +605,17 @@ def printGlobal():
 
 if success == True:
     #print("Archivo aprobado")
-    #directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     #quad.cuadruplos()
-    #varsTable.show()
     virtual.inicio(quadMain)
+    #varsTable.show()
+    #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()
+    #quad.mostraPilaDim()
     sys.exit()
 else:
     print("Archivo no aprobado")

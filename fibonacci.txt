@@ -1,0 +1,23 @@
+program prueba:
+
+var int global1, global2;
+
+function void fibonacci(int a, int b, int c){
+    var int x;
+    if ( a < 1 ){
+        x = 0;
+    } else {
+        x = b;
+        b = c;
+        c = c + x;
+        print(x);
+        fibonacci(a-1, b, c);
+    }
+}
+
+main(){
+    var float por, por2;
+    int x;
+    input(x);
+    fibonacci(x,1,1);
+}

@@ -2,9 +2,11 @@ from quadruple import Quad
 import memoriaPadre
 import memoria
 import vars_table as varTable
+import sys
 
 indexMemoria = 0
 indexAntesdeFuncion = 0
+esMain = True
 
 def division(quad, i):
     left = quad.left_operand
@@ -188,7 +190,10 @@ def era(quad, i):
 
 def gosub(quad, i):
     global indexAntesdeFuncion
-    indexAntesdeFuncion = i
+    global esMain
+    if esMain:
+        indexAntesdeFuncion = i
+    esMain = False
     i = quad.result
     return i
 
@@ -200,9 +205,32 @@ def param(quad, i):
 
 def endproc(quad, i):
     global indexMemoria
+    global esMain
+    esMain = True
     indexMemoria -= 1
     i = indexAntesdeFuncion
+
     return i + 1
+
+def returnN(quad, i):
+    tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.left_operand)
+    tipo2 = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.result)
+    valor = memoriaPadre.memoria_local[indexMemoria].getValor(quad.result, tipo2)
+    memoriaPadre.memoria_local[indexMemoria - 1].updateVariableLocal(valor, quad.left_operand, tipo)
+    return i + 1
+
+def verifica(quad, i):
+    miDim = quad.left_operand
+    dimOriginal = quad.right_operand
+
+    miDim = int(miDim)
+    dimOriginal = int(dimOriginal)
+
+    if(miDim > dimOriginal or miDim < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
+    else:
+        return i + 1
 
 def acciones(quad, i):
 
@@ -227,7 +255,12 @@ def acciones(quad, i):
         '!=': different,
 
         'print': printt,
-        'input': inputt
+        'input': inputt,
+
+        'return': returnN
+        'input': inputt,
+
+        'ver': verifica
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

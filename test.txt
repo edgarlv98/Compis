@@ -2,36 +2,31 @@ program prueba:
 
 var int global1, global2;
 
-function void imprimir(){
+function void fibonacci(int a, int b, int c){
     var int x;
-    print("HOLA");
-}
-
-function int otraFuncion(int tre){
-    var int prueba25;
-    float pruebaFloat;
-    pruebaFloat = 67.98;
-    prueba25 = 2 + 6 * 6;
-    tre = prueba25;
-    print("Entro a otraFuncion");
-    print(tre);
-}
-
-%%Este es un comentario
-function int pruebafuncion(int a, int b){
-    var int eme;
-    eme = 1;
-    print("Escribe variable para eme en pruebafuncion");
-    input(eme);
-    a = a + 1;
-    eme = eme * 2;
-    print(eme);
+    if ( a < 1 ){
+        x = 0;
+    } else {
+        x = b;
+        b = c;
+        c = c + x;
+        print(x);
+        fibonacci(a-1, b, c);
+    }
 }
 
 main(){
-    var float por, por2, matriz[2][2], arreglo[2];
+    var float por, por2;
+    int arreglo[10], pruebaArreglo[8], matriz[2][4];
     int pruebaInt;
-    pruebaInt = 2 + 3;
-    pruebafuncion(pruebaInt, 8);
-    otraFuncion(4);
+    pruebaInt = 2 + 3 * 3;
+    pruebaArreglo[2] = 2 * 2;
+    arreglo[3] = pruebaArreglo[2] + 1;
+    print("ARREGLO");
+    print(pruebaArreglo[2]);
+    print(arreglo[3]);
+    %%global1 = pruebaInt;
+    %%print("MAIN");
+    %%pruebafuncion(pruebaInt, 8);
+    %%otraFuncion(4);
 }
