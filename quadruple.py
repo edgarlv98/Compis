@@ -33,7 +33,7 @@ def pushID(id, funcion):
         if(id == simbolos[i].id and funcion == simbolos[i].funcion):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
-            PilaO.append(simbolos[i].direccion)
+            appendPilaO(simbolos[i].direccion)
             break
 
 def is_float(cte):
@@ -46,17 +46,17 @@ def pushCTE(cte, direccion):
     isFloat = is_float(cte)
     if(isFloat):
         PTypes.append('float')
-        PilaO.append(direccion)
+        appendPilaO(direccion)
         AVAIL.append(float(cte))
     else:
         isInt = cte.isdigit()
         if(isInt):
             PTypes.append('int')
-            PilaO.append(direccion)
+            appendPilaO(direccion)
             AVAIL.append(int(cte))
         else:
             PTypes.append('char')
-            PilaO.append(direccion)
+            appendPilaO(direccion)
             AVAIL.append(cte)
 
 def pushTipo(tipo):
@@ -69,10 +69,10 @@ def createQuadAssign():
     POperSize = len(POper)
     if POperSize > 0:
         if(POper[POperSize-1] == '='):
-            right_operand = PilaO.pop()
+            right_operand = popPilaO()
             right_type = PTypes.pop()
             right_value = AVAIL.pop()
-            left_operand = PilaO.pop()
+            left_operand = popPilaO()
             left_type = PTypes.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
@@ -92,10 +92,10 @@ def createQuadTerm():
     POperSize = len(POper)
     if(POperSize > 0):
         if(POper[POperSize-1] == '+' or POper[POperSize-1] == '-'):
-            right_operand = PilaO.pop()
+            right_operand = popPilaO()
             right_type = PTypes.pop()
             AVAIL.pop()
-            left_operand = PilaO.pop()
+            left_operand = popPilaO()
             left_type = PTypes.pop()
             AVAIL.pop()
             operator = POper.pop()
@@ -106,7 +106,7 @@ def createQuadTerm():
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(direccion)
-                PilaO.append(direccion)
+                appendPilaO(direccion)
                 PTypes.append(result_type)
     #else:
     #    print("ERROR")
@@ -115,10 +115,10 @@ def createQuadFact():
     POperSize = len(POper)
     if(POperSize > 0):
         if (POper[POperSize-1] == '*' or POper[POperSize-1] == '/'):
-            right_operand = PilaO.pop()
+            right_operand = popPilaO()
             right_type = PTypes.pop()
             right_value = AVAIL.pop()
-            left_operand = PilaO.pop()
+            left_operand = popPilaO()
             left_type = PTypes.pop()
             left_value = AVAIL.pop()
             operator = POper.pop()
@@ -129,7 +129,7 @@ def createQuadFact():
                 quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
                 Quad.append(quadr)
                 AVAIL.append(direccion)
-                PilaO.append(direccion)
+                appendPilaO(direccion)
                 PTypes.append(result_type)
     #else:
     #    print("ERROR")
@@ -137,10 +137,10 @@ def createQuadFact():
 def createQuadComp():
     POperSize = len(POper)
     if(POper[POperSize-1] == '>' or POper[POperSize-1] == '<' or POper[POperSize-1] == '==' or POper[POperSize-1] == '!='):
-        right_operand = PilaO.pop()
+        right_operand = popPilaO()
         right_type = PTypes.pop()
         right_value = AVAIL.pop()
-        left_operand = PilaO.pop()
+        left_operand = popPilaO()
         left_type = PTypes.pop()
         left_value = AVAIL.pop()
         operator = POper.pop()
@@ -151,7 +151,7 @@ def createQuadComp():
             quadr = quadruple(len(Quad), operator, left_operand, right_operand, direccion)
             Quad.append(quadr)
             AVAIL.append(direccion)
-            PilaO.append(direccion)
+            appendPilaO(direccion)
             PTypes.append('bool')
     #else:
     #    print("ERROR")
@@ -160,7 +160,7 @@ def createQuadPrint():
     POperSize = len(POper)
     if POperSize > 0:
         if (POper[POperSize-1] == 'print') or (POper[POperSize-1] == 'input'):
-            right_operand = PilaO.pop()
+            right_operand = popPilaO()
             PTypes.pop()
             AVAIL.pop()
             operator = POper.pop()
@@ -175,11 +175,11 @@ def createQuadReturn(funcionPadre):
             direccion = x.direccion
             tipo = x.tipo
             break
-    right_operand = PilaO.pop()
+    right_operand = popPilaO()
     PTypes.pop()
     AVAIL.pop()
     PTypes.append(tipo)
-    PilaO.append(direccion)
+    appendPilaO(direccion)
     quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
     Quad.append(quadr)
 
@@ -189,7 +189,7 @@ def fill(cuadruplo, salto):
 def createQuadCond():
     exp_type = PTypes.pop()
     if exp_type == "bool":
-        result = PilaO.pop()
+        result = popPilaO()
         quadr = quadruple(len(Quad), "gotof", result, None, None)
         Quad.append(quadr)
         PJumps.append(len(Quad) - 1)
@@ -213,7 +213,7 @@ def while1():
 def while2():
     exp_type = PTypes.pop()
     if(exp_type == 'bool'):
-        result = PilaO.pop()
+        result = popPilaO()
         quadr = quadruple(len(Quad), 'gotof', result, None, None)
         Quad.append(quadr)
         PJumps.append(len(Quad)-1)
@@ -233,7 +233,7 @@ def loop1():
 def loop2():
     exp_type = PTypes.pop()
     if(exp_type == 'bool'):
-        result = PilaO.pop()
+        result = popPilaO()
         quadr = quadruple(len(Quad), 'gotof', result, None, None)
         Quad.append(quadr)
         PJumps.append(len(Quad)-1)
@@ -258,7 +258,7 @@ paramDireccion = None
 varsTableAux = []
 
 def moduloTres():
-    argument = PilaO.pop()
+    argument = popPilaO()
     AVAIL.pop()
     quadr = quadruple(len(Quad), 'param', argument, None, getDireccionParam() + paramCont)
     Quad.append(quadr)
@@ -282,6 +282,7 @@ def sumaParametro():
 def moduloSeis(id, alcance, direccion):
     quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
+    appendPilaO(direccion)
     global paramCont
     paramCont = 0
     
@@ -300,7 +301,7 @@ def verificaDim(id):
         if(simbolos[i].id == id):
             dimension = simbolos[i].dimension
     
-    operand = PilaO.pop()
+    operand = popPilaO()
     value = AVAIL.pop()
     tipo = PTypes.pop()
     quadr = quadruple(len(Quad), 'ver', value, dimension, value)
@@ -309,17 +310,17 @@ def verificaDim(id):
         sys.exit()
     else:
         Quad.append(quadr)
-        aux = PilaO.pop()
+        aux = popPilaO()
         aux = int(aux) + int(value)
-        PilaO.append(aux)
+        appendPilaO(aux)
         PilaDim.append(value)
 
 def asignacionDimensionada():
     PoperSize = len(POper)
     if (PoperSize > 0):
         if(POper[PoperSize- 1] == '='):
-            leftDireccion = PilaO.pop()
-            rightDireccion = PilaO.pop()
+            leftDireccion = popPilaO()
+            rightDireccion = popPilaO()
             dim1 = AVAIL.pop()
             AVAIL.pop()
             dim2 = AVAIL.pop()
@@ -329,3 +330,14 @@ def asignacionDimensionada():
             quadr = quadruple(len(Quad), operator, left, None, right)
             Quad.append(quadr)
             result = rightDireccion
+
+def popPilaO():
+    global PilaO
+    x =  PilaO.pop()
+    #print( "se quita ",x )
+    return x
+
+def appendPilaO(value):
+    global PilaO
+    PilaO.append(value)
+    #print("Se agrega ",value)

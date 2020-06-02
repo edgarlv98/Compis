@@ -372,7 +372,6 @@ def p_estatuto(p):
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN
-                       | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
     
 def p_actualizaFuncion(p):
@@ -385,8 +384,10 @@ def p_gosub(p):
     '''
     for x in directorioFunc.funciones:
         if x.id == idFuncActual:
-            quad.moduloSeis(x.id, x.alcance, x.direccion)
-            break
+            for y in varsTable.simbolos:
+                if y.id == x.id:
+                    quad.moduloSeis(x.id, x.alcance, y.direccion)
+                    break
     
 def p_generarEra(p):
     '''generarEra :
@@ -410,7 +411,7 @@ def p_paramFuncionAux(p):
 
 def p_push_id2(p):
     "push_id2 :"
-    quad.pushID(p[-1])
+    quad.pushID(p[-1], funcionPadreDeVariables)
 
 def p_array(p):
     '''arreglo : ID push_id LCORCH exp RCORCH ver_dim1
@@ -616,7 +617,7 @@ if success == True:
     #quad.mostrarSize()
     varsTable.show()
     quad.cuadruplos()
-    #virtual.inicio(quadMain)
+    virtual.inicio(quadMain)
     #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()

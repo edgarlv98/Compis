@@ -255,9 +255,9 @@ def acciones(quad, i):
         '!=': different,
 
         'print': printt,
-        'input': inputt,
 
         'return': returnN,
+        'input': inputt,
 
         'ver': verifica
     }
