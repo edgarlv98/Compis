@@ -15,6 +15,12 @@ function void fibonacci(int a, int b, int c){
     }
 }
 
+function int regresaValor(int a){
+    a = a + 1;
+    print(a);
+    return a;
+} 
+
 main(){
     var float por, por2;
     int arreglo[10], pruebaArreglo[8], matriz[2][4];
@@ -22,11 +28,6 @@ main(){
     pruebaInt = 2 + 3 * 3;
     pruebaArreglo[2] = 2 * 2;
     arreglo[3] = pruebaArreglo[2] + 1;
-    print("ARREGLO");
-    print(pruebaArreglo[2]);
-    print(arreglo[3]);
-    %%global1 = pruebaInt;
-    %%print("MAIN");
-    %%pruebafuncion(pruebaInt, 8);
-    %%otraFuncion(4);
+    %%fibonacci(arreglo[3], 1, 1);
+    print(regresaValor(2););
 }

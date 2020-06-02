@@ -169,14 +169,18 @@ def createQuadPrint():
 
 def createQuadReturn(funcionPadre):
     direccion = 0
+    tipo = None
     for x in simbolos:
         if x.id == funcionPadre:
             direccion = x.direccion
+            tipo = x.tipo
             break
-
     right_operand = PilaO.pop()
     PTypes.pop()
     AVAIL.pop()
+    PTypes.append(tipo)
+    POper.append(direccion)
+    print(direccion)
     quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
     Quad.append(quadr)
 
@@ -281,13 +285,6 @@ def moduloSeis(id, alcance, direccion):
     Quad.append(quadr)
     global paramCont
     paramCont = 0
-
-def miReturn():
-    result = PilaO.pop()
-    PTypes.pop()
-    AVAIL.pop()
-    quadr = quadruple(len(Quad), 'return', None, None, result)
-    Quad.append(quadr)
     
 def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)

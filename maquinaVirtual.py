@@ -257,8 +257,7 @@ def acciones(quad, i):
         'print': printt,
         'input': inputt,
 
-        'return': returnN
-        'input': inputt,
+        'return': returnN,
 
         'ver': verifica
     }

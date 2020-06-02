@@ -267,7 +267,7 @@ def p_function(p):
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc function 
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux functionReturn RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
@@ -415,6 +415,7 @@ def p_array(p):
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
                   | arreglo EQUAL push_poper expresion create_asign SEMICOLON
+                  | ID push_id EQUAL push_poper llamadaAFuncion create_asign SEMICOLON
     '''
 
 def p_push_id_dimensionada(p):
@@ -457,6 +458,7 @@ def p_quad_condFinal(p):
 
 def p_escritura(p):
     '''escritura : PRINT push_poper LPAREN escrituraAux RPAREN quad_print SEMICOLON
+                | PRINT push_poper LPAREN llamadaAFuncion RPAREN quad_print SEMICOLON
     '''
 
 def p_lectura(p):
@@ -610,9 +612,9 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #quad.cuadruplos()
-    virtual.inicio(quadMain)
     #varsTable.show()
+    #quad.cuadruplos()
+    #virtual.inicio(quadMain)
     #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()
