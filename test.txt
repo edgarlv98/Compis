@@ -2,32 +2,21 @@ program prueba:
 
 var int global1, global2;
 
-function void fibonacci(int a, int b, int c){
-    var int x;
-    if ( a < 1 ){
-        x = 0;
-    } else {
-        x = b;
-        b = c;
-        c = c + x;
-        print(x);
-        fibonacci(a-1, b, c);
-    }
+function int regresaValor2(int a){
+    a = a + 1;
+    print(a);
+    return a;
 }
 
 function int regresaValor(int a){
     a = a + 1;
-    print(a);
     return a;
-} 
+}
 
 main(){
     var float por, por2;
     int arreglo[10], pruebaArreglo[8], matriz[2][4];
     int pruebaInt;
-    pruebaInt = 2 + 3 * 3;
-    pruebaArreglo[2] = 2 * 2;
-    arreglo[3] = pruebaArreglo[2] + 1;
-    %%fibonacci(arreglo[3], 1, 1);
-    print(regresaValor(2););
+    print("aqui");
+    pruebaInt = regresaValor2(2) + 1;
 }

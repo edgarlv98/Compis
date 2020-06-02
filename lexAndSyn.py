@@ -171,8 +171,8 @@ def p_varAuxGlobal2(p):
                      | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMA varAuxGlobal2
     '''
     tipo = varsTable.tipo
-    direccion = memoriaPadre.memoria_global.getDirVarGlobal(tipo)
-    memoriaPadre.memoria_global.updateGlobalVariable(None, direccion, tipo)
+    direccion = memoriaPadre.memoria_local[0].getDirVarGlobal(tipo)
+    memoriaPadre.memoria_local[0].updateGlobalVariable(None, direccion, tipo)
     varsTable.insert(p[1], tipo, direccion, funcionPadreDeVariables)
 
 def p_main(p):
@@ -263,11 +263,14 @@ boolNeedsReturn = False
 
 def p_function(p):
     '''function : FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc
-              | FUNCTION tipoFunc nomFunc LPAREN  RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc function 
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
-              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE bloqueAux functionReturn RBRACE endProc function
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc 
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
@@ -307,8 +310,8 @@ def p_empty(p):
 
 def p_push_function(p):
     "push_function :"
-    tipo = directorioFunc.tipo
     if(directorioFunc.tipo != 'void'):
+        tipo = directorioFunc.tipo
         direccion = memoriaPadre.memoria_local[0].getDirVarGlobal(tipo)
         memoriaPadre.memoria_local[0].updateGlobalVariable(None, direccion, tipo)
         varsTable.insert(p[-1], tipo, direccion, 'global')
@@ -368,6 +371,7 @@ def p_estatuto(p):
     '''
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
+                       | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN
                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN SEMICOLON
     '''
     
@@ -431,9 +435,7 @@ def p_ver_dim1(p):
 
 def p_create_asign(p):
     "create_asign :"
-    valor = quad.createQuadAssign()
-    myVar = p[-5]
-    varsTable.update(myVar, valor)
+    quad.createQuadAssign()
 
 def p_comparacion(p):
     '''comparacion : ID push_id DOUBLEEQUAL push_poper expresion SEMICOLON
@@ -536,7 +538,7 @@ def p_factorAux(p):
 
 def p_push_id(p):
     "push_id :"
-    quad.pushID(p[-1])
+    quad.pushID(p[-1], funcionPadreDeVariables)
 
 def p_push_cte(p):
     "push_cte :"
@@ -612,8 +614,8 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #varsTable.show()
-    #quad.cuadruplos()
+    varsTable.show()
+    quad.cuadruplos()
     #virtual.inicio(quadMain)
     #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()

@@ -27,10 +27,10 @@ class quadruple(object):
         self.operator = operator
         self.result = result
 
-def pushID(id):
+def pushID(id, funcion):
     size = len(simbolos)
     for i in range(size):
-        if(id == simbolos[i].id):
+        if(id == simbolos[i].id and funcion == simbolos[i].funcion):
             AVAIL.append(simbolos[i].value)
             PTypes.append(simbolos[i].tipo)
             PilaO.append(simbolos[i].direccion)
@@ -179,8 +179,7 @@ def createQuadReturn(funcionPadre):
     PTypes.pop()
     AVAIL.pop()
     PTypes.append(tipo)
-    POper.append(direccion)
-    print(direccion)
+    PilaO.append(direccion)
     quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
     Quad.append(quadr)
 
