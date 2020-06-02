@@ -260,7 +260,7 @@ varsTableAux = []
 def moduloTres():
     argument = popPilaO()
     AVAIL.pop()
-    quadr = quadruple(len(Quad), 'param', argument, None, getDireccionParam() + paramCont)
+    quadr = quadruple(len(Quad), 'param', argument, None, getDireccionParam()+ paramCont )
     Quad.append(quadr)
     sumaParametro()
 

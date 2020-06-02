@@ -14,7 +14,7 @@ main(){
     var int pruebaInt;
     pruebaInt = 3;
     print("aqui");
-    print(regresaValor(pruebaInt) + 1);
+    print(regresaValor(pruebaInt));
     pruebaInt = regresaValor(pruebaInt) + 2;
     print(pruebaInt);
     print(regresaValor2(3));

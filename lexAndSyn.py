@@ -366,7 +366,7 @@ def p_estatuto(p):
                 | while
                 | loopFromDo
                 | comparacion
-                | llamadaAFuncion
+                | llamadaAFuncion SEMICOLON
                 | lectura
     '''
 def p_llamadaAFuncion(p):
@@ -385,7 +385,7 @@ def p_gosub(p):
     for x in directorioFunc.funciones:
         if x.id == idFuncActual:
             for y in varsTable.simbolos:
-                if y.id == x.id:
+                if y.funcion == x.id:
                     quad.moduloSeis(x.id, x.alcance, y.direccion)
                     break
     
@@ -615,8 +615,8 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    varsTable.show()
-    quad.cuadruplos()
+    #varsTable.show()
+    #quad.cuadruplos()
     virtual.inicio(quadMain)
     #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()
