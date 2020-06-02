@@ -246,47 +246,40 @@ def moduloDos(direccion):
     quadr = quadruple(len(Quad), 'era', None, None, direccion)
     getFunc(direccion)
     Quad.append(quadr)
-    global paramCont
-    paramCont = 1
 
 quadAuxParaParametros = []
 funcName = None
+
 paramDireccion = None
 varsTableAux = []
 
 def moduloTres():
     argument = PilaO.pop()
     AVAIL.pop()
-    quadr = quadruple(0, 'param', argument, None, 'param')
-    quadAuxParaParametros.append(quadr)
+    quadr = quadruple(len(Quad), 'param', argument, None, getDireccionParam() + paramCont)
+    Quad.append(quadr)
     sumaParametro()
-
-
 
 def getFunc(direccion):
     for x in directFunc.funciones:
         if x.direccion == direccion:
             global funcName 
             funcName = x.id
-    filterSimbolosDeFunc()
-            
-def filterSimbolosDeFunc():
+
+def getDireccionParam():
     for x in simbolos:
         if x.funcion == funcName:
-            varsTableAux.append(x)
-    
+            return x.direccion
+
 def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
 def moduloSeis(id, alcance, direccion):
-    for i in range(1,paramCont):
-        x = quadAuxParaParametros.pop()
-        x.contQua = len(Quad)
-        x.result = varsTableAux[i-1].direccion
-        Quad.append(x)
     quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
+    global paramCont
+    paramCont = 0
 
 def miReturn():
     result = PilaO.pop()

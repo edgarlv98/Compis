@@ -232,6 +232,7 @@ def p_function(p):
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE functionReturn RBRACE endProc function 
               | FUNCTION tipoFunc nomFunc LPAREN RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc
+              | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE bloqueAux RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE functionReturn RBRACE endProc function
               | FUNCTION tipoFunc nomFunc LPAREN param RPAREN LBRACE vars bloqueAux functionReturn RBRACE endProc function
@@ -358,12 +359,15 @@ def p_generarEra(p):
             break
 
 def p_paramFuncion(p):
-    '''paramFuncion : ID  push_id2
-                     | ID push_id2 COMA paramFuncion
-                     | expresion
-                     | expresion COMA paramFuncion
+    '''paramFuncion : ID push_id2 paramFuncionAux
+                     | ID push_id2 paramFuncionAux COMA paramFuncion
+                     | exp paramFuncionAux
+                     | exp paramFuncionAux COMA paramFuncion
                      | empty
     '''
+
+def p_paramFuncionAux(p):
+    "paramFuncionAux : "
     quad.moduloTres()
 
 def p_push_id2(p):
@@ -551,16 +555,16 @@ def printGlobal():
 
 if success == True:
     #print("Archivo aprobado")
-    #directorioFunc.show()
     #print("Variables")
     #varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    quad.cuadruplos()
+    #quad.cuadruplos()
     virtual.inicio(quadMain)
-    varsTable.show()
-    memoriaPadre.memoria_local[0].show()
+    #varsTable.show()
+    #directorioFunc.show()
+    #memoriaPadre.memoria_local[0].show()
     sys.exit()
 else:
     print("Archivo no aprobado")
