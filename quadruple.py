@@ -295,25 +295,44 @@ def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)
     Quad.append(quadr)
 
-def verificaDim(id):
+def verificaDim(id, funcion):
     size = len(simbolos)
     for i in range(size):
-        if(simbolos[i].id == id):
+        if(simbolos[i].id == id and simbolos[i].funcion == funcion):
             dimension = simbolos[i].dimension
     
+    value = AVAIL.pop()
+    operand = popPilaO()
+    tipo = PTypes.pop()
+
+    quadr = quadruple(len(Quad), 'ver', operand, dimension, operand)
+    Quad.append(quadr)
+    aux = popPilaO()
+    aux = int(aux)
+    appendPilaO(aux)
+    PilaDim.append(value)
+
+def verificaDim2(id, funcion):
+    size = len(simbolos)
+    for i in range(size):
+        if(simbolos[i].id == id and simbolos[i].funcion == funcion):
+            dimension = simbolos[i].dimension
+    popPilaO()
     operand = popPilaO()
     value = AVAIL.pop()
+    value2 = AVAIL.pop()
     tipo = PTypes.pop()
-    quadr = quadruple(len(Quad), 'ver', value, dimension, value)
-    if(value > dimension or value < 0):
-        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+    
+    if(value > dimension[0] or value < 0 or value2 > dimension[1] or value2 < 0  ):
+        print("ERROR: El indide de la matriz esta fuera de la dimension declarada")
         sys.exit()
     else:
+        quadr = quadruple(len(Quad), 'ver', (value, value2), dimension, value)
         Quad.append(quadr)
         aux = popPilaO()
-        aux = int(aux) + int(value)
+        print(int(aux),int(value)*int(dimension[1]),int(value2))
+        aux = int(aux) + int(value)*int(dimension[1]) + int(value2)
         appendPilaO(aux)
-        PilaDim.append(value)
 
 def asignacionDimensionada():
     PoperSize = len(POper)

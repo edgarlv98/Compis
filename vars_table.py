@@ -54,5 +54,5 @@ def update(id, value):
 def show():
     longitud = len(simbolos)
     for i in range(0, longitud):
-        if(type(simbolos[i].dimension) == int):
-            print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].funcion, simbolos[i].dimension, simbolos[i].value)
+        print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].funcion, simbolos[i].dimension, simbolos[i].value)
+        

@@ -294,12 +294,16 @@ class memoria(object):
     def updateVariableLocal(self, valor, dir, tipo):
         if(tipo == "int"):
             self.local.int[dir] = valor
+            return
         if(tipo == "float"):
             self.local.float[dir] = valor
+            return
         if(tipo == "char"):
             self.local.char[dir] = valor
+            return
         if(tipo == "bool"):
             self.local.bool[dir] = valor
+            return
 
     # Funcion que regresa una direccion para una fucion
     # dependiendo de su tipo

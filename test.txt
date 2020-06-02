@@ -11,11 +11,18 @@ function int regresaValor2(int a){
 }
 
 main(){
-    var int pruebaInt;
+    var int pruebaInt, matriz[2][2], arreglo[3], indice;
     pruebaInt = 3;
+    indice = 0;
+    while(pruebaInt > 0){
+        arreglo[indice] = pruebaInt;
+        pruebaInt = pruebaInt - 1;
+        indice = indice + 1;
+    }
+    indice = 0;
     print("aqui");
-    print(regresaValor(pruebaInt));
-    pruebaInt = regresaValor(pruebaInt) + 2;
-    print(pruebaInt);
-    print(regresaValor2(3));
+    while(indice < 3){
+        print(arreglo[indice]);
+        indice = indice + 1;
+    }
 }

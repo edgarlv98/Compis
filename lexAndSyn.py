@@ -238,6 +238,7 @@ def p_matriz(p):
         direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
         varsTable.insertDimensionada(p[-7], tipo, direccion, funcionPadreDeVariables, valor)
         i = i + 1
+        
 
 def p_tipo(p):
     '''tipo : INT
@@ -417,9 +418,18 @@ def p_array(p):
     '''arreglo : ID push_id LCORCH exp RCORCH ver_dim1
     '''
 
+def p_matrix(p):
+    ''' matrix : ID push_id LCORCH exp RCORCH LCORCH exp RCORCH ver_dim2
+    '''
+
+def p_ver_dim2(p):
+    " ver_dim2 : "
+    quad.verificaDim2(p[-8], funcionPadreDeVariables)
+
 def p_asignacion(p):
     '''asignacion : ID push_id EQUAL push_poper expresion create_asign SEMICOLON
-                  | arreglo EQUAL push_poper expresion create_asign SEMICOLON
+                  | arreglo EQUAL push_poper exp create_asign SEMICOLON
+                  | matrix EQUAL push_poper exp create_asign SEMICOLON
                   | ID push_id EQUAL push_poper llamadaAFuncion create_asign SEMICOLON
     '''
 
@@ -432,7 +442,7 @@ def p_create_asign_dim(p):
 
 def p_ver_dim1(p):
     "ver_dim1 :"
-    quad.verificaDim(p[-5])
+    quad.verificaDim(p[-5], funcionPadreDeVariables)
 
 def p_create_asign(p):
     "create_asign :"
@@ -561,6 +571,7 @@ def p_var_cte(p):
                | CTE_F push_cte
                | CTE_STRING push_cte
                | arreglo
+               | matrix
     '''
     varsTable.valor = p[1]
 

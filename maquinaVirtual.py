@@ -117,12 +117,32 @@ def goto(quad, i):
     return quad.result
 
 def printt(quad, i):
-    direccionVariable = quad.result
-    tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
+    
 
-    imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
+    dimension = 0
 
-    print(imprime)
+    for x in varTable.simbolos:
+        if x.direccion == quad.result:
+            dimension = x.dimension
+
+    if dimension == 0:
+        direccionVariable = quad.result
+        tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
+
+        imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
+
+        print(imprime)    
+    else:
+
+        aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
+        direccionVariable = quad.result
+        aux = direccionVariable + int(aux)
+
+        tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(aux)
+        imprime = memoriaPadre.memoria_local[indexMemoria].getValor(aux, tipoVariable)
+
+        print(imprime)
+        dimension = 0
 
     return i + 1
 
@@ -136,16 +156,36 @@ def inputt(quad, i):
 
     return i + 1
 
+direccionDelIndice = 0
+
 def equal(quad, i):
+
     left = quad.left_operand
+    dimension = 0
+
+    for x in varTable.simbolos:
+        if x.direccion == quad.result:
+            dimension = x.dimension
+
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
-    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
-
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)    
     result = quad.result
-    tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
+    if dimension == 0:
+        
+        tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
 
-    memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, result, tipoResult)
+        memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, result, tipoResult)
+    else:
+         
+        
+        aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
+        direccionVariable = quad.result
+        aux = direccionVariable + int(aux)
 
+
+        tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
+        memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
+        dimension = 0
     return i + 1
 
 def doubleEqual(quad, i):
@@ -220,17 +260,34 @@ def returnN(quad, i):
     return i + 1
 
 def verifica(quad, i):
+    global direccionDelIndice
+    direccionDelIndice = quad.left_operand
     miDim = quad.left_operand
+    
+    miDim = memoriaPadre.memoria_local[indexMemoria].getValor(miDim, None)
     dimOriginal = quad.right_operand
+    if(type(dimOriginal) == int):
+        miDim = int(miDim)
+        dimOriginal = int(dimOriginal)
 
-    miDim = int(miDim)
-    dimOriginal = int(dimOriginal)
-
-    if(miDim > dimOriginal or miDim < 0):
-        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
-        sys.exit()
+        if(miDim >= dimOriginal or miDim < 0):
+            print("ERROR: El indide del arreglo esta fuera de la dimension declarada")
+            sys.exit()
+        else:
+            return i + 1
     else:
-        return i + 1
+        dimLeft = int(miDim[0])
+        dimRight = int(miDim[1])
+        dimOrig = int(dimOriginal[0])
+        dimOrig1 = int(dimOriginal[1])
+
+
+        if(dimLeft > dimOrig or dimLeft < 0 or dimRight > dimOrig1 or dimRight < 0):
+            print("ERROR: El indide de la matriz esta fuera de la dimension declarada")
+            sys.exit()
+        else:
+            return i + 1
+
 
 def acciones(quad, i):
 
