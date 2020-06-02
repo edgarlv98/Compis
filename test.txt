@@ -5,6 +5,11 @@ function int regresaValor(int a){
     return a;
 }
 
+function int regresaValor2(int a){
+    a = a + 5;
+    return a;
+}
+
 main(){
     var int pruebaInt;
     pruebaInt = 3;
@@ -12,4 +17,5 @@ main(){
     print(regresaValor(pruebaInt) + 1);
     pruebaInt = regresaValor(pruebaInt) + 2;
     print(pruebaInt);
+    print(regresaValor2(3));
 }
