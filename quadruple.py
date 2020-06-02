@@ -298,16 +298,19 @@ def verificaDim(id):
         if(simbolos[i].id == id):
             dimension = simbolos[i].dimension
     
-    #direccion = memoriaPadre.memoria_local[0].getDirTemporal('int')
     operand = PilaO.pop()
     value = AVAIL.pop()
     tipo = PTypes.pop()
     quadr = quadruple(len(Quad), 'ver', value, dimension, value)
-    Quad.append(quadr)
-    prueba = PilaO.pop()
-    prueba = int(prueba) + int(value)
-    PilaO.append(prueba)
-    PilaDim.append(value)
+    if(value > dimension or value < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
+    else:
+        Quad.append(quadr)
+        aux = PilaO.pop()
+        aux = int(aux) + int(value)
+        PilaO.append(aux)
+        PilaDim.append(value)
 
 def asignacionDimensionada():
     PoperSize = len(POper)

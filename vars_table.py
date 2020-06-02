@@ -18,7 +18,7 @@ class variable(object):
         self.direccion = direccion
         self.value = str(value)
         self.funcion = funcion
-        self.dimension = int(dimension)
+        self.dimension = dimension
 
 def insert(id, tipo, direccion, funcion):
     temp = variable(id, tipo, direccion, funcion)
@@ -54,4 +54,5 @@ def update(id, value):
 def show():
     longitud = len(simbolos)
     for i in range(0, longitud):
-        print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].funcion, simbolos[i].dimension, simbolos[i].value)
+        if(type(simbolos[i].dimension) == int):
+            print(simbolos[i].id, simbolos[i].tipo, simbolos[i].direccion, simbolos[i].funcion, simbolos[i].dimension, simbolos[i].value)

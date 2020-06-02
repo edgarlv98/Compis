@@ -230,11 +230,12 @@ def p_matriz(p):
     dim1 = int(p[-5])
     dim2 = int(p[-2])
     dimension = dim1 * dim2
+    valor = (p[-5], p[-2])
     tipo = varsTable.tipo
     i = 0
-    while(i < dimension-1):
+    while(i < dimension):
         direccion = memoriaPadre.memoria_local[0].getDirvariableLocal(tipo)
-        varsTable.insert(p[-7], tipo, direccion, funcionPadreDeVariables)
+        varsTable.insertDimensionada(p[-7], tipo, direccion, funcionPadreDeVariables, valor)
         i = i + 1
 
 def p_tipo(p):
@@ -369,7 +370,6 @@ def p_gosub(p):
             quad.moduloSeis(x.id, x.alcance, x.direccion)
             break
     
-
 def p_generarEra(p):
     '''generarEra :
     '''

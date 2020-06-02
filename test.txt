@@ -30,14 +30,14 @@ function int pruebafuncion(int a, int b){
 
 main(){
     var float por, por2;
-    int arreglo[10], pruebaArreglo[8], matriz[4][4];
+    int arreglo[10], pruebaArreglo[8], matriz[2][4];
     int pruebaInt;
     pruebaInt = 2 + 3 * 3;
-    pruebaArreglo[2] = 2 * 5;
-    arreglo[5] = pruebaArreglo[2] + 1;
+    pruebaArreglo[2] = 2 * 2;
+    arreglo[3] = pruebaArreglo[2] + 1;
     print("ARREGLO");
     print(pruebaArreglo[2]);
-    print(arreglo[5]);
+    print(arreglo[3]);
     %%global1 = pruebaInt;
     %%print("MAIN");
     %%pruebafuncion(pruebaInt, 8);

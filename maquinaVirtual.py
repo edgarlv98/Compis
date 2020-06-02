@@ -206,15 +206,15 @@ def endproc(quad, i):
     return i + 1
 
 def verifica(quad, i):
-    left = quad.left_operand
-    right = quad.right_operand
+    miDim = quad.left_operand
+    dimOriginal = quad.right_operand
 
-    tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
-    valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
+    miDim = int(miDim)
+    dimOriginal = int(dimOriginal)
 
-    if(valorLeft > int(right)):
-        print("ERROR: El indice del arreglo/matriz es mayor a sus dimensiones")
-        sys.exit
+    if(miDim > dimOriginal or miDim < 0):
+        print("ERROR: El indide de la matriz/arreglo esta fuera de la dimension declarada")
+        sys.exit()
     else:
         return i + 1
 
