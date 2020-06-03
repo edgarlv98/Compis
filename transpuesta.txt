@@ -1,0 +1,48 @@
+program prueba:
+
+
+main(){
+    var int matriz[2][3], row, column, valor;
+    valor= 0;
+    row = 0;
+    column = 0;
+    
+    while( row < 2 ){
+        column = 0;
+        while( column < 3){
+            matriz[row][column] = valor;
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    row = 0;
+    column = 0;
+    print("Matriz Original");
+    while( row < 2 ){
+        column = 0;
+        while( column < 3){
+            print(matriz[row][column]);
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    %%Transpuesta matriz
+    matriz!;
+    print("Transpuesta!!");
+
+    row = 0;
+    column = 0;
+    while( row < 3 ){
+        column = 0;
+        while( column < 2){
+            print(matriz[row][column]);
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+}

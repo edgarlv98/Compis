@@ -1,0 +1,43 @@
+program prueba:
+main(){
+    var float matriz[2][2];
+    int row, column,valor;
+    valor = 1;
+    row = 0;
+    column = 0;
+    
+    while( row < 2 ){
+        column = 0;
+        while( column < 2){
+            input(valor);
+            matriz[row][column] = valor;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    print("Matriz original");
+    row = 0;
+    column = 0;
+    while( row < 2 ){
+        column = 0;
+        while( column < 2){
+            print(matriz[row][column]);
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    print("Inversaaa!!");
+    matriz?;
+    row = 0;
+    column = 0;
+    while( row < 2 ){
+        column = 0;
+        while( column < 2){
+            print(matriz[row][column]);
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+}

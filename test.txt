@@ -1,0 +1,25 @@
+program prueba:
+
+
+main(){
+    var int arr[7];
+    int indice, aux;
+    indice = 0;
+    aux = 7;
+    
+    while( aux > 0 ){
+        arr[indice] = aux;
+        aux = aux - 1;
+        indice = indice + 1;
+    }
+    indice = 0;
+    aux = 7;
+    while( aux > 0 ){
+        print(arr[indice]);
+        aux = aux - 1;
+        indice = indice + 1;
+        if( aux < 4){
+            break;
+        }
+    }
+}
