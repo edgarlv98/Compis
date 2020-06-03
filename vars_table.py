@@ -20,11 +20,13 @@ class variable(object):
         self.funcion = funcion
         self.dimension = dimension
 
+#Inserta a la tabla de variables
 def insert(id, tipo, direccion, funcion):
     temp = variable(id, tipo, direccion, funcion)
     if (len(simbolos) >= 1 and not repeatID(id, funcion)) or len(simbolos) == 0:
         simbolos.append(temp)
 
+#Inserta a la tabla de variables
 def insertDimensionada(id, tipo, direccion, funcion, dimension):
     aux = memoriaPadre.memoria_local[0].getDirvariableLocal('dimension')
     memoriaPadre.memoria_local[0].updateVariableLocal(dimension,aux,'dimension')
@@ -32,6 +34,7 @@ def insertDimensionada(id, tipo, direccion, funcion, dimension):
     if (len(simbolos) >= 1 and not repeatID(id, funcion)) or len(simbolos) == 0:
         simbolos.append(temp)
 
+#Funcion que checa si se repite una variable
 def repeatID(id, funcion):
     aux = False
 
@@ -42,6 +45,7 @@ def repeatID(id, funcion):
             sys.exit()
     return aux
 
+#Funcion que actualiza el valor de una variable
 def update(id, value):
     for i in range (len(simbolos)):
         if simbolos[i].id == id:
@@ -53,6 +57,7 @@ def update(id, value):
             else:
                 memoriaPadre.memoria_local[0].updateVariableLocal(value, direccion, tipo)
 
+#Muestra las variables
 def show():
     longitud = len(simbolos)
     for i in range(0, longitud):

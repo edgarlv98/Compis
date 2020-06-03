@@ -27,6 +27,7 @@ class quadruple(object):
         self.operator = operator
         self.result = result
 
+#Funcion que hace push a un id
 def pushID(id, funcion):
     size = len(simbolos)
     for i in range(size):
@@ -36,12 +37,14 @@ def pushID(id, funcion):
             appendPilaO(simbolos[i].direccion)
             break
 
+#Funcion que checa si una cte es float
 def is_float(cte):
     try:
         return float(cte) and '.' in cte
     except ValueError:
         return False
 
+#Funcion que hace push a una cte
 def pushCTE(cte, direccion):
     isFloat = is_float(cte)
     if(isFloat):
@@ -59,12 +62,15 @@ def pushCTE(cte, direccion):
             appendPilaO(direccion)
             AVAIL.append(cte)
 
+#Funcion que hace push a un tipo
 def pushTipo(tipo):
     PTypes.append(tipo)
 
+#Funcion que hace push a un operador
 def pushPoper(operador):
     POper.append(operador)
 
+#Funcion que crea el cuadrplo de asignacion
 def createQuadAssign():
     POperSize = len(POper)
     if POperSize > 0:
@@ -80,13 +86,13 @@ def createQuadAssign():
             quadr = quadruple(len(Quad), operator, right_operand, None, left_operand)
             Quad.append(quadr)
             result = right_value
-    #else:
-    #    print("ERROR")
 
+#Funcion que muestralos cuadruplos
 def cuadruplos():
     for i in range(len(Quad)):
         print(Quad[i].contQua, Quad[i].operator, Quad[i].left_operand, Quad[i].right_operand, Quad[i].result)
 
+#Funcion que crea el cuadrplo de termino
 def createQuadTerm():
     POperSize = len(POper)
     if(POperSize > 0):
@@ -107,9 +113,8 @@ def createQuadTerm():
                 AVAIL.append(direccion)
                 appendPilaO(direccion)
                 PTypes.append(result_type)
-    #else:
-    #    print("ERROR")
 
+#Funcion que crea el cuadrplo de factor
 def createQuadFact():
     POperSize = len(POper)
     if(POperSize > 0):
@@ -130,9 +135,8 @@ def createQuadFact():
                 AVAIL.append(direccion)
                 appendPilaO(direccion)
                 PTypes.append(result_type)
-    #else:
-    #    print("ERROR")
 
+#Funcion que crea el cuadrplo de comparacion
 def createQuadComp():
     POperSize = len(POper)
     if(POper[POperSize-1] == '>' or POper[POperSize-1] == '<' or POper[POperSize-1] == '==' or POper[POperSize-1] == '!='):
@@ -152,9 +156,8 @@ def createQuadComp():
             AVAIL.append(direccion)
             appendPilaO(direccion)
             PTypes.append('bool')
-    #else:
-    #    print("ERROR")
 
+#Funcion que crea el cuadrplo de print
 def createQuadPrint():
     POperSize = len(POper)
     if POperSize > 0:
@@ -166,6 +169,7 @@ def createQuadPrint():
             quadr = quadruple(len(Quad), operator, None, None, right_operand)
             Quad.append(quadr)
 
+#Funcion que crea el cuadrplo de return
 def createQuadReturn(funcionPadre):
     direccion = 0
     tipo = None
@@ -182,9 +186,11 @@ def createQuadReturn(funcionPadre):
     quadr = quadruple(len(Quad), 'return', direccion, None, right_operand)
     Quad.append(quadr)
 
+#Funcion que rellena los gotof y goto
 def fill(cuadruplo, salto):
     Quad[cuadruplo].result = salto
 
+#Funcion que crea el cuadrplo de condicion
 def createQuadCond():
     exp_type = PTypes.pop()
     if exp_type == "bool":
@@ -195,10 +201,12 @@ def createQuadCond():
     else:
         print("ERROR:")
 
+#Funcion quea el actualiza el valor del salto
 def updateQuadCondIFJump():
     end = PJumps.pop()
     fill(end, len(Quad))
 
+#Funcion quea el actualiza el valor del salto en condiciones
 def updateQuadCondIfElseJump():
     quadr = quadruple(len(Quad), "goto", None, None, None)
     Quad.append(quadr)
@@ -206,9 +214,11 @@ def updateQuadCondIfElseJump():
     PJumps.append(len(Quad) - 1)
     fill(false, len(Quad))
 
+#Funion que hace push al salto
 def while1():
     PJumps.append(len(Quad))
 
+#Funcion quea el actualiza el valor del salto en gotof
 def while2():
     exp_type = PTypes.pop()
     if(exp_type == 'bool'):
@@ -219,6 +229,7 @@ def while2():
     else:
         print("ERROR")
 
+#Funcion quea el actualiza el valor del salto en goto
 def while3():
     final = PJumps.pop()
     regresa = PJumps.pop()
@@ -239,12 +250,12 @@ def loop2():
     else:
         print("ERROR")
 
+#Muestra el tamano de la pila de operadores
 def mostrarSize():
     for i in range(len(POper)):
         print(POper[i])
 
-
-
+#Funcion que crea el cuadruplo de era
 def moduloDos(direccion):
     quadr = quadruple(len(Quad), 'era', None, None, direccion)
     getFunc(direccion)
@@ -256,6 +267,7 @@ funcName = None
 paramDireccion = None
 varsTableAux = []
 
+#Funcion que crea el cuadruplo de param
 def moduloTres():
     argument = popPilaO()
     AVAIL.pop()
@@ -263,37 +275,43 @@ def moduloTres():
     Quad.append(quadr)
     sumaParametro()
 
+#Funcion que actualiza el valor de funcName
 def getFunc(direccion):
     for x in directFunc.funciones:
         if x.direccion == direccion:
             global funcName 
             funcName = x.id
 
+#Funcion que regfresa la direccion de los parametros
 def getDireccionParam():
     for x in simbolos:
         if x.funcion == funcName:
             return x.direccion
 
+#Funcion que suma el param
 def sumaParametro():
     global paramCont
     paramCont = paramCont + 1
 
+#Funcion que crea el cuadruplo gosub
 def moduloSeis(id, alcance, direccion):
     quadr = quadruple(len(Quad), 'gosub', direccion, None, alcance)
     Quad.append(quadr)
     appendPilaO(direccion)
     global paramCont
     paramCont = 0
-    
+
+#Funcion que crea el cuadruplo endproc
 def endproc():
     quadr = quadruple(len(Quad), 'endproc', None, None, None)
     Quad.append(quadr)
-    #memoriaPadre.memoria_local[0].cleanMemory()
 
+#Funcion que crea el cuadruplo end
 def endPrograma():
     quadr = quadruple(len(Quad), 'end', None, None, None)
     Quad.append(quadr)
 
+#Funcion que crea el cuadruplo ver para arreglos
 def verificaDim(id, funcion):
     size = len(simbolos)
     for i in range(size):
@@ -311,18 +329,22 @@ def verificaDim(id, funcion):
     appendPilaO(aux)
     PilaDim.append(value)
 
+#Funcion que crea el cuadruplo break
 def breakk():
     quadr = quadruple(len(Quad), 'break', None, None, None)
     Quad.append(quadr)
 
+#Funcion que crea el cuadruplo trans
 def creaTrans(id1, funcionPadre):
     quadr = quadruple(len(Quad), 'transpuesta', id1, None, funcionPadre)
     Quad.append(quadr)
 
+#Funcion que crea el cuadruplo inversa
 def creaInversa(id1, funcionPadre):
     quadr = quadruple(len(Quad), 'inversa', id1, None, funcionPadre)
     Quad.append(quadr)
 
+#Funcion que crea el cuadruplo ver para matrices
 def verificaDim2(id, funcion):
     size = len(simbolos)
     for i in range(size):
@@ -339,6 +361,7 @@ def verificaDim2(id, funcion):
     aux = popPilaO()
     appendPilaO(aux)
 
+#Funcion que crea el cuadruplo asignar para variables dimensionadas
 def asignacionDimensionada():
     PoperSize = len(POper)
     if (PoperSize > 0):
@@ -355,6 +378,7 @@ def asignacionDimensionada():
             Quad.append(quadr)
             result = rightDireccion
 
+#Funcion que crea el cuadruplo determinante
 def determinante(matriz, var, funcion):
     size = len(simbolos)
     for i in range(size):
@@ -370,13 +394,13 @@ def determinante(matriz, var, funcion):
     quadr = quadruple(len(Quad), 'det', direccion, None, direccion1)
     Quad.append(quadr)
 
+#Funcion que hace pop a la pilaO
 def popPilaO():
     global PilaO
     x =  PilaO.pop()
-    #print( "se quita ",x )
     return x
 
+#Funcion hace append a la pilaO
 def appendPilaO(value):
     global PilaO
     PilaO.append(value)
-    #print("Se agrega ",value)

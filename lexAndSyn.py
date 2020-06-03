@@ -620,7 +620,7 @@ def funcionDos(id):
 
 parser = yacc.yacc()
 
-archivo = "fibonacci.txt"
+archivo = "transpuesta.txt"
 f = open(archivo, 'r')
 s = f.read()
 

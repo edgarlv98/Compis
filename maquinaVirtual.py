@@ -9,6 +9,7 @@ indexMemoria = 0
 indexAntesdeFuncion = 0
 esMain = True
 
+#Funcion que realiza la operacion de division en la maquina virtual
 def division(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -24,7 +25,8 @@ def division(quad, i):
     memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'int')
 
     return i + 1
-    
+
+#Funcion que realiza la operacion de multiplicacion en la maquina virtual
 def mult(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -41,6 +43,7 @@ def mult(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de resta en la maquina virtual
 def resta(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -57,6 +60,7 @@ def resta(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de suma en la maquina virtual
 def suma(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -73,6 +77,7 @@ def suma(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de mayor que en la maquina virtual
 def mayor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -89,6 +94,7 @@ def mayor(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de menor que en la maquina virtual
 def menor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -107,6 +113,7 @@ def menor(quad, i):
 
 auxiliarBreak = 0
 
+#Funcion que realiza el gotof en la maquina virtual
 def gotof(quad, i):
     left = quad.left_operand
     valor = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, 'bool')
@@ -118,9 +125,11 @@ def gotof(quad, i):
     else:
         return i + 1
 
+#Funcion que realiza el goto en la maquina virtual
 def goto(quad, i):
     return quad.result
 
+#Funcion que realiza la operacion de print en la maquina virtual
 def printt(quad, i):
     
     dimension = 0
@@ -160,6 +169,7 @@ def printt(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de input en la maquina virtual
 def inputt(quad, i):
     direccionVariable = quad.result
     tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
@@ -172,6 +182,7 @@ def inputt(quad, i):
 
 direccionDelIndice = 0
 
+#Funcion que realiza la asignacion en la maquina virtual
 def equal(quad, i):
 
     left = quad.left_operand
@@ -209,6 +220,7 @@ def equal(quad, i):
         memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
     return i + 1
 
+#Funcion que realiza la operacion de igual en la maquina virtual
 def doubleEqual(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -225,6 +237,7 @@ def doubleEqual(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de diferente en la maquina virtual
 def different(quad, i):
     left = quad.left_operand
     right = quad.right_operand
@@ -241,7 +254,7 @@ def different(quad, i):
 
     return i + 1
 
-
+#Funcion que realiza la llamada de funcion en la maquina virtual
 def era(quad, i):
     global indexMemoria
     memoriaPadre.memoria_local.append(memoria.memoria())
@@ -249,6 +262,7 @@ def era(quad, i):
     memoriaPadre.memoria_local[indexMemoria] = memoriaPadre.memoria_local[indexMemoria - 1]
     return i + 1
 
+#Funcion que realiza el gosub en la maquina virtual
 def gosub(quad, i):
     global indexAntesdeFuncion
     global esMain
@@ -258,12 +272,14 @@ def gosub(quad, i):
     i = quad.result
     return i
 
+#Funcion que realiza la operacion de los parametros en la maquina virtual
 def param(quad, i):
     tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.left_operand)
     valorParam = memoriaPadre.memoria_local[indexMemoria].getValor(quad.left_operand, tipo)
     memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorParam, quad.result, tipo)
     return i + 1
 
+#Funcion que realiza el endproc de una funcion
 def endproc(quad, i):
     global indexMemoria
     global esMain
@@ -273,6 +289,7 @@ def endproc(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de return en la maquina virtual
 def returnN(quad, i):
     tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.left_operand)
     tipo2 = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.result)
@@ -283,10 +300,12 @@ def returnN(quad, i):
 limiteMatriz = None
 valoresCorchetes = None
 
+#Break en desarrollo
 def breakk(quad, i):
     i = auxiliarBreak
     return i
 
+#Funcion que verifica las dimensiones en la maquina virtual
 def verifica(quad, i):
     global direccionDelIndice
     global limiteMatriz
@@ -321,6 +340,7 @@ def verifica(quad, i):
         else:
             return i + 1
 
+#Funcion que realiza la operacion de transpuesta de una matriz en la maquina virtual
 def trans(quad, i):
     trans = quad.left_operand
     funcion = quad.result
@@ -356,6 +376,7 @@ def trans(quad, i):
 
     return i + 1
 
+#Funcion que realiza la operacion de inversa de una matriz en la maquina virtual
 def inversa(quad, i):
     inv = quad.left_operand
     funcion = quad.result
@@ -404,6 +425,7 @@ def inversa(quad, i):
     
     return i + 1
 
+#Funcion que realiza la operacion de determinante de una matriz en la maquina virtual
 def determinante(quad, i):
     det = quad.left_operand
 
@@ -432,7 +454,7 @@ def determinante(quad, i):
     
     return i + 1
 
-
+#Switch de la maquina virtual
 def acciones(quad, i):
 
     switch = {
@@ -471,10 +493,10 @@ def acciones(quad, i):
         return position
     return i + 1
 
+#Inicio de la maquina virtual
 def inicio(quadrupleMain):
     i = quadrupleMain + 1
     while Quad[i].operator != 'end':
-        #print(Quad[i].contQua, Quad[i].operator, Quad[i].left_operand, Quad[i].right_operand, Quad[i].result)
         i = acciones(Quad[i], i)
         
         

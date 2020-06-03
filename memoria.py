@@ -346,27 +346,6 @@ class memoria(object):
             self.dimensiones += 1
         return temp
 
-    # Funcion que limpia las direcciones de los temporales
-    def cleanMemory(self):
-
-        self.memoTempInt = 10000
-        self.memoTempFloat = 10100
-        self.memoTempChar = 10200
-        self.memoTempBool = 10300
-
-        #global memoLocalInt 
-        #global memoLocalFloat
-        #global memoLocalChar
-        #memoLocalInt = 15000
-        #memoLocalFloat = 15100
-        #memoLocalChar = 15200
-        #global memoCteInt 
-        #global memoCteFloat
-        #global memoCteChar
-        #memoCteInt = 20000
-        #memoCteFloat = 21000
-        #memoCteChar = 22000
-
     def show(self):
         print("GLOBAL")
         print("INT")
