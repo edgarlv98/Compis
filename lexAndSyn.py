@@ -178,6 +178,7 @@ def p_varAuxGlobal2(p):
 def p_main(p):
     '''main : nomMain LPAREN RPAREN LBRACE bloqueAux RBRACE
             | nomMain LPAREN RPAREN LBRACE vars bloqueAux RBRACE
+            | nomMain LPAREN RPAREN LBRACE llamadaAFuncion RBRACE
     '''
 
 def p_nomMain(p):
@@ -385,11 +386,13 @@ def p_gosub(p):
     '''
     for x in directorioFunc.funciones:
         if x.id == idFuncActual:
-            for y in varsTable.simbolos:
-                if y.funcion == x.id:
-                    quad.moduloSeis(x.id, x.alcance, y.direccion)
-                    break
-    
+            if p[-5] == 'void':
+                for y in varsTable.simbolos:
+                    if y.funcion == x.id:
+                        quad.moduloSeis(x.id, x.alcance, y.direccion)
+                        break
+            else:
+                quad.moduloSeis(x.id, x.alcance, 0)
 def p_generarEra(p):
     '''generarEra :
     '''

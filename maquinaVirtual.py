@@ -118,25 +118,33 @@ def goto(quad, i):
 
 def printt(quad, i):
     
-
     dimension = 0
-
     for x in varTable.simbolos:
         if x.direccion == quad.result:
             dimension = x.dimension
-
     if dimension == 0:
+
         direccionVariable = quad.result
         tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
 
         imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
 
         print(imprime)    
-    else:
-
+    elif type(dimension) == int and dimension>0:
         aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
         direccionVariable = quad.result
         aux = direccionVariable + int(aux)
+
+        tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(aux)
+        imprime = memoriaPadre.memoria_local[indexMemoria].getValor(aux, tipoVariable)
+
+        print(imprime)
+        dimension = 0
+    else:
+        s1 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[0]), None))
+        d2 = int(limiteMatriz[1])
+        s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[1]), None))
+        aux = int(direccionDelIndice) + s1 * d2 + s2
 
         tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(aux)
         imprime = memoriaPadre.memoria_local[indexMemoria].getValor(aux, tipoVariable)
@@ -175,17 +183,23 @@ def equal(quad, i):
         tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
 
         memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, result, tipoResult)
-    else:
-         
-        
+    elif dimension > 0 and type(dimension) == int:
         aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
         direccionVariable = quad.result
         aux = direccionVariable + int(aux)
 
-
         tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
         memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
         dimension = 0
+    else :
+        s1 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[0]), None))
+        d2 = int(limiteMatriz[1])
+        s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[1]), None))
+        aux = int(direccionDelIndice) + s1 * d2 + s2
+
+        tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
+        memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
+
     return i + 1
 
 def doubleEqual(quad, i):
@@ -259,29 +273,37 @@ def returnN(quad, i):
     memoriaPadre.memoria_local[indexMemoria - 1].updateVariableLocal(valor, quad.left_operand, tipo)
     return i + 1
 
+limiteMatriz = None
+valoresCorchetes = None
+
 def verifica(quad, i):
     global direccionDelIndice
+    global limiteMatriz
+    global valoresCorchetes
+
     direccionDelIndice = quad.left_operand
-    miDim = quad.left_operand
-    
-    miDim = memoriaPadre.memoria_local[indexMemoria].getValor(miDim, None)
+    miDim = quad.result
     dimOriginal = quad.right_operand
+
     if(type(dimOriginal) == int):
+        miDim = memoriaPadre.memoria_local[indexMemoria].getValor(miDim, None)
         miDim = int(miDim)
         dimOriginal = int(dimOriginal)
-
         if(miDim >= dimOriginal or miDim < 0):
             print("ERROR: El indide del arreglo esta fuera de la dimension declarada")
             sys.exit()
         else:
             return i + 1
     else:
-        dimLeft = int(miDim[0])
-        dimRight = int(miDim[1])
+        
+        limiteMatriz = quad.right_operand
+        valoresCorchetes = quad.result
+
+        dimLeft = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(miDim[0]), None))
+        dimRight = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(miDim[1]), None))
         dimOrig = int(dimOriginal[0])
         dimOrig1 = int(dimOriginal[1])
-
-
+        
         if(dimLeft > dimOrig or dimLeft < 0 or dimRight > dimOrig1 or dimRight < 0):
             print("ERROR: El indide de la matriz esta fuera de la dimension declarada")
             sys.exit()

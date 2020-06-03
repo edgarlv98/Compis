@@ -1,28 +1,9 @@
 program prueba:
 
-function int regresaValor(int a){
-    a = a + 1;
-    return a;
-}
-
-function int regresaValor2(int a){
-    a = a + 5;
-    return a;
+function void imprime(){
+    print("hola");
 }
 
 main(){
-    var int pruebaInt, matriz[2][2], arreglo[3], indice;
-    pruebaInt = 3;
-    indice = 0;
-    while(pruebaInt > 0){
-        arreglo[indice] = pruebaInt;
-        pruebaInt = pruebaInt - 1;
-        indice = indice + 1;
-    }
-    indice = 0;
-    print("aqui");
-    while(indice < 3){
-        print(arreglo[indice]);
-        indice = indice + 1;
-    }
+    imprime();
 }

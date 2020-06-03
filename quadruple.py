@@ -317,22 +317,16 @@ def verificaDim2(id, funcion):
     for i in range(size):
         if(simbolos[i].id == id and simbolos[i].funcion == funcion):
             dimension = simbolos[i].dimension
-    popPilaO()
+            direccion = simbolos[i].direccion
+            break
+        
+    operand1 = popPilaO()
     operand = popPilaO()
-    value = AVAIL.pop()
-    value2 = AVAIL.pop()
     tipo = PTypes.pop()
-    
-    if(value > dimension[0] or value < 0 or value2 > dimension[1] or value2 < 0  ):
-        print("ERROR: El indide de la matriz esta fuera de la dimension declarada")
-        sys.exit()
-    else:
-        quadr = quadruple(len(Quad), 'ver', (value, value2), dimension, value)
-        Quad.append(quadr)
-        aux = popPilaO()
-        print(int(aux),int(value)*int(dimension[1]),int(value2))
-        aux = int(aux) + int(value)*int(dimension[1]) + int(value2)
-        appendPilaO(aux)
+    quadr = quadruple(len(Quad), 'ver', direccion , dimension, (operand, operand1))
+    Quad.append(quadr)
+    aux = popPilaO()
+    appendPilaO(aux)
 
 def asignacionDimensionada():
     PoperSize = len(POper)
