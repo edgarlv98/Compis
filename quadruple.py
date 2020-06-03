@@ -355,6 +355,21 @@ def asignacionDimensionada():
             Quad.append(quadr)
             result = rightDireccion
 
+def determinante(matriz, var, funcion):
+    size = len(simbolos)
+    for i in range(size):
+        if(simbolos[i].id == matriz and simbolos[i].funcion == funcion):
+            direccion = simbolos[i].direccion
+            break
+
+    for i in range(size):
+        if(simbolos[i].id == var and simbolos[i].funcion == funcion):
+            direccion1 = simbolos[i].direccion
+            break
+
+    quadr = quadruple(len(Quad), 'det', direccion, None, direccion1)
+    Quad.append(quadr)
+
 def popPilaO():
     global PilaO
     x =  PilaO.pop()

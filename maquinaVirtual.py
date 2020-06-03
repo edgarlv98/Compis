@@ -129,10 +129,9 @@ def printt(quad, i):
             dimension = x.dimension
 
     if dimension == 0:
-
         direccionVariable = quad.result
         tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
-        imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
+        imprime = memoriaPadre.memoria_local[indexMemoria].getValor(direccionVariable, None)
 
         print(imprime)
         return i + 1    
@@ -400,7 +399,36 @@ def inversa(quad, i):
         for j in range(0,r):
             copiaDirec = baseDir + a*r + j
             tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(copiaDirec)
+            matriz[a][j] = round(matriz[a][j], 4)
             memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(matriz[a][j], copiaDirec, tipo)
+    
+    return i + 1
+
+def determinante(quad, i):
+    det = quad.left_operand
+
+    for x in varTable.simbolos:
+        if det == x.direccion :
+            direccion = x.direccion
+            dimensiones = x.dimension
+            break
+    dimensiones =  memoriaPadre.memoria_local[0].getValor(dimensiones, 'dimension')
+
+    r = int(dimensiones[0])
+    c = int(dimensiones[1])
+
+    matriz = []
+
+    for a in range(0,r):
+        matriz.append([])
+        for j in range(0,c):
+            aux = memoriaPadre.memoria_local[indexMemoria].getValor(direccion,None)
+            matriz[a].append(aux) 
+            direccion += 1
+    
+    aux = np.linalg.det(np.array(matriz))
+    aux = round(aux, 4)
+    memoriaPadre.memoria_local[0].updateVariableLocal(aux, quad.result, 'float')
     
     return i + 1
 
@@ -434,7 +462,8 @@ def acciones(quad, i):
         'break': breakk,
         'ver': verifica,
         'transpuesta': trans,
-        'inversa' : inversa
+        'inversa': inversa,
+        'det': determinante
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

@@ -458,7 +458,13 @@ def p_asignacion(p):
                   | arreglo EQUAL push_poper exp create_asign SEMICOLON
                   | matrix EQUAL push_poper exp create_asign SEMICOLON
                   | ID push_id EQUAL push_poper llamadaAFuncion create_asign SEMICOLON
+                  | ID push_id EQUAL push_poper determinante SEMICOLON
     '''
+
+def p_determinante(p):
+    '''determinante : ID push_id DETERMINANT
+    '''
+    quad.determinante(p[1], p[-4], funcionPadreDeVariables)
 
 def p_push_id_dimensionada(p):
     "push_id_dimensionada :"
@@ -614,7 +620,7 @@ def funcionDos(id):
 
 parser = yacc.yacc()
 
-archivo = "test.txt"
+archivo = "fibonacci.txt"
 f = open(archivo, 'r')
 s = f.read()
 
@@ -654,7 +660,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     
-    quad.cuadruplos()
+    #quad.cuadruplos()
     #memoriaPadre.memoria_local[0].show()
     virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
