@@ -1,6 +1,6 @@
 # PATITO ++
 
-_Patito +++ es un lenguaje de programación capaz de soportar operaciones lineales, no lineales, funciones, el uso de matrices y arreglos. Además cuenta con funciones pre-establecidas para operaciones en matrices (inversa, determinante, transpuesta)._
+_Patito ++ es un lenguaje de programación capaz de soportar operaciones lineales, no lineales, funciones, el uso de matrices y arreglos. Además cuenta con funciones pre-establecidas para operaciones en matrices (inversa, determinante, transpuesta)._
 
 ## Comenzando 🚀
 
@@ -33,67 +33,67 @@ _Para ejectuar las pruebas es necesario realizar el siguiente comando en tu term
 python lexAndSyn.py
 ```
 _Nota: Es recomendable utilizar una version de Python superior a la 3.0_
+
 ### Syntaxis 🔩
 
-__
-
+_Declaración de variables:_
 ```
-Da un ejemplo
-```
-
-### Y las pruebas de estilo de codificación ⌨️
-
-_Explica que verifican estas pruebas y por qué_
-
-```
-Da un ejemplo
+var <tipo> <idArray>[<size>], <id>, <idMatriz>[<size>][<size>];
+<OtroTipo> <id>, <id>;
 ```
 
-## Despliegue 📦
+_Declaración de funciones:_
+```
+function <tipo> <id> (<parametros){
+<bloqueCódigo>
+}
+```
 
-_Agrega notas adicionales sobre como hacer deploy_
+_Algunas declaraciones de asignaciones:_
+```
+<id> = <id>;
+<id> = <cte>;
+<id> = <array>[<index>];
+<id> = <matrix>[<index>][<index>];
+<id> = <id/cte> <operador + - * /> <id/cte> 
+```
 
-## Construido con 🛠️
+_Declaración de Ciclos:_
+```
+while ( <cond> ) {
+  <bloqueCódigo>
+}
+```
+_Nota: La variable que se utilice en la condición no se actualiza automáticamente. No olvides actualizarla!_
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+_Declaración Escritura:_
+```
+print(<id>);
+print(<cte>);
+print(<id> <op> <cte>);
+print(<array>[<cte/id>]);
+print(<matrix>[<cte/id>][<cte/id>]);
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
+_Declaración Lectura:_
+```
+input[<id>]
+```
 
-## Contribuyendo 🖇️
+## Resumen 🛠️
 
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
+El proyecto fue elaborado para la clase 'Desarrollo de Compiladores' en el ITESM Campus Monterrey.
+Febrero - Junio 2020
 
-## Wiki 📖
+## Autores 📖
 
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
-
-## Versionado 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
-
-## Autores ✒️
-
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
-
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Francisco J. Castro Zuñiga
+Edgar López Villarreal
 
 ## Expresiones de Gratitud 🎁
 
 * Comenta a otros sobre este proyecto 📢
 * Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
+* No dudes en contactarnos si quieres continuar con el desarrollo del proyecto🤓.
+* No critiques, disfruta!
 
-
-
----
-⌨️ con ❤️ por [Villanuevand](https://github.com/Villanuevand) 😊
