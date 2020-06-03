@@ -1,6 +1,4 @@
 program prueba:
-
-
 main(){
     var float matriz[2][2];
     int row, column,valor;
@@ -18,6 +16,7 @@ main(){
         row = row + 1;
     }
 
+    print("Matriz original");
     row = 0;
     column = 0;
     while( row < 2 ){

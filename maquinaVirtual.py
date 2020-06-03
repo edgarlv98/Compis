@@ -119,7 +119,9 @@ def gotof(quad, i):
     valor = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, 'bool')
 
     global auxiliarBreak
-    auxiliarBreak = quad.result
+    if auxiliarBreak == 0:
+        auxiliarBreak = quad.result
+    
     if(valor == 'False' or valor == False):
         return quad.result
     else:
@@ -127,6 +129,8 @@ def gotof(quad, i):
 
 #Funcion que realiza el goto en la maquina virtual
 def goto(quad, i):
+    global auxiliarBreak
+    auxiliarBreak = 0
     return quad.result
 
 #Funcion que realiza la operacion de print en la maquina virtual
@@ -302,7 +306,9 @@ valoresCorchetes = None
 
 #Break en desarrollo
 def breakk(quad, i):
+    global auxiliarBreak
     i = auxiliarBreak
+    auxiliarBreak = 0
     return i
 
 #Funcion que verifica las dimensiones en la maquina virtual

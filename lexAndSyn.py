@@ -620,7 +620,7 @@ def funcionDos(id):
 
 parser = yacc.yacc()
 
-archivo = "transpuesta.txt"
+archivo = "test.txt"
 f = open(archivo, 'r')
 s = f.read()
 
@@ -663,6 +663,7 @@ if success == True:
     #quad.cuadruplos()
     #memoriaPadre.memoria_local[0].show()
     virtual.inicio(quadMain)
+
     #memoriaPadre.memoria_local[0].show()
     #varsTable.show()
     #directorioFunc.show()

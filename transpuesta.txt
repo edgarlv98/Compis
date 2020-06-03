@@ -19,6 +19,7 @@ main(){
 
     row = 0;
     column = 0;
+    print("Matriz Original");
     while( row < 2 ){
         column = 0;
         while( column < 3){

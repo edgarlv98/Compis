@@ -2,23 +2,24 @@ program prueba:
 
 
 main(){
-    var float matriz[2][2], determinante;
-    int row, column,valor;
-    valor = 1;
-    row = 0;
-    column = 0;
+    var int arr[7];
+    int indice, aux;
+    indice = 0;
+    aux = 7;
     
-    while( row < 2 ){
-        column = 0;
-        while( column < 2){
-            input(valor);
-            matriz[row][column] = valor;
-            column = column + 1;
-        }
-        row = row + 1;
+    while( aux > 0 ){
+        arr[indice] = aux;
+        aux = aux - 1;
+        indice = indice + 1;
     }
-
-    determinante = matriz$;
-    print("Determinanteee");
-    print(determinante);
+    indice = 0;
+    aux = 7;
+    while( aux > 0 ){
+        print(arr[indice]);
+        aux = aux - 1;
+        indice = indice + 1;
+        if( aux < 4){
+            break;
+        }
+    }
 }
