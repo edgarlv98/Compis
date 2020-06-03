@@ -1,9 +1,57 @@
 program prueba:
 
-function void imprime(){
-    print("hola");
+function void find(int tam){
+    var int arreglo[10];
+    while( tam > 0){
+        tam = tam -1;
+        arreglo[tam] = tam;
+        print(tam);
+        if(tam < 5){
+            break;
+        }
+    }
 }
 
 main(){
-    imprime();
+    var int matriz[2][3], row, column, valor, arreglo1[2], arreglo2[2];
+    valor= 0;
+    row = 0;
+    column = 0;
+    
+    while( row < 2 ){
+        column = 0;
+        while( column < 3){
+            matriz[row][column] = valor;
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    row = 0;
+    column = 0;
+    while( row < 2 ){
+        column = 0;
+        while( column < 3){
+            print(matriz[row][column]);
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+
+    matriz!;
+    print("Transpuesta!!");
+    row = 0;
+    column = 0;
+    while( row < 2 ){
+        column = 0;
+        while( column < 3){
+            print(matriz[row][column]);
+            valor = valor + 1;
+            column = column + 1;
+        }
+        row = row + 1;
+    }
+    
 }

@@ -3,6 +3,7 @@ import memoriaPadre
 import memoria
 import vars_table as varTable
 import sys
+import numpy as np
 
 indexMemoria = 0
 indexAntesdeFuncion = 0
@@ -104,10 +105,14 @@ def menor(quad, i):
 
     return i + 1
 
+auxiliarBreak = 0
+
 def gotof(quad, i):
     left = quad.left_operand
     valor = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, 'bool')
 
+    global auxiliarBreak
+    auxiliarBreak = quad.result
     if(valor == 'False' or valor == False):
         return quad.result
     else:
@@ -276,6 +281,10 @@ def returnN(quad, i):
 limiteMatriz = None
 valoresCorchetes = None
 
+def breakk(quad, i):
+    i = auxiliarBreak
+    return i
+
 def verifica(quad, i):
     global direccionDelIndice
     global limiteMatriz
@@ -310,6 +319,41 @@ def verifica(quad, i):
         else:
             return i + 1
 
+def trans(quad, i):
+    trans = quad.left_operand
+    funcion = quad.result
+    copiaDirec = 0
+    for x in varTable.simbolos:
+        if trans == x.id and funcion == x.funcion:
+            direccion = x.direccion
+            dimensiones = x.dimension
+            break
+    
+    copiaDirec = direccion
+    r = int(dimensiones[0])
+    c = int(dimensiones[1])
+    matriz = []
+    for a in range(0,r):
+        matriz.append([])
+        for j in range(0,c):
+            aux = memoriaPadre.memoria_local[indexMemoria].getValor(direccion,None)
+            matriz[a].append(aux) 
+            direccion += 1
+    
+    matriz = np.array(matriz).transpose()
+
+    for x in varTable.simbolos:
+        if trans == x.id and funcion == x.funcion:
+            x.dimension = (x.dimension[1], x.dimension[0])
+
+    baseDir = copiaDirec
+    for a in range(0,c):
+        for j in range(0,r):
+            copiaDirec = baseDir + a*r + j
+            tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(copiaDirec)
+            memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(matriz[a][j], copiaDirec, tipo)
+    
+    return i + 1
 
 def acciones(quad, i):
 
@@ -337,8 +381,9 @@ def acciones(quad, i):
 
         'return': returnN,
         'input': inputt,
-
-        'ver': verifica
+        'break': breakk,
+        'ver': verifica,
+        'transpuesta': trans
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':

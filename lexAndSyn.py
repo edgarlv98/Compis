@@ -38,7 +38,8 @@ reserved = {
     'do' : 'DO',
     'to' : 'TO',
     'main' : 'MAIN',
-    'return' : 'RETURN'
+    'return' : 'RETURN',
+    'break' : 'BREAK'
 }
 
 tokens = [
@@ -370,7 +371,22 @@ def p_estatuto(p):
                 | comparacion
                 | llamadaAFuncion SEMICOLON
                 | lectura
+                | BREAK generaCuadbreak SEMICOLON
+                | transpuesta
     '''
+
+def p_transpuesta(p):
+    '''transpuesta : ID push_id TRANSPUESTA creaTrans SEMICOLON
+    '''
+
+def p_creaTrans(p):
+    "creaTrans : "
+    quad.creaTrans( p[-3], funcionPadreDeVariables)
+
+def p_generaCuadbreak(p):
+    "generaCuadbreak : "
+    quad.breakk()
+
 def p_llamadaAFuncion(p):
     '''llamadaAFuncion : ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN expresion
                        | ID actualizaFuncion generarEra LPAREN paramFuncion gosub RPAREN
@@ -629,9 +645,10 @@ if success == True:
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
-    #varsTable.show()
-    #quad.cuadruplos()
+    
+    quad.cuadruplos()
     virtual.inicio(quadMain)
+    #varsTable.show()
     #directorioFunc.show()
     #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()

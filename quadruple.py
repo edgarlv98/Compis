@@ -312,6 +312,14 @@ def verificaDim(id, funcion):
     appendPilaO(aux)
     PilaDim.append(value)
 
+def breakk():
+    quadr = quadruple(len(Quad), 'break', None, None, None)
+    Quad.append(quadr)
+
+def creaTrans(id1, funcionPadre):
+    quadr = quadruple(len(Quad), 'transpuesta', id1, None, funcionPadre)
+    Quad.append(quadr)
+
 def verificaDim2(id, funcion):
     size = len(simbolos)
     for i in range(size):
@@ -319,7 +327,7 @@ def verificaDim2(id, funcion):
             dimension = simbolos[i].dimension
             direccion = simbolos[i].direccion
             break
-        
+
     operand1 = popPilaO()
     operand = popPilaO()
     tipo = PTypes.pop()
