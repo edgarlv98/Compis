@@ -1,32 +1,25 @@
 program prueba:
 
-var int global1, global2;
-
-function void fibonacci(int a, int b, int c){
-    var int x;
-    if ( a < 1 ){
-        x = 0;
-    } else {
-        x = b;
-        b = c;
-        c = c + x;
-        print(x);
-        fibonacci(a-1, b, c);
-    }
-}
 
 main(){
-    var float por, por2;
-    int arreglo[10], pruebaArreglo[8], matriz[2][4];
-    int pruebaInt;
-    pruebaInt = 2 + 3 * 3;
-    pruebaArreglo[2] = 2 * 2;
-    arreglo[3] = pruebaArreglo[2] + 1;
-    print("ARREGLO");
-    print(pruebaArreglo[2]);
-    print(arreglo[3]);
-    %%global1 = pruebaInt;
-    %%print("MAIN");
-    %%pruebafuncion(pruebaInt, 8);
-    %%otraFuncion(4);
+    var int arr[7];
+    int indice, aux;
+    indice = 0;
+    aux = 7;
+    
+    while( aux > 0 ){
+        arr[indice] = aux;
+        aux = aux - 1;
+        indice = indice + 1;
+    }
+    indice = 0;
+    aux = 7;
+    while( aux > 0 ){
+        print(arr[indice]);
+        aux = aux - 1;
+        indice = indice + 1;
+        if( aux < 4){
+            break;
+        }
+    }
 }

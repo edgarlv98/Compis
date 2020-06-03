@@ -52,6 +52,8 @@ class memoria(object):
     tempMainChar = 2200
     tempMainBool = 2300
 
+    #direccion dimensiones
+    dimensiones = 1000
 
     def getTipo(self, cte):
         tipo = str(type(cte))
@@ -149,6 +151,8 @@ class memoria(object):
             temp = self.local.char[direccion]
         elif(tipo == 'bool'):
             temp = self.local.bool[direccion]
+        elif(tipo == 'dimension'):
+            temp = self.local.dimension[direccion]
         return temp
 
     # Funcion que checa si una constante ya se encuentra en
@@ -294,12 +298,19 @@ class memoria(object):
     def updateVariableLocal(self, valor, dir, tipo):
         if(tipo == "int"):
             self.local.int[dir] = valor
+            return
         if(tipo == "float"):
             self.local.float[dir] = valor
+            return
         if(tipo == "char"):
             self.local.char[dir] = valor
+            return
         if(tipo == "bool"):
             self.local.bool[dir] = valor
+            return
+        if(tipo == "dimension"):
+            self.local.dimension[dir] = valor
+            return
 
     # Funcion que regresa una direccion para una fucion
     # dependiendo de su tipo
@@ -330,28 +341,10 @@ class memoria(object):
         elif(tipo == 'char'):
             temp = self.memoLocalChar
             self.memoLocalChar += 1
+        elif(tipo == 'dimension'):
+            temp = self.dimensiones
+            self.dimensiones += 1
         return temp
-
-    # Funcion que limpia las direcciones de los temporales
-    def cleanMemory(self):
-
-        self.memoTempInt = 10000
-        self.memoTempFloat = 10100
-        self.memoTempChar = 10200
-        self.memoTempBool = 10300
-
-        #global memoLocalInt 
-        #global memoLocalFloat
-        #global memoLocalChar
-        #memoLocalInt = 15000
-        #memoLocalFloat = 15100
-        #memoLocalChar = 15200
-        #global memoCteInt 
-        #global memoCteFloat
-        #global memoCteChar
-        #memoCteInt = 20000
-        #memoCteFloat = 21000
-        #memoCteChar = 22000
 
     def show(self):
         print("GLOBAL")
@@ -373,3 +366,5 @@ class memoria(object):
         pprint(self.local.char, width=1)
         print("BOOL")
         pprint(self.local.bool, width=1)
+        print("DIMENSIONES")
+        pprint(self.local.dimension, width=1)
