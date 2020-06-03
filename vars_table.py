@@ -26,7 +26,9 @@ def insert(id, tipo, direccion, funcion):
         simbolos.append(temp)
 
 def insertDimensionada(id, tipo, direccion, funcion, dimension):
-    temp = variable(id, tipo, direccion, funcion, dimension)
+    aux = memoriaPadre.memoria_local[0].getDirvariableLocal('dimension')
+    memoriaPadre.memoria_local[0].updateVariableLocal(dimension,aux,'dimension')
+    temp = variable(id, tipo, direccion, funcion, aux)
     if (len(simbolos) >= 1 and not repeatID(id, funcion)) or len(simbolos) == 0:
         simbolos.append(temp)
 

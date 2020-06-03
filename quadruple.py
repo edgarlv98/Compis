@@ -320,6 +320,10 @@ def creaTrans(id1, funcionPadre):
     quadr = quadruple(len(Quad), 'transpuesta', id1, None, funcionPadre)
     Quad.append(quadr)
 
+def creaInversa(id1, funcionPadre):
+    quadr = quadruple(len(Quad), 'inversa', id1, None, funcionPadre)
+    Quad.append(quadr)
+
 def verificaDim2(id, funcion):
     size = len(simbolos)
     for i in range(size):

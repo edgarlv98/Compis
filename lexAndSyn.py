@@ -373,11 +373,19 @@ def p_estatuto(p):
                 | lectura
                 | BREAK generaCuadbreak SEMICOLON
                 | transpuesta
+                | inversa
     '''
 
 def p_transpuesta(p):
     '''transpuesta : ID push_id TRANSPUESTA creaTrans SEMICOLON
     '''
+def p_inversa(p):
+    '''inversa : ID push_id INVERSA creaInversa SEMICOLON
+    '''
+
+def p_creaInversa(p):
+    "creaInversa : "
+    quad.creaInversa( p[-3], funcionPadreDeVariables)
 
 def p_creaTrans(p):
     "creaTrans : "
@@ -647,10 +655,11 @@ if success == True:
     #quad.mostrarSize()
     
     quad.cuadruplos()
-    virtual.inicio(quadMain)
+    #memoriaPadre.memoria_local[0].show()
+    #virtual.inicio(quadMain)
+    #memoriaPadre.memoria_local[0].show()
     #varsTable.show()
     #directorioFunc.show()
-    #memoriaPadre.memoria_local[0].show()
     #quad.mostraPilaDim()
     sys.exit()
 else:

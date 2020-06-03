@@ -52,6 +52,8 @@ class memoria(object):
     tempMainChar = 2200
     tempMainBool = 2300
 
+    #direccion dimensiones
+    dimensiones = 1000
 
     def getTipo(self, cte):
         tipo = str(type(cte))
@@ -149,6 +151,8 @@ class memoria(object):
             temp = self.local.char[direccion]
         elif(tipo == 'bool'):
             temp = self.local.bool[direccion]
+        elif(tipo == 'dimension'):
+            temp = self.local.dimension[direccion]
         return temp
 
     # Funcion que checa si una constante ya se encuentra en
@@ -304,6 +308,9 @@ class memoria(object):
         if(tipo == "bool"):
             self.local.bool[dir] = valor
             return
+        if(tipo == "dimension"):
+            self.local.dimension[dir] = valor
+            return
 
     # Funcion que regresa una direccion para una fucion
     # dependiendo de su tipo
@@ -334,6 +341,9 @@ class memoria(object):
         elif(tipo == 'char'):
             temp = self.memoLocalChar
             self.memoLocalChar += 1
+        elif(tipo == 'dimension'):
+            temp = self.dimensiones
+            self.dimensiones += 1
         return temp
 
     # Funcion que limpia las direcciones de los temporales
@@ -377,3 +387,5 @@ class memoria(object):
         pprint(self.local.char, width=1)
         print("BOOL")
         pprint(self.local.bool, width=1)
+        print("DIMENSIONES")
+        pprint(self.local.dimension, width=1)

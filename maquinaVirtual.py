@@ -134,8 +134,10 @@ def printt(quad, i):
 
         imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
 
-        print(imprime)    
-    elif type(dimension) == int and dimension>0:
+        print(imprime)
+        return i + 1    
+    dimension = memoriaPadre.memoria_local[0].getValor(dimension, 'dimension')
+    if type(dimension) == int and dimension>0:
         aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
         direccionVariable = quad.result
         aux = direccionVariable + int(aux)
@@ -184,11 +186,13 @@ def equal(quad, i):
     valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)    
     result = quad.result
     if dimension == 0:
-        
         tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
-
         memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, result, tipoResult)
-    elif dimension > 0 and type(dimension) == int:
+        return i + 1
+    
+    dimension = memoriaPadre.memoria_local[0].getValor(dimension, 'dimension')
+    
+    if dimension > 0 and type(dimension) == int:
         aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
         direccionVariable = quad.result
         aux = direccionVariable + int(aux)
@@ -197,14 +201,13 @@ def equal(quad, i):
         memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
         dimension = 0
     else :
+        
         s1 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[0]), None))
         d2 = int(limiteMatriz[1])
         s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[1]), None))
         aux = int(direccionDelIndice) + s1 * d2 + s2
-
         tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(result)
         memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
-
     return i + 1
 
 def doubleEqual(quad, i):
@@ -292,7 +295,7 @@ def verifica(quad, i):
 
     direccionDelIndice = quad.left_operand
     miDim = quad.result
-    dimOriginal = quad.right_operand
+    dimOriginal = memoriaPadre.memoria_local[0].getValor(quad.right_operand, 'dimension') 
 
     if(type(dimOriginal) == int):
         miDim = memoriaPadre.memoria_local[indexMemoria].getValor(miDim, None)
@@ -305,7 +308,7 @@ def verifica(quad, i):
             return i + 1
     else:
         
-        limiteMatriz = quad.right_operand
+        limiteMatriz = dimOriginal
         valoresCorchetes = quad.result
 
         dimLeft = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(miDim[0]), None))
@@ -328,7 +331,7 @@ def trans(quad, i):
             direccion = x.direccion
             dimensiones = x.dimension
             break
-    
+    dimensiones =  memoriaPadre.memoria_local[0].getValor(dimensiones, 'dimension')
     copiaDirec = direccion
     r = int(dimensiones[0])
     c = int(dimensiones[1])
@@ -341,10 +344,10 @@ def trans(quad, i):
             direccion += 1
     
     matriz = np.array(matriz).transpose()
-
     for x in varTable.simbolos:
         if trans == x.id and funcion == x.funcion:
-            x.dimension = (x.dimension[1], x.dimension[0])
+            memoriaPadre.memoria_local[0].updateVariableLocal((c,r),x.dimension,'dimension')
+
 
     baseDir = copiaDirec
     for a in range(0,c):
@@ -352,6 +355,7 @@ def trans(quad, i):
             copiaDirec = baseDir + a*r + j
             tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(copiaDirec)
             memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(matriz[a][j], copiaDirec, tipo)
+
     
     return i + 1
 
