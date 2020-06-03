@@ -76,13 +76,12 @@ def createQuadAssign():
             left_type = PTypes.pop()
             operator = POper.pop()
             result_type = semantic(left_type, right_type, operator)
-            if(result_type != 'error'):
-                quadr = quadruple(len(Quad), operator, right_operand, None, left_operand)
-                Quad.append(quadr)
-                result = right_value
+           
+            quadr = quadruple(len(Quad), operator, right_operand, None, left_operand)
+            Quad.append(quadr)
+            result = right_value
     #else:
     #    print("ERROR")
-    return result
 
 def cuadruplos():
     for i in range(len(Quad)):

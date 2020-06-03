@@ -656,7 +656,7 @@ if success == True:
     
     quad.cuadruplos()
     #memoriaPadre.memoria_local[0].show()
-    #virtual.inicio(quadMain)
+    virtual.inicio(quadMain)
     #memoriaPadre.memoria_local[0].show()
     #varsTable.show()
     #directorioFunc.show()

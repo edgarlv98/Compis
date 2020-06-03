@@ -127,15 +127,16 @@ def printt(quad, i):
     for x in varTable.simbolos:
         if x.direccion == quad.result:
             dimension = x.dimension
+
     if dimension == 0:
 
         direccionVariable = quad.result
         tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(direccionVariable)
-
         imprime = memoriaPadre.memoria_local[indexMemoria].regresaValor(direccionVariable, tipoVariable)
 
         print(imprime)
         return i + 1    
+
     dimension = memoriaPadre.memoria_local[0].getValor(dimension, 'dimension')
     if type(dimension) == int and dimension>0:
         aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice, None))
@@ -152,7 +153,6 @@ def printt(quad, i):
         d2 = int(limiteMatriz[1])
         s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valoresCorchetes[1]), None))
         aux = int(direccionDelIndice) + s1 * d2 + s2
-
         tipoVariable = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(aux)
         imprime = memoriaPadre.memoria_local[indexMemoria].getValor(aux, tipoVariable)
 
@@ -348,7 +348,6 @@ def trans(quad, i):
         if trans == x.id and funcion == x.funcion:
             memoriaPadre.memoria_local[0].updateVariableLocal((c,r),x.dimension,'dimension')
 
-
     baseDir = copiaDirec
     for a in range(0,c):
         for j in range(0,r):
@@ -356,8 +355,55 @@ def trans(quad, i):
             tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(copiaDirec)
             memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(matriz[a][j], copiaDirec, tipo)
 
+    return i + 1
+
+def inversa(quad, i):
+    inv = quad.left_operand
+    funcion = quad.result
+    copiaDirec = 0
+    for x in varTable.simbolos:
+        if inv == x.id and funcion == x.funcion:
+            direccion = x.direccion
+            dimensiones = x.dimension
+            break
+
+    if memoriaPadre.memoria_local[0].getTipoDireccion(direccion) != 'float':
+        print("Para calcular la inversa es necesario que la matriz sea de tipo float.")
+        sys.exit()
+
+    dimensiones =  memoriaPadre.memoria_local[0].getValor(dimensiones, 'dimension')
+    copiaDirec = direccion
+    r = int(dimensiones[0])
+    c = int(dimensiones[1])
+
+    if r != c:
+        print("No es posible calcular la inversa, la matriz no es cuadrada.")
+        sys.exit()
+
+    matriz = []
+
+    for a in range(0,r):
+        matriz.append([])
+        for j in range(0,c):
+            aux = memoriaPadre.memoria_local[indexMemoria].getValor(direccion,None)
+            matriz[a].append(aux) 
+            direccion += 1
+
+    try:
+        matriz = np.linalg.inv(np.array(matriz))
+    except:
+        print("No es posible calcular matriz inversa, ya que es matriz singular.")
+        sys.exit()
+
+    baseDir = copiaDirec
+    for a in range(0,c):
+        for j in range(0,r):
+            copiaDirec = baseDir + a*r + j
+            tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(copiaDirec)
+            memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(matriz[a][j], copiaDirec, tipo)
     
     return i + 1
+
 
 def acciones(quad, i):
 
@@ -387,7 +433,8 @@ def acciones(quad, i):
         'input': inputt,
         'break': breakk,
         'ver': verifica,
-        'transpuesta': trans
+        'transpuesta': trans,
+        'inversa' : inversa
     }
     func = switch.get(quad.operator, 'x')
     if func != 'x':
