@@ -49,6 +49,11 @@ function <tipo> <id> (<parametros){
 }
 ```
 
+_Llamada a funciones:_
+```
+<idFuncion>(<param1>...<paramN>);
+```
+
 _Algunas declaraciones de asignaciones:_
 ```
 <id> = <id>;
@@ -87,8 +92,8 @@ Febrero - Junio 2020
 
 ## Autores 📖
 
-Francisco J. Castro Zuñiga
-Edgar López Villarreal
+* Francisco J. Castro Zuñiga
+* Edgar López Villarreal
 
 ## Expresiones de Gratitud 🎁
 
