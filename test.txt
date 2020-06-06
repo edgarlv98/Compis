@@ -1,13 +1,31 @@
 program prueba:
 
 main(){
-    var int mat1[2][2], mat2[2][2];
-    int aux,r,c;
+    var int mat1[2][2], mat2[2][2], arreglo[5];
+    int aux,r,c, x, i, j, valor;
     mat2[0][0] = 0;
     mat1[1][1] = 2;
-    mat2[1][1] = 59;
-    mat1[1][1] = mat2[1][1] + 2;
+    mat2[1][1] = 60;
+    mat1[1][1] = mat2[1][1] * 2;
     print(mat1[1][1]);
-    
 
+    i = 0;
+    j = 0;
+
+    while(i < 5){
+        input(aux);
+        arreglo[i] = aux;
+        i = i + 1;
+    }
+
+    i = 0;
+    print("Valor a encontrar");
+    input(x);
+
+    while(i < 5){
+        if(arreglo[i] == x){
+            print("Entonrado");
+        } 
+        i = i + 1;
+    }
 }

@@ -14,6 +14,23 @@ def division(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
+
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
@@ -31,6 +48,23 @@ def mult(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0 and type(dimensionLeft) == int):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0 and type(dimensionLeft) == int):
+        right = getDirArreglo(right)
+
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
@@ -47,6 +81,23 @@ def mult(quad, i):
 def resta(quad, i):
     left = quad.left_operand
     right = quad.right_operand
+
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
 
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
@@ -75,6 +126,8 @@ def getDimension(dir):
     for x in varTable.simbolos:
         if x.direccion == dir:
             dimension = x.dimension
+            if(dimension == 0):
+                return dimension
             dimension = memoriaPadre.memoria_local[0].getValor(dimension, 'dimension')
             return dimension
     return 0
@@ -84,12 +137,9 @@ def suma(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
-    memoriaPadre.memoria_local[indexMemoria].show()
-
     #obtener dimension real del op
     dimensionLeft = getDimension(left)
     dimensionRight = getDimension(right)
-    
 
     #checar si es matrix del lado izq
     if type(dimensionLeft) != int:
@@ -97,6 +147,12 @@ def suma(quad, i):
 
     if type(dimensionRight) != int:
         right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
 
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
@@ -115,6 +171,23 @@ def mayor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
+
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
@@ -131,6 +204,23 @@ def mayor(quad, i):
 def menor(quad, i):
     left = quad.left_operand
     right = quad.right_operand
+    
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
 
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
@@ -228,96 +318,61 @@ direccionDelIndice = []
 def equal(quad, i):
 
     left = quad.left_operand
-    dimension = 0
-    dimensionLeft = None
-    for x in varTable.simbolos:
-        if x.direccion == quad.result:
-            dimension = x.dimension
+    right = quad.result
 
-    for k in varTable.simbolos:
-        if k.direccion == left:
-            dimensionLeft = k.dimension
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
 
-    #iguales dos variables normales
-    if dimension == 0 and dimensionLeft == None:
-        tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
-        valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
-        tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.result)
-        memoriaPadre.memoria_local[indexMemoria].updateTemporal(valorLeft, quad.result, tipoResult)
-        return i + 1
-    
-    dimension = memoriaPadre.memoria_local[0].getValor(dimension, 'dimension')
-    #arreglo igual a variable
-    if dimension > 0 and type(dimension) == int:
-        aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice.pop(), None))
-        direccionVariable = quad.result
-        aux = direccionVariable + int(aux)
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
 
-        tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.result)
-        memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, aux, tipoResult)
-        dimension = 0
-    else :
-        
-        if (dimensionLeft == None):
-            pass
-        else:
-            dimensionLeft = memoriaPadre.memoria_local[0].getValor(dimensionLeft, 'dimension')
-           
-        #matriz = variable
-        if dimensionLeft == None and type(dimension) != int:
-            
-            valorCorch1 = valoresCorchetes.pop()
-            dim = limiteMatriz.pop()
-            s1 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch1[0]), None))
-            d2 = int(dim[1])
-            s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch1[1]), None))
-            aux = int(direccionDelIndice.pop()) + s1 * d2 + s2
-            tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(quad.result)
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
 
-            left = memoriaPadre.memoria_local[indexMemoria].getValor(left,None)
+    if(dimensionLeft > 0 and type(dimensionLeft) == int):
+        left = getDirArreglo(left)
 
-            memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(left, aux, tipoResult)
-            return i + 1
+    if(dimensionRight > 0 and type(dimensionRight) == int):
+        right = getDirArreglo(right)
 
-        elif type(dimensionLeft) != int and type(dimension) != int:
-            valorCorch1 = valoresCorchetes.pop()
-            valorCorch2 = valoresCorchetes.pop()
-            direc1 = direccionDelIndice.pop()
-            direc2 = direccionDelIndice.pop()
-            dim1 = limiteMatriz.pop()
-            dim2 = limiteMatriz.pop()
-            s1 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch1[0]), None))
-            d2 = int(dim1[1])
-            s2 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch1[1]), None))
-            aux = int(direc2) + s1 * d2 + s2
-
-            s11 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch2[0]), None))
-            d22 = int(dim2[1])
-            s22 = int(memoriaPadre.memoria_local[indexMemoria].getValor(int(valorCorch2[1]), None))
-            aux2 = int(direc1) + s11 * d22 + s22
-
-
-            valorGuardar = memoriaPadre.memoria_local[indexMemoria].getValor(aux2,None)
-
-            tipoResult = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(aux)
-
-            memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorGuardar, aux, tipoResult)
-
-            return i + 1
+    valorLeft = memoriaPadre.memoria_local[indexMemoria].getValor(left, None)
+    tipo = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
+    memoriaPadre.memoria_local[indexMemoria].updateVariableLocal(valorLeft, right, tipo)
         
     return i + 1
+
+def getDirArreglo(dir):
+    aux = int(memoriaPadre.memoria_local[indexMemoria].getValor(direccionDelIndice.pop(), None))
+    nuevaDireccion = dir + aux
+    return nuevaDireccion
 
 #Funcion que realiza la operacion de igual en la maquina virtual
 def doubleEqual(quad, i):
     left = quad.left_operand
     right = quad.right_operand
 
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0 and type(dimensionLeft) == int):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0 and type(dimensionRight) == int):
+        right = getDirArreglo(right)
+
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)
 
     valorLeft = memoriaPadre.memoria_local[indexMemoria].regresaValor(left, tipoLeft)
     valorRight = memoriaPadre.memoria_local[indexMemoria].regresaValor(right, tipoRight)
-
     resultado = valorLeft == valorRight
     
     memoriaPadre.memoria_local[indexMemoria].updateTemporal(resultado, quad.result, 'bool')
@@ -328,6 +383,23 @@ def doubleEqual(quad, i):
 def different(quad, i):
     left = quad.left_operand
     right = quad.right_operand
+
+    #obtener dimension real del op
+    dimensionLeft = getDimension(left)
+    dimensionRight = getDimension(right)
+
+    #checar si es matrix del lado izq
+    if type(dimensionLeft) != int:
+        left = realDirMatrix()
+
+    if type(dimensionRight) != int:
+        right = realDirMatrix()
+
+    if(dimensionLeft > 0):
+        left = getDirArreglo(left)
+
+    if(dimensionRight > 0):
+        right = getDirArreglo(right)
 
     tipoLeft = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(left)
     tipoRight = memoriaPadre.memoria_local[indexMemoria].getTipoDireccion(right)

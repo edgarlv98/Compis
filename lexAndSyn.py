@@ -660,7 +660,7 @@ if success == True:
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     
-    quad.cuadruplos()
+    #quad.cuadruplos()
     #memoriaPadre.memoria_local[0].show()
     virtual.inicio(quadMain)
 
