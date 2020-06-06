@@ -1,25 +1,13 @@
 program prueba:
 
-
 main(){
-    var int arr[7];
-    int indice, aux;
-    indice = 0;
-    aux = 7;
+    var int mat1[2][2], mat2[2][2];
+    int aux,r,c;
+    mat2[0][0] = 0;
+    mat1[1][1] = 2;
+    mat2[1][1] = 59;
+    mat1[1][1] = mat2[1][1] + 2;
+    print(mat1[1][1]);
     
-    while( aux > 0 ){
-        arr[indice] = aux;
-        aux = aux - 1;
-        indice = indice + 1;
-    }
-    indice = 0;
-    aux = 7;
-    while( aux > 0 ){
-        print(arr[indice]);
-        aux = aux - 1;
-        indice = indice + 1;
-        if( aux < 4){
-            break;
-        }
-    }
+
 }

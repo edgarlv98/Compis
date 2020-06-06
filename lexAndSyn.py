@@ -655,12 +655,12 @@ def printGlobal():
 if success == True:
     #print("Archivo aprobado")
     #print("Variables")
-    #varsTable.show()
+    varsTable.show()
     #printGlobal()
     #printTablaDeVariablePorFuncion()
     #quad.mostrarSize()
     
-    #quad.cuadruplos()
+    quad.cuadruplos()
     #memoriaPadre.memoria_local[0].show()
     virtual.inicio(quadMain)
 

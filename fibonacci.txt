@@ -15,9 +15,36 @@ function void fibonacci(int a, int b, int c){
     }
 }
 
+function int pelos(int a, int b){
+    var int aux;
+    aux = a + b;
+    return aux;
+}
+
+function void fibonacciIter(int a){
+    var int aux1, aux2, temp;
+    aux1 = 1;
+    aux2 = 1;
+    if (a == 1){
+        print(1);
+    }
+    if( a == 2){
+        print(1,1);
+    }
+
+    while(a>0){
+        print(aux1);
+        temp = aux2;
+        aux2 = pelos(aux1, aux2);
+        aux1 = temp;
+        a = a-1;
+    }
+}
+
 main(){
     var float por, por2;
     int x;
     input(x);
-    fibonacci(x,1,1);
+    %%fibonacci(x, 1, 1);
+    fibonacciIter(x);
 }

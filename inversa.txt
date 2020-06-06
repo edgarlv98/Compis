@@ -29,7 +29,9 @@ main(){
     }
 
     print("Inversaaa!!");
+
     matriz?;
+    
     row = 0;
     column = 0;
     while( row < 2 ){
